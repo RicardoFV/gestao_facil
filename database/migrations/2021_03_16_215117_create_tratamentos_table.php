@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTratamentosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('tratamentos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+            $table->date('dt_entrega');
+            $table->integer('id_usuario')->unsigned();
+            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_requisito')->unsigned();
+            $table->foreign('id_requisito')->references('id')->on('requisitos');
+            $table->integer('id_sistema')->unsigned();
+            $table->foreign('id_sistema')->references('id')->on('sistemas');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tratamentos');
+    }
+}
