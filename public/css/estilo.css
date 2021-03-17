@@ -6,3 +6,12 @@ body {
     background: linear-gradient( to right, #155799, #159957);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+
+/* coloca a cor do titulo*/
+
+#titulo {
+    color: #fff;
+    padding-top: 2%;
+    padding-bottom: 5%;
+}
