@@ -27,6 +27,7 @@
 </head>
 <body>
     <div id="app">
+        
         @auth
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{ url('/') }}">Gestao de Sistemas</a>
@@ -35,15 +36,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" id="p_requisito" href="{{route('requirements.index') }}">Requisito</a>
-                            <a class="dropdown-item" id="p_sistema" href="{{route('systems.index') }}">Sistema</a>
-                            <a class="dropdown-item" id="p_tratamento" href="{{route('treatments.index') }}">Tratamento</a>
-                            <a class="dropdown-item" id="p_usuario"  href="{{ route('register') }}">Usuário</a>
-                            <a class="dropdown-item" id="p_versao" href="{{route('versions.index') }}">Versão</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tratamento</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('settings.index')}}">Configurações</a>
                     </li>
         
                     <li class="nav-item">

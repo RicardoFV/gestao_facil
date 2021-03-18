@@ -59,6 +59,30 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="situacao" class="col-md-4 col-form-label text-md-right">{{ __('Situacao') }}</label>
+
+                    <div class="col-md-6">
+                        <select name="situacao" id="situacao" class="form-control">
+                            <option value="nao_iniciado">Não Iniciada</option>
+                            <option value="em_andamento">Em Andamento</option>
+                            <option value="parado">Parado</option>
+                            <option value="concluido">Concluído</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_usuario_responsavel" class="col-md-4 col-form-label text-md-right">{{ __('Usuário Responsável') }}</label>
+
+                    <div class="col-md-6">
+                        <select name="id_usuario_responsavel" id="id_sistema" class="form-control">
+                            <option value="">usuario 1</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="id_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Requisito') }}</label>
 
                     <div class="col-md-6">

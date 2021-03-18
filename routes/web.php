@@ -26,7 +26,8 @@ Route::resources([
     'requirements'=> 'RequisitoController',
     'systems'=> 'SistemaController',
     'treatments'=> 'TratamentoController',
-    'versions'=> 'VersaoController'
+    'versions'=> 'VersaoController',
+    'settings' => 'ConfigController'
 ]);
 
 Auth::routes();

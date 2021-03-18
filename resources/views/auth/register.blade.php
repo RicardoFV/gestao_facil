@@ -68,8 +68,9 @@
                     <div class="col-md-6">
                         
                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
-                            <option value="administrador" >Administrador</option> 
-                            <option value="usuario" >Usuário</option>
+                            <option value="administrador" >Administrador(a)</option> 
+                            <option value="desenvolvedor" >Desenvoldor(a)</option> 
+                            <option value="usuario" >Usuário(a)</option>
                         </select>
                     </div>
                 </div>
