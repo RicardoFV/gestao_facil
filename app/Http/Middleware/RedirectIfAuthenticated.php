@@ -18,9 +18,11 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        /* foi comentado para que consiga usar o layout de registrar
         if (Auth::guard($guard)->check()) {
             return redirect(RouteServiceProvider::HOME);
         }
+        */
 
         return $next($request);
     }

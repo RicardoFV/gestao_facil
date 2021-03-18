@@ -2,10 +2,10 @@
 
 @section('content')
 
-<div class="container">
+<div class="container cadastro">
     <div class="card mt-1">
         <div class="card-header">
-            <h1>Versão</h1>
+            <h1>Tratamento</h1>
         </div>
         <div class="form-row col-sm-12">
             <div class="form-group col-sm-6 d-flex inline mt-3">
@@ -29,8 +29,7 @@
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" type="text" class="form-control" readonly/>
-
+                        <input id="id" type="text" class="form-control" readonly>
                     </div>
                 </div>
 
@@ -38,13 +37,36 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome">
+                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" required autocomplete="nome" autofocus>
 
                         @error('nome')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_sistema" class="col-md-4 col-form-label text-md-right">{{ __('Sistema') }}</label>
+
+                    <div class="col-md-6">
+                        <select name="id_sistema" id="id_sistema" class="form-control">
+                            <option value="">Sistema 1</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Requisito') }}</label>
+
+                    <div class="col-md-6">
+                        
+                        <select name="id_requisito" id="id_requisito" class="form-control">
+                            <option value="">Requisito 1</option>
+                            <option value="">Requisito 2</option>
+                        </select>
                     </div>
                 </div>
 
@@ -65,9 +87,13 @@
                     <tr>
                         <th scope="col">Codigo</th>
                         <th scope="col">Nome</th>
+                        <th scope="col">Sistema</th>
+                        <th scope="col">Requisito</th>
+                        <th scope="col">Responsável</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
+
             </table>
         </div>
     </div>

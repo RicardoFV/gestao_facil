@@ -22,6 +22,13 @@ Route::get('/', function () {
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resources([
+    'requirements'=> 'RequisitoController',
+    'systems'=> 'SistemaController',
+    'treatments'=> 'TratamentoController',
+    'versions'=> 'VersaoController'
+]);
+
 Auth::routes();
 
 
