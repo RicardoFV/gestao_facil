@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tratamento;
 
 class TratamentoController extends Controller
 {
@@ -17,7 +18,8 @@ class TratamentoController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.tratamento');
+        $tratamentos = Tratamento::listar();
+        return view('paginas.cadastros.tratamento')->with('tratamentos', $tratamentos);
     }
 
     /**

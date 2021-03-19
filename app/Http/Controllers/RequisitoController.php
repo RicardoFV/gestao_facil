@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Requisito;
 
 class RequisitoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $requisitos = Requisito::listar();
+        $this->middleware('auth', compact('requisitos'));
     }
     /**
      * Display a listing of the resource.

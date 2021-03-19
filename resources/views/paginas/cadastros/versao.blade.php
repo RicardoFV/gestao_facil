@@ -68,6 +68,18 @@
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
+                <tbody class="text-center">
+                @foreach($versoes as $versao)
+                    <tr>
+                        <td>{{$versao->id }}</td>
+                        <td>{{$versao->nome }}</td>
+                        <td>
+                            <a href="">Editar</a>
+                            <a href="">Excluir</a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
         </div>
     </div>

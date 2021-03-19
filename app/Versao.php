@@ -10,4 +10,8 @@ class Versao extends Model
         'nome',
         'id_usuario'
     ];
+
+    public static function listar(){
+        return self::all();
+    }
 }

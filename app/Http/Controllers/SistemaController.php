@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Sistema;
 
 class SistemaController extends Controller
 {
@@ -18,7 +19,8 @@ class SistemaController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.sistema');
+        $sistemas = Sistema::listar();
+        return view('paginas.cadastros.sistema', ['sistemas'=>$sistemas]);
     }
 
     /**

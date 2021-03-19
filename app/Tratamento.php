@@ -15,4 +15,7 @@ class Tratamento extends Model
         'id_requisito',
         'id_sistema'
     ];
+    public static function listar(){
+        return self::all();
+    }
 }

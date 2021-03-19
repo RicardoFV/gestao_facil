@@ -15,5 +15,8 @@ class Sistema extends Model
         'id_usuario',
         'id_versao'
     ];
+    public static function listar(){
+        return self::all();
+    }
 
 }

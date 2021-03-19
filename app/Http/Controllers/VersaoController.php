@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Versao;
 
 class VersaoController extends Controller
 {
@@ -17,7 +18,8 @@ class VersaoController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.versao');
+        $versoes = Versao::listar();
+        return view('paginas.cadastros.versao', compact('versoes'));
     }
 
     /**

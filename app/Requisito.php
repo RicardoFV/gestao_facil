@@ -14,4 +14,8 @@ class Requisito extends Model
         'id_usuario'
     ];
 
+    public static function listar(){
+        return self::all();
+    }
+
 }
