@@ -15,7 +15,7 @@ class CreateTratamentosTable extends Migration
     {
         Schema::create('tratamentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
+            $table->string('descricao');
             $table->date('dt_entrega');
             $table->enum('situacao', ['nao_iniciado', 'em_andamento', 'parado', 'concluido']);
             $table->integer('id_usuario_responsavel')->unsigned();

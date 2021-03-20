@@ -34,20 +34,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
-
-                    <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" required autocomplete="nome" autofocus>
-
-                        @error('nome')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="id_sistema" class="col-md-4 col-form-label text-md-right">{{ __('Sistema') }}</label>
 
                     <div class="col-md-6">
@@ -55,6 +41,18 @@
                             <option value="">Sistema 1</option>
                         </select>
 
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Requisito') }}</label>
+
+                    <div class="col-md-6">
+                        
+                        <select name="id_requisito" id="id_requisito" class="form-control">
+                            <option value="">Requisito 1</option>
+                            <option value="">Requisito 2</option>
+                        </select>
                     </div>
                 </div>
 
@@ -83,16 +81,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="id_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Requisito') }}</label>
+                    <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
 
                     <div class="col-md-6">
-                        
-                        <select name="id_requisito" id="id_requisito" class="form-control">
-                            <option value="">Requisito 1</option>
-                            <option value="">Requisito 2</option>
-                        </select>
+                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3"></textarea>
                     </div>
                 </div>
+
+               
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

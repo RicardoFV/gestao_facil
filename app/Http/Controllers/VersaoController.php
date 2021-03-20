@@ -48,9 +48,7 @@ class VersaoController extends Controller
             'id_usuario'=>$id_usuario
         ];
         Versao::inserir($form);
-
-        $versoes = Versao::listar();
-        return view('paginas.cadastros.versao', compact('versoes'));
+        return redirect()->action('VersaoController@index');
     }
 
     /**

@@ -52,10 +52,8 @@ class RequisitoController extends Controller
             'id_usuario'=>$id_usuario
         ];
         Requisito::inserir($form);
-
-        $requisitos = Requisito::listar();
-
-        return view('paginas.cadastros.requisito', compact('requisitos'));
+        
+        return redirect()->action('RequisitoController@index');
     }
 
     /**

@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tratamento</a>
+                        <a class="nav-link" href="{{route('treatments.index') }}">Tratamento</a>
                     </li>
 
                     <li class="nav-item">
