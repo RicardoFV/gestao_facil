@@ -16,8 +16,8 @@ class CreateSistemasTable extends Migration
         Schema::create('sistemas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('caminho_imagem');
-            $table->string('nome_imagem');
+            //$table->string('caminho_imagem');
+            //$table->string('nome_imagem');
             $table->string('descricao');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');

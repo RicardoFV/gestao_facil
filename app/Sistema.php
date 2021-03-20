@@ -9,8 +9,8 @@ class Sistema extends Model
     protected $fillable = [
         'nome',
         'imagem',
-        'caminho_imagem',
-        'nome_imagem',
+       // 'caminho_imagem',
+        //'nome_imagem',
         'descricao',
         'id_usuario',
         'id_versao'
