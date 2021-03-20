@@ -18,4 +18,8 @@ class Requisito extends Model
         return self::all();
     }
 
+    public static function inserir(array $dados){
+        self::create($dados);
+    }
+
 }

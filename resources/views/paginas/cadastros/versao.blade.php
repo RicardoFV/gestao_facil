@@ -22,7 +22,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="">
+            <form method="POST" action="{{route('versions.store')}}">
                 @csrf
 
                 <div class="form-group row">

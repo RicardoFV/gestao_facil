@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tratamento extends Model
 {
-    protected $filable =[
+    protected $fillable =[
         'nome',
         'dt_entrega',   
         'situacao',

@@ -9,8 +9,7 @@ class RequisitoController extends Controller
 {
     public function __construct()
     {
-        $requisitos = Requisito::listar();
-        $this->middleware('auth', compact('requisitos'));
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +18,8 @@ class RequisitoController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.requisito');
+        $requisitos = Requisito::listar();
+        return view('paginas.cadastros.requisito', compact('requisitos'));
     }
 
     /**
@@ -29,7 +29,7 @@ class RequisitoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -40,7 +40,22 @@ class RequisitoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nome = $request->input('nome');
+        $tipo_requisito = $request->input('tipo_requisito');
+        $descricao = $request->input('descricao');
+        $id_usuario = auth()->user()->id;
+
+        $form = [
+            'nome' => $nome, 
+            'tipo_requisito'=> $tipo_requisito,
+            'descricao'=>$descricao,
+            'id_usuario'=>$id_usuario
+        ];
+        Requisito::inserir($form);
+
+        $requisitos = Requisito::listar();
+
+        return view('paginas.cadastros.requisito', compact('requisitos'));
     }
 
     /**

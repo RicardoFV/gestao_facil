@@ -40,7 +40,17 @@ class VersaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nome = $request->input('nome');
+        $id_usuario = auth()->user()->id;
+
+        $form = [
+            'nome' => $nome, 
+            'id_usuario'=>$id_usuario
+        ];
+        Versao::inserir($form);
+
+        $versoes = Versao::listar();
+        return view('paginas.cadastros.versao', compact('versoes'));
     }
 
     /**

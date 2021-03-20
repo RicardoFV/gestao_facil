@@ -22,7 +22,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('requirements.store') }}">
                 @csrf
 
                 <div class="form-group row">
@@ -90,6 +90,20 @@
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
+                <tbody class="text-center">
+                    @foreach($requisitos as $requisito)
+                        <tr>
+                            <td>{{$requisito->id }}</td>
+                            <td>{{$requisito->nome }}</td>
+                            <td>{{$requisito->tipo_requisito }}</td>
+                            <td>{{$requisito->descricao }}</td>
+                            <td>
+                                <a href="">Editar</a>
+                                <a href="">Excluir</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
 
             </table>
         </div>
