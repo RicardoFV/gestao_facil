@@ -24,12 +24,12 @@
 
             <form method="POST" action="{{route('versions.store')}}">
                 @csrf
-
+                @if(isset($versao))
                 <div class="form-group row">
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" type="text" value="{{ old('id') }}" " class="form-control" readonly/>
+                        <input id="id" type="text" value="{{ $versao->id }}" " class="form-control" readonly/>
 
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome">
+                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ $versao->nome }}" required autocomplete="nome">
 
                         @error('nome')
                             <span class="invalid-feedback" role="alert">
@@ -47,6 +47,7 @@
                         @enderror
                     </div>
                 </div>
+                @endif
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
@@ -69,6 +70,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
+                @if(isset($versoes))    
                 @foreach($versoes as $versao)
                     <tr>
                         <td>{{$versao->id }}</td>
@@ -79,6 +81,7 @@
                         </td>
                     </tr>
                 @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
