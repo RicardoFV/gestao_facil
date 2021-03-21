@@ -29,7 +29,7 @@
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" type="text" class="form-control" readonly/>
+                        <input id="id" type="text" value="{{ old('id') }}" " class="form-control" readonly/>
 
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         <td>{{$versao->id }}</td>
                         <td>{{$versao->nome }}</td>
                         <td>
-                            <a href="">Editar</a>
+                            <a href="{{ action('VersaoController@show', $versao->id)}}">Editar</a>
                             <a href="">Excluir</a>
                         </td>
                     </tr>

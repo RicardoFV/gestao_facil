@@ -21,7 +21,7 @@
         <hr />
 
         <div class="card-body">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('systems.store') }}">
                 @csrf
 
                 <div class="form-group row">
@@ -51,8 +51,9 @@
 
                     <div class="col-md-6">
                         <select name="id_versao" id="id_versao" class="form-control">
-                            <option value="">versao 1</option>
-                            <option value="">versao 2</option>
+                            @foreach($versoes as $versao)
+                            <option value="{{$versao->id}}">{{$versao->nome}}</option>
+                            @endforeach
                         </select>         
                     </div>
                 </div>
@@ -95,7 +96,18 @@
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
-
+                <tbody class="text-center">
+                    @foreach($sistemas as $sistema)
+                        <tr>
+                            <td>{{$sistema->id_sistema }}</td>
+                            <td>{{$sistema->nome_sistema }}</td>
+                            <td>{{$sistema->nome_versao }}</td>
+                            <td>
+                                <a href="">Editar</a>
+                                <a href="">Excluir</a>
+                            </td>
+                        </tr>
+                    @endforeach
             </table>
         </div>
     </div>

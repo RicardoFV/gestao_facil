@@ -27,7 +27,8 @@ Route::resources([
     'systems'=> 'SistemaController',
     'treatments'=> 'TratamentoController',
     'versions'=> 'VersaoController',
-    'settings' => 'ConfigController'
+    'settings' => 'ConfigController',
+    'users' => 'UsuarioController'
 ]);
 
 Auth::routes();

@@ -38,8 +38,16 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('auth');
+        $this->middleware('auth');
     }
+
+    /*
+    public function index()
+    {
+        $users = User::listar();
+        return view('auth.register', compact('users'));
+    }
+    */
 
     /**
      * Get a validator for an incoming registration request.
@@ -47,6 +55,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    /*
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -55,6 +64,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+    */
 
     /**
      * Create a new user instance after a valid registration.
@@ -62,13 +72,17 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    /*
     protected function create(array $data)
     {
-        return User::create([
+        User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'perfil_acesso'=>$data['perfil_acesso'],
             'password' => Hash::make($data['password']),
         ]); 
+
+        return redirect()->action('RegisterController@index');
     }
+    */
 }

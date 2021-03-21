@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Versao;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-use function PHPUnit\Framework\isEmpty;
-
-class VersaoController extends Controller
+class UsuarioController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
+    use RegistersUsers;
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +21,16 @@ class VersaoController extends Controller
      */
     public function index()
     {
-        $versoes = Versao::listar();
-        return view('paginas.cadastros.versao', compact('versoes'));
+        $users = User::listar();
+        return view('auth.register', compact('users'));
+    }
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 
     /**
@@ -42,15 +51,21 @@ class VersaoController extends Controller
      */
     public function store(Request $request)
     {
-        $nome = $request->input('nome');
-        $id_usuario = auth()->user()->id;
+        $nome = $request->input('name');
+        $email = $request->input('email');
+        $perfil_acesso = $request->input('perfil_acesso');
+        $password = $request->input('password');
 
         $form = [
-            'nome' => $nome, 
-            'id_usuario'=>$id_usuario
-        ];
-        Versao::inserir($form);
-        return redirect()->action('VersaoController@index');
+            'name' => $nome ,
+            'email' => $email,
+            'perfil_acesso'=>$perfil_acesso,
+            'password' => Hash::make($password)
+        ]; 
+
+        User::inserir($form);
+
+        return redirect()->action('UsuarioController@index');
     }
 
     /**
@@ -61,11 +76,7 @@ class VersaoController extends Controller
      */
     public function show($id)
     {
-        // faz a consulta 
-        $versao = Versao::find($id);
-        //if(!isEmpty($versao)){
-            return view('paginas.cadastros.versao', compact('versao'));
-        //}
+        //
     }
 
     /**

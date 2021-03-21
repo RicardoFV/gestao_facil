@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-6">
                     <h1>
-                        <a href="{{ route('register') }}" class="badge badge-light">Usuário</a>
+                        <a href="{{ route('users.index') }}" class="badge badge-light">Usuário</a>
                     </h1>
                 </div>
         

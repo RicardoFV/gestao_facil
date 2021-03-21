@@ -18,4 +18,7 @@ class Tratamento extends Model
     public static function listar(){
         return self::all();
     }
+    public static function inserir(array $dados){
+        self::create($dados);
+    }
 }

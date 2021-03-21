@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Sistema;
+use App\{Sistema, Versao};
 
 class SistemaController extends Controller
 {
@@ -19,8 +19,12 @@ class SistemaController extends Controller
      */
     public function index()
     {
-        $sistemas = Sistema::listar();
-        return view('paginas.cadastros.sistema', ['sistemas'=>$sistemas]);
+        $versoes = Versao::listar();
+        $sistemas = Sistema::listarVersaoSistema();
+        return view('paginas.cadastros.sistema', [
+            'sistemas'=>$sistemas, 
+            'versoes' =>$versoes,
+            ]);
     }
 
     /**
@@ -41,7 +45,20 @@ class SistemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nome = $request->input('nome');
+        $descricao = $request->input('descricao');
+        $id_versao = $request->input('id_versao');
+        $id_usuario = auth()->user()->id;
+
+        $form = [
+            'nome' => $nome,
+            'descricao'=>$descricao,
+            'id_usuario'=>$id_usuario,
+            'id_versao'=>$id_versao
+        ];
+        Sistema::inserir($form);
+
+        return redirect()->action('SistemaController@index');
     }
 
     /**
