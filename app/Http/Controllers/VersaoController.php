@@ -21,7 +21,7 @@ class VersaoController extends Controller
     public function index()
     {
         $versoes = Versao::listar();
-        return view('paginas.cadastros.versao', compact('versoes'));
+        return view('paginas.listas.versao_lista', compact('versoes'));
     }
 
     /**
@@ -31,7 +31,8 @@ class VersaoController extends Controller
      */
     public function create()
     {
-        //
+        //chama a tela de cadastro
+        return view('paginas.cadastros.versao');
     }
 
     /**
@@ -50,7 +51,8 @@ class VersaoController extends Controller
             'id_usuario'=>$id_usuario
         ];
         Versao::inserir($form);
-        return redirect()->action('VersaoController@index');
+        return redirect()->action('VersaoController@index')
+            ->with('mensagem', 'Versão cadastrada com sucesso!');
     }
 
     /**
@@ -61,11 +63,7 @@ class VersaoController extends Controller
      */
     public function show($id)
     {
-        // faz a consulta 
-        $versao = Versao::find($id);
-        //if(!isEmpty($versao)){
-            return view('paginas.cadastros.versao', compact('versao'));
-        //}
+        
     }
 
     /**
@@ -76,7 +74,13 @@ class VersaoController extends Controller
      */
     public function edit($id)
     {
-        //
+        // faz a consulta 
+        $versao = Versao::find($id);
+        if(!empty($versao)){
+            return view('paginas.alteracoes.versao_altera', compact('versao'));
+        }else{
+            return redirect()->back()->with('erro', 'Versão não encontrada!');
+        }
     }
 
     /**
@@ -87,8 +91,21 @@ class VersaoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        $versao = Versao::find($id);
+        if(!empty($versao)){
+            $versao->id = $id;
+            $versao->nome =$request->input('nome');
+            $versao->id_usuario= auth()->user()->id;
+
+            Versao::atualizar($versao);
+            return redirect()->action('VersaoController@index')
+            ->with('mensagem', 'Versão Atualizada com sucesso!');
+        }else{
+            return redirect()->back()->with('erro', 'Erro ao atualizar a Versão!');
+        }
+
+        
     }
 
     /**
@@ -99,6 +116,19 @@ class VersaoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $versao = Versao::find($id);
+        if(!empty($versao)){
+            $sistema = Versao::consultarSistemaPorVersao($versao->id);
+            if(!empty($sistema)){
+                return redirect()->back()->with('erro', 'Versão não pode ser removida');
+            }else{
+                Versao::deletar($versao->id);
+                return redirect()->action('VersaoController@index')
+                    ->with('mensagem', 'Versão Excluída com sucesso!');
+            }
+        }else {
+            return redirect()->back()->with('erro', 'Versão não encontrada!');
+        }
+         
     }
 }

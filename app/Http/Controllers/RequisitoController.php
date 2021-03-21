@@ -19,7 +19,7 @@ class RequisitoController extends Controller
     public function index()
     {
         $requisitos = Requisito::listar();
-        return view('paginas.cadastros.requisito', compact('requisitos'));
+        return view('paginas.listas.requisito_lista', compact('requisitos'));
     }
 
     /**
@@ -29,7 +29,7 @@ class RequisitoController extends Controller
      */
     public function create()
     {
-        
+        return view('paginas.cadastros.requisito');
     }
 
     /**

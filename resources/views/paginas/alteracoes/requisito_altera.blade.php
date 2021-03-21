@@ -9,9 +9,13 @@
         </div>
         <div class="form-row col-sm-12">
             <div class="form-group col-sm-6 d-flex inline mt-3">
-                <a href="{{route('requirements.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
+                <input type="text" class="form-control col-sm-4 mr-1 ml-2" placeholder="Digite seu nome" />
+                <button type="submit" class="btn btn-primary col-4 btn-sm mr-1">Consultor</button>
             </div>
-            
+            <div class="form-group col-sm-6 d-flex inline mt-3">
+                <button class="btn btn-primary col-sm-4 btn-sm mr-1">Novo</button>
+                <button type="submit" class="btn btn-danger col-4 btn-sm mr-1">Deletar</button>
+            </div>
         </div>
 
         <hr />
@@ -25,7 +29,7 @@
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" value="{{ old('id') }}" type="text" class="form-control" readonly/>
+                        <input id="id" type="text" class="form-control" readonly/>
 
                     </div>
                 </div>
@@ -74,6 +78,35 @@
             </form>
         </div>
 
+        <!-- criação da tabela  -->
+        <div class="container">
+            <table class="table table-hover table-sm">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Tipo Requisito</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach($requisitos as $requisito)
+                        <tr>
+                            <td>{{$requisito->id }}</td>
+                            <td>{{$requisito->nome }}</td>
+                            <td>{{$requisito->tipo_requisito }}</td>
+                            <td>{{$requisito->descricao }}</td>
+                            <td>
+                                <a href="">Editar</a>
+                                <a href="">Excluir</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+
+            </table>
+        </div>
     </div>
 </div>
 

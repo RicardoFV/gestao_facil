@@ -26,4 +26,6 @@ class Sistema extends Model
         self::create($dados);
     }
 
+   
+
 }
