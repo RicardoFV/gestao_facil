@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Validator;
 class UsuarioController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     use RegistersUsers;
     /**
      * Display a listing of the resource.
