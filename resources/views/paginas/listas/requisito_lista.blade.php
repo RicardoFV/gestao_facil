@@ -14,6 +14,12 @@
             
         </div>
 
+        <!-- mensagem de Sucesso-->
+        @include('mensagens.sucesso') 
+
+        <!-- mensagem de erro-->
+            @include('mensagens.erro')
+
         <hr />
 
         <!-- criação da tabela  -->

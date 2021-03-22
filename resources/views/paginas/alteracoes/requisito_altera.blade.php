@@ -7,7 +7,7 @@
         <div class="card-header">
             <h1>Requisito</h1>
         </div>
-        <div class="form-row col-sm-12">
+        <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <input type="text" class="form-control col-sm-4 mr-1 ml-2" placeholder="Digite seu nome" />
                 <button type="submit" class="btn btn-primary col-4 btn-sm mr-1">Consultor</button>

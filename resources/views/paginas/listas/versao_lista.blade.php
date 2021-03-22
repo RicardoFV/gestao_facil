@@ -8,7 +8,7 @@
         <div class="card-header">
             <h1>Versão</h1>
         </div>
-        <div class="form-row col-sm-12">
+        <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('versions.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>

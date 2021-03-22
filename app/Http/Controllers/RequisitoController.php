@@ -52,8 +52,9 @@ class RequisitoController extends Controller
             'id_usuario'=>$id_usuario
         ];
         Requisito::inserir($form);
-        
-        return redirect()->action('RequisitoController@index');
+         
+        return redirect()->action('RequisitoController@index')
+          ->with('mensagem', 'Requisito cadastrada com sucesso!');
     }
 
     /**
