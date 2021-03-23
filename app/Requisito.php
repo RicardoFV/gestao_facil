@@ -22,4 +22,8 @@ class Requisito extends Model
         self::create($dados);
     }
 
+    public static function atualizar(Requisito $requisito){
+        $requisito->push();
+    }
+
 }

@@ -76,7 +76,13 @@ class RequisitoController extends Controller
      */
     public function edit($id)
     {
-        // 
+        // faz a consulta 
+        $requisito = Requisito::find($id);
+        if(!empty($requisito)){
+            return view('paginas.alteracoes.requisito_altera', compact('requisito'));
+        }else{
+            return redirect()->back()->with('erro', 'Requisito não encontrada!');
+        }  
     }
 
     /**
@@ -88,7 +94,20 @@ class RequisitoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $requisito = Requisito::find($id);
+        if(!empty($requisito)){
+            $requisito->id = $id;
+            $requisito->nome =$request->input('nome');
+            $requisito->tipo_requisito =$request->input('tipo_requisito');
+            $requisito->descricao =$request->input('descricao');
+            $requisito->id_usuario= auth()->user()->id;
+
+            Requisito::atualizar($requisito);
+            return redirect()->action('RequisitoController@index')
+            ->with('mensagem', 'Requisito Atualizada com sucesso!');
+        }else{
+            return redirect()->back()->with('erro', 'Erro ao atualizar a Requisito!');
+        }
     }
 
     /**

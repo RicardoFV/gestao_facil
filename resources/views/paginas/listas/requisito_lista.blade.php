@@ -7,7 +7,7 @@
         <div class="card-header">
             <h1>Requisito</h1>
         </div>
-        <div class="form-row col-sm-12">
+        <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('requirements.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
@@ -42,8 +42,22 @@
                             <td>{{$requisito->tipo_requisito }}</td>
                             <td>{{$requisito->descricao }}</td>
                             <td>
-                                <a href="">Editar</a>
-                                <a href="">Excluir</a>
+                            
+                                <a href="{{ action('RequisitoController@edit', $requisito->id)}}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                
+                                <form method="post" action="{{route('requirements.destroy',$requisito->id )}}"
+                                    onclick="deletar('{{ action("RequisitoController@destroy", $requisito->id) }}', 'Versao');">
+                                        @csrf
+                                        <!-- colocando o segundo metodo para ser executad -->
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">
+                                                <!-- ou inves do nome excluir , coloco um icone -->
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                </form>
+                                
                             </td>
                         </tr>
                     @endforeach

@@ -16,14 +16,13 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <script src="{{ asset('js/script.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <!-- Styles -->
-     <!-- arquivo CSS -->
+     
+    
      <link rel="stylesheet" type="text/css" href="<?php echo asset('css/estilo.css') ?>">
+     
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
 </head>
