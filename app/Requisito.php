@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Requisito extends Model
 {
@@ -24,6 +25,14 @@ class Requisito extends Model
 
     public static function atualizar(Requisito $requisito){
         $requisito->push();
+    }
+
+    public static function deletar($id){
+        return self::destroy($id);
+    }
+
+    public static function consultarTratamentoPorRequisito($id){
+        return DB::select('select * from tratamentos where id_requisito ='.$id);   
     }
 
 }

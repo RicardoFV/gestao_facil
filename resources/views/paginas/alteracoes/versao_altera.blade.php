@@ -11,6 +11,9 @@
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('versions.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
+            <div class="form-group col-sm-6 d-flex inline mt-3">
+                <a href="{{route('versions.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
+            </div>
         </div>
 
         <hr />

@@ -36,6 +36,14 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach($requisitos as $requisito)
+                    <?php
+                        // valida o que foi recebido e muda os nomes
+                        if($requisito->tipo_requisito === 'funcional'){
+                            $requisito->tipo_requisito = 'Funcional';
+                        }else if($requisito->tipo_requisito === 'nao_funcional'){
+                            $requisito->tipo_requisito = 'Não Funcional';
+                        }             
+                    ?>
                         <tr>
                             <td>{{$requisito->id }}</td>
                             <td>{{$requisito->nome }}</td>
@@ -48,7 +56,7 @@
                                 </a>
                                 
                                 <form method="post" action="{{route('requirements.destroy',$requisito->id )}}"
-                                    onclick="deletar('{{ action("RequisitoController@destroy", $requisito->id) }}', 'Versao');">
+                                    onclick="deletar('{{ action("RequisitoController@destroy", $requisito->id) }}', 'Requisito');">
                                         @csrf
                                         <!-- colocando o segundo metodo para ser executad -->
                                             @method('DELETE')

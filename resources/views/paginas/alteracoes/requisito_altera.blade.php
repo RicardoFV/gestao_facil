@@ -11,15 +11,18 @@
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{route('requirements.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>     
+            <div class="form-group col-sm-6 d-flex inline mt-3">
+                <a href="{{route('requirements.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
+            </div>
         </div>
 
         <hr />
 
         <div class="card-body">
 
-            <form method="POST" action="{{ route('requirements.store') }}">
+            <form method="POST" action="{{route('requirements.update', $requisito->id)}}">
                 @csrf
-
+                @method('PUT')
                 <div class="form-group row">
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
@@ -49,8 +52,8 @@
                     <div class="col-md-6">
                         
                         <select name="tipo_requisito" id="tipo_requisito" class="form-control">
-                            <option value="funcional">Funcional</option>
-                            <option value="nao_funcional">Não Funcional</option>
+                            <option value="funcional" {{ ($requisito->tipo_requisito == 'funcional')? 'selected': ''}}>Funcional</option>
+                            <option value="nao_funcional" {{ ($requisito->tipo_requisito == 'nao_funcional')? 'selected': ''}}>Não Funcional</option>
                         </select>
                     </div>
                 </div>
@@ -59,7 +62,9 @@
                     <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
 
                     <div class="col-md-6">
-                        <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" value="{{$requisito->descricao}}" cols="30" rows="3"></textarea>
+                        <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
+                            {{$requisito->descricao}}
+                        </textarea>
                     </div>
                 </div>
 

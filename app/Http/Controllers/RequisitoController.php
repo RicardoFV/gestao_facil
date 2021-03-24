@@ -54,7 +54,7 @@ class RequisitoController extends Controller
         Requisito::inserir($form);
          
         return redirect()->action('RequisitoController@index')
-          ->with('mensagem', 'Requisito cadastrada com sucesso!');
+          ->with('mensagem', 'Requisito cadastrado com sucesso!');
     }
 
     /**
@@ -81,7 +81,7 @@ class RequisitoController extends Controller
         if(!empty($requisito)){
             return view('paginas.alteracoes.requisito_altera', compact('requisito'));
         }else{
-            return redirect()->back()->with('erro', 'Requisito não encontrada!');
+            return redirect()->back()->with('erro', 'Requisito não encontrado!');
         }  
     }
 
@@ -104,7 +104,7 @@ class RequisitoController extends Controller
 
             Requisito::atualizar($requisito);
             return redirect()->action('RequisitoController@index')
-            ->with('mensagem', 'Requisito Atualizada com sucesso!');
+            ->with('mensagem', 'Requisito Atualizado com sucesso!');
         }else{
             return redirect()->back()->with('erro', 'Erro ao atualizar a Requisito!');
         }
@@ -117,7 +117,19 @@ class RequisitoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        $requisito = Requisito::find($id);
+        if(!empty($requisito)){
+            $tratamento = Requisito::consultarTratamentoPorRequisito($requisito->id);
+            if(!empty($tratamento)){
+                return redirect()->back()->with('erro', 'Requisito não pode ser removida');
+            }else{
+                Requisito::deletar($requisito->id);
+                return redirect()->action('RequisitoController@index')
+                    ->with('mensagem', 'Requisito Excluído com sucesso!');
+            }
+        }else {
+            return redirect()->back()->with('erro', 'Requisito não encontrado!');
+        }
     }
 }
