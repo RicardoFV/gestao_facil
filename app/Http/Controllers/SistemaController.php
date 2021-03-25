@@ -19,12 +19,8 @@ class SistemaController extends Controller
      */
     public function index()
     {
-        $versoes = Versao::listar();
         $sistemas = Sistema::listarVersaoSistema();
-        return view('paginas.cadastros.sistema', [
-            'sistemas'=>$sistemas, 
-            'versoes' =>$versoes,
-            ]);
+        return view('paginas.listas.sistema_lista', ['sistemas'=>$sistemas]);
     }
 
     /**
@@ -34,7 +30,8 @@ class SistemaController extends Controller
      */
     public function create()
     {
-        //
+        $versoes = Versao::listar();
+        return view('paginas.cadastros.sistema' ,compact('versoes'));
     }
 
     /**
@@ -58,7 +55,8 @@ class SistemaController extends Controller
         ];
         Sistema::inserir($form);
 
-        return redirect()->action('SistemaController@index');
+        return redirect()->action('SistemaController@index')
+          ->with('mensagem', 'Sistema cadastrado com sucesso!');
     }
 
     /**

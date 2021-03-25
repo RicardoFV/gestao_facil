@@ -63,7 +63,13 @@ class VersaoController extends Controller
      */
     public function show($id)
     {
-        
+        // faz a consulta 
+        $versao = Versao::find($id);
+        if(!empty($versao)){
+            return view('paginas.decisoes.apagar_versao', compact('versao'));
+        }else{
+            return redirect()->back()->with('erro', 'Versão não encontrada!');
+        }
     }
 
     /**

@@ -42,18 +42,10 @@
                             <a href="{{ action('VersaoController@edit', $versao->id)}}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
-                            
-                            <form method="post" action="{{route('versions.destroy',$versao->id )}}"
-                                onclick="deletar('{{ action("VersaoController@destroy", $versao->id) }}', 'Versao');">
-                                    @csrf
-                                    <!-- colocando o segundo metodo para ser executad -->
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">
-                                            <!-- ou inves do nome excluir , coloco um icone -->
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                            </form>
-                            
+
+                            <a href="{{ action('VersaoController@show', $versao->id)}}" class="btn btn-danger btn-sm">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

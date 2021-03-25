@@ -65,7 +65,13 @@ class RequisitoController extends Controller
      */
     public function show($id)
     {
-        //
+        // faz a consulta 
+        $requisito = Requisito::find($id);
+        if(!empty($requisito)){
+            return view('paginas.decisoes.apagar_requisito', compact('requisito'));
+        }else{
+            return redirect()->back()->with('erro', 'Requisito não encontrado!');
+        }  
     }
 
     /**

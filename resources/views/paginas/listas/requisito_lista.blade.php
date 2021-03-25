@@ -55,16 +55,9 @@
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
                                 
-                                <form method="post" action="{{route('requirements.destroy',$requisito->id )}}"
-                                    onclick="deletar('{{ action("RequisitoController@destroy", $requisito->id) }}', 'Requisito');">
-                                        @csrf
-                                        <!-- colocando o segundo metodo para ser executad -->
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm">
-                                                <!-- ou inves do nome excluir , coloco um icone -->
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                </form>
+                                <a href="{{ action('RequisitoController@show', $requisito->id)}}" class="btn btn-danger btn-sm">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
                                 
                             </td>
                         </tr>

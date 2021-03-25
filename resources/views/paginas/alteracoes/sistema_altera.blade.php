@@ -17,14 +17,14 @@
         <hr />
 
         <div class="card-body">
-            <form method="POST" action="{{ route('systems.store') }}">
+            <form method="POST" action="{{ route('systems.update', $sistema->id) }}">
                 @csrf
 
                 <div class="form-group row">
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" type="text" class="form-control" readonly>
+                        <input id="id" type="text" class="form-control" value="{{$sistema->id}}" readonly>
                     </div>
                 </div>
 
@@ -32,7 +32,7 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" required autocomplete="nome" autofocus>
+                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{$sistema->nome}}" required autocomplete="nome" autofocus>
 
                         @error('nome')
                             <span class="invalid-feedback" role="alert">
@@ -67,14 +67,16 @@
                     <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
 
                     <div class="col-md-6">
-                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3"></textarea>
+                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
+                            {{$sistema->descricao}}
+                        </textarea>
                     </div>
                 </div>
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-block btn-success">
-                            {{ __('Cadastrar') }}
+                            {{ __('Atualizar') }}
                         </button>
                     </div>
                 </div>
