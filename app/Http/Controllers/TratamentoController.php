@@ -19,7 +19,7 @@ class TratamentoController extends Controller
     public function index()
     {
         $tratamentos = Tratamento::listar();
-        return view('paginas.cadastros.tratamento')->with('tratamentos', $tratamentos);
+        return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
     }
 
     /**
@@ -29,7 +29,7 @@ class TratamentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('paginas.cadastros.tratamento');
     }
 
     /**

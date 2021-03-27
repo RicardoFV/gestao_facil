@@ -49,7 +49,8 @@ class RequisitoController extends Controller
             'nome' => $nome, 
             'tipo_requisito'=> $tipo_requisito,
             'descricao'=>$descricao,
-            'id_usuario'=>$id_usuario
+            'id_usuario'=>$id_usuario,
+            'excluido'=> 1
         ];
         Requisito::inserir($form);
          
@@ -112,7 +113,7 @@ class RequisitoController extends Controller
             return redirect()->action('RequisitoController@index')
             ->with('mensagem', 'Requisito Atualizado com sucesso!');
         }else{
-            return redirect()->back()->with('erro', 'Erro ao atualizar a Requisito!');
+            return redirect()->back()->with('erro', 'Erro ao atualizar o Requisito!');
         }
     }
 
@@ -130,7 +131,8 @@ class RequisitoController extends Controller
             if(!empty($tratamento)){
                 return redirect()->back()->with('erro', 'Requisito não pode ser removida');
             }else{
-                Requisito::deletar($requisito->id);
+                $requisito->excluido = 0;
+                Requisito::deletar($requisito);
                 return redirect()->action('RequisitoController@index')
                     ->with('mensagem', 'Requisito Excluído com sucesso!');
             }

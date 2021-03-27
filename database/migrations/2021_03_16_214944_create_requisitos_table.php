@@ -17,6 +17,7 @@ class CreateRequisitosTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('descricao');
+            $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->enum('tipo_requisito', ['funcional', 'nao_funcional']);
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');

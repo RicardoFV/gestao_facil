@@ -19,6 +19,7 @@ class CreateSistemasTable extends Migration
             //$table->string('caminho_imagem');
             //$table->string('nome_imagem');
             $table->string('descricao');
+            $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_versao')->unsigned();

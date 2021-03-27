@@ -16,6 +16,7 @@ class CreateVersaosTable extends Migration
         Schema::create('versaos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
+            $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();

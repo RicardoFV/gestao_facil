@@ -64,7 +64,8 @@ class UsuarioController extends Controller
             'name' => $nome ,
             'email' => $email,
             'perfil_acesso'=>$perfil_acesso,
-            'password' => Hash::make($password)
+            'password' => Hash::make($password),
+            'excluido' => 1
         ]; 
 
         User::inserir($form);

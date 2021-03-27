@@ -13,7 +13,8 @@ class Tratamento extends Model
         'id_usuario_responsavel',  
         'id_usuario',
         'id_requisito',
-        'id_sistema'
+        'id_sistema',
+        'excluido'
     ];
     public static function listar(){
         return self::all();

@@ -51,7 +51,8 @@ class SistemaController extends Controller
             'nome' => $nome,
             'descricao'=>$descricao,
             'id_usuario'=>$id_usuario,
-            'id_versao'=>$id_versao
+            'id_versao'=>$id_versao,
+            'excluido'=> 1
         ];
         Sistema::inserir($form);
 
@@ -67,7 +68,13 @@ class SistemaController extends Controller
      */
     public function show($id)
     {
-        //
+        // faz a consulta 
+        $sistema = Sistema::find($id);
+        if(!empty($sistema)){
+            return view('paginas.decisoes.apagar_sistema', compact('sistema'));
+        }else{
+            return redirect()->back()->with('erro', 'Sistema não encontrado!');
+        }  
     }
 
     /**
@@ -97,7 +104,20 @@ class SistemaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sistema = Sistema::find($id);
+        if(!empty($sistema)){
+            $sistema->id = $id;
+            $sistema->nome =$request->input('nome');
+            $sistema->descricao =$request->input('descricao');
+            $sistema->id_usuario= auth()->user()->id;
+            $sistema->id_versao= $request->input('id_versao');
+
+            Sistema::atualizar($sistema);
+            return redirect()->action('SistemaController@index')
+            ->with('mensagem', 'Sistema Atualizado com sucesso!');
+        }else{
+            return redirect()->back()->with('erro', 'Erro ao atualizar o Sistema!');
+        }
     }
 
     /**
@@ -108,6 +128,19 @@ class SistemaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sistema = Sistema::find($id);
+        if(!empty($sistema)){
+            $tratamento = Sistema::consultarTratamentoPorsistema($sistema->id);
+            if(!empty($tratamento)){
+                return redirect()->back()->with('erro', 'Sistema não pode ser removida');
+            }else{
+                $sistema->excluido = 0;
+                Sistema::deletar($sistema);
+                return redirect()->action('SistemaController@index')
+                    ->with('mensagem', 'Sistema Excluído com sucesso!');
+            }
+        }else {
+            return redirect()->back()->with('erro', 'Sistema não encontrado!');
+        }
     }
 }

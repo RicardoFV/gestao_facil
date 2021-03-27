@@ -12,11 +12,12 @@ class Requisito extends Model
         'nome',
         'descricao',
         'tipo_requisito',
-        'id_usuario'
+        'id_usuario',
+        'excluido'
     ];
 
     public static function listar(){
-        return self::all();
+        return DB::select('select * from requisitos where excluido = 1  ');
     }
 
     public static function inserir(array $dados){
@@ -27,8 +28,8 @@ class Requisito extends Model
         $requisito->push();
     }
 
-    public static function deletar($id){
-        return self::destroy($id);
+    public static function deletar(Requisito $requisito){
+        $requisito->push();
     }
 
     public static function consultarTratamentoPorRequisito($id){

@@ -48,7 +48,8 @@ class VersaoController extends Controller
 
         $form = [
             'nome' => $nome, 
-            'id_usuario'=>$id_usuario
+            'id_usuario'=>$id_usuario,
+            'excluido'=> 1
         ];
         Versao::inserir($form);
         return redirect()->action('VersaoController@index')
@@ -128,7 +129,9 @@ class VersaoController extends Controller
             if(!empty($sistema)){
                 return redirect()->back()->with('erro', 'Versão não pode ser removida');
             }else{
-                Versao::deletar($versao->id);
+                // coloca como excluido 
+                $versao->excluido = 0;
+                Versao::deletar($versao);
                 return redirect()->action('VersaoController@index')
                     ->with('mensagem', 'Versão Excluída com sucesso!');
             }

@@ -17,6 +17,7 @@ class CreateTratamentosTable extends Migration
             $table->increments('id');
             $table->string('descricao');
             $table->date('dt_entrega');
+            $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->enum('situacao', ['nao_iniciado', 'em_andamento', 'parado', 'concluido']);
             $table->integer('id_usuario_responsavel')->unsigned();
             $table->foreign('id_usuario_responsavel')->references('id')->on('users');
