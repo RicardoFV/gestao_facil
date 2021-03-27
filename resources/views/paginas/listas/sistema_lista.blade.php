@@ -39,11 +39,11 @@
                     <td>{{$sistema->nome_sistema }}</td>
                     <td>{{$sistema->nome_versao }}</td>
                     <td>
-                        <a href="{{ action('SistemaController@edit', $sistema->id)}}" class="btn btn-primary btn-sm">
+                        <a href="{{ action('SistemaController@edit', $sistema->id_sistema)}}" class="btn btn-primary btn-sm">
                             <i class="fas fa-external-link-alt"></i>
                         </a>
                         
-                        <a href="{{ action('SistemaController@show', $sistema->id)}}" class="btn btn-danger btn-sm">
+                        <a href="{{ action('SistemaController@show', $sistema->id_sistema)}}" class="btn btn-danger btn-sm">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>

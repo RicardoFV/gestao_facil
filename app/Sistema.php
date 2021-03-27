@@ -18,7 +18,7 @@ class Sistema extends Model
     ];
     // feito uma uniao de tabela com o intuito de trazer melhor as informaçoes 
     public static function listarVersaoSistema(){
-        return DB::select('select v.id as id, s.id as id_sistema, v.nome as nome_versao , s.nome as nome_sistema from versaos v inner join sistemas s 
+        return DB::select('select v.id as id, s.id as id_sistema, v.nome as nome_versao , s.nome as nome_sistema, s.descricao as descricao from versaos v inner join sistemas s 
         on v.id = s.id_versao');
     }
 

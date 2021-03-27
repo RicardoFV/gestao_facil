@@ -8,6 +8,10 @@
             <h1>Sistema</h1>
         </div>
         <div class="form-row col-sm-12 justify-content-center">
+    
+            <div class="form-group col-sm-6 d-flex inline mt-3">
+                <a href="{{route('systems.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
+            </div>     
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{route('systems.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
             </div>
@@ -48,7 +52,7 @@
                     <div class="col-md-6">
                         <select name="id_versao" id="id_versao" class="form-control">
                             @foreach($versoes as $versao)
-                            <option value="{{$versao->id}}">{{$versao->nome}}</option>
+                                <option value="{{ $sistema->id_versao }}" {{ ($sistema->id_versao === $versao->id)? 'selected': ''}}>{{$versao->nome}}</option>
                             @endforeach
                         </select>         
                     </div>
@@ -67,7 +71,7 @@
                     <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
 
                     <div class="col-md-6">
-                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
+                        <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
                             {{$sistema->descricao}}
                         </textarea>
                     </div>

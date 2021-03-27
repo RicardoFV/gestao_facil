@@ -78,7 +78,14 @@ class SistemaController extends Controller
      */
     public function edit($id)
     {
-        //
+         // faz a consulta 
+         $sistema  = Sistema::find($id);
+         if(!empty($sistema)){
+            $versoes = Versao::listar();
+            return view('paginas.alteracoes.sistema_altera', compact('sistema','versoes' ));
+         }else{
+             return redirect()->back()->with('erro', 'Sistema não encontrada!');
+         }
     }
 
     /**
