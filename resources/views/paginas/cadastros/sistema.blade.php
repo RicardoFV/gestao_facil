@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <select name="id_versao" id="id_versao" class="form-control">
                             @foreach($versoes as $versao)
-                            <option value="{{$versao->id}}">{{$versao->nome}}</option>
+                                <option value="{{$versao->id}}">{{$versao->nome}}</option>
                             @endforeach
                         </select>         
                     </div>

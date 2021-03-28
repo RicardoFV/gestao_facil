@@ -28,14 +28,35 @@
                 <thead class="text-center">
                     <tr>
                         <th scope="col">Codigo</th>
-                        <th scope="col">Nome</th>
+                        <th scope="col">Descrição</th>
                         <th scope="col">Sistema</th>
                         <th scope="col">Requisito</th>
                         <th scope="col">Responsável</th>
+                        <th scope="col">Situação</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
-
+                <tbody class="text-center">
+                    @foreach($tratamentos as $tratamento)
+                        <tr>
+                            <td>{{$tratamento->id }}</td>
+                            <td>{{$tratamento->descricao }}</td>
+                            <td>{{$tratamento->nome_sistema }}</td>
+                            <td>{{$tratamento->nome_requisito }}</td>
+                            <td>{{$tratamento->nome_usuario }}</td>
+                            <td>{{$tratamento->situacao }}</td>
+                            <td>
+                                <a href="{{ action('TratamentoController@edit', $tratamento->id)}}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                
+                                <a href="{{ action('TratamentoController@show', $tratamento->id)}}" class="btn btn-danger btn-sm">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>

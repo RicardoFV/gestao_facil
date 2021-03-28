@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tratamento extends Model
 {
@@ -17,7 +18,24 @@ class Tratamento extends Model
         'excluido'
     ];
     public static function listar(){
-        return self::all();
+        return DB::select(
+            'select 
+            tra.id , tra.situacao, tra.descricao,
+            sis.id as id_sistema, sis.nome as nome_sistema,
+            res.id as id_requisito , res.nome as nome_requisito,
+            usuario.id as id_usuario , usuario.name as nome_usuario
+            from 
+            tratamentos  tra inner join sistemas sis
+            on tra.id_sistema = sis.id
+            
+            inner join requisitos res
+            on tra.id_requisito = res.id
+            
+            inner join users usuario
+            on tra.id_usuario_responsavel = usuario.id
+            
+            where tra.excluido = 1'
+        );
     }
     public static function inserir(array $dados){
         self::create($dados);

@@ -123,11 +123,13 @@ class VersaoController extends Controller
      */
     public function destroy($id)
     {
+        
         $versao = Versao::find($id);
         if(!empty($versao)){
             $sistema = Versao::consultarSistemaPorVersao($versao->id);
             if(!empty($sistema)){
-                return redirect()->back()->with('erro', 'Versão não pode ser removida');
+                return redirect()->action('VersaoController@index')
+                    ->with('erro', 'Versão não pode ser removida');
             }else{
                 // coloca como excluido 
                 $versao->excluido = 0;

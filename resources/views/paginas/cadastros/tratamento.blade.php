@@ -29,11 +29,21 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="dt_entrega" class="col-md-4 col-form-label text-md-right">{{ __('Data De Entrega') }}</label>
+
+                    <div class="col-md-6">
+                        <input id="dt_entrega" name="dt_entrega" type="date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="id_sistema" class="col-md-4 col-form-label text-md-right">{{ __('Sistema') }}</label>
 
                     <div class="col-md-6">
                         <select name="id_sistema" id="id_sistema" class="form-control">
-                            <option value="">Sistema 1</option>
+                            @foreach($sistemas as $sistema)
+                                <option value="{{$sistema->id_sistema}}">{{$sistema->nome_sistema}}</option>
+                            @endforeach
                         </select>
 
                     </div>
@@ -45,8 +55,9 @@
                     <div class="col-md-6">
                         
                         <select name="id_requisito" id="id_requisito" class="form-control">
-                            <option value="">Requisito 1</option>
-                            <option value="">Requisito 2</option>
+                            @foreach($requisitos as $requisito)
+                                <option value="{{$requisito->id}}">{{$requisito->nome}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -69,7 +80,9 @@
 
                     <div class="col-md-6">
                         <select name="id_usuario_responsavel" id="id_sistema" class="form-control">
-                            <option value="">usuario 1</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ ($user->id == Auth::user()->id)? 'selected': ''}}>{{$user->name}}</option>
+                            @endforeach
                         </select>
 
                     </div>

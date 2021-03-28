@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tratamento;
+use App\{Tratamento, Requisito, Sistema, User};
 
 class TratamentoController extends Controller
 {
@@ -29,7 +29,11 @@ class TratamentoController extends Controller
      */
     public function create()
     {
-        return view('paginas.cadastros.tratamento');
+        $sistemas = Sistema::listarVersaoSistema();
+        $requisitos = Requisito::listar();
+        $users = User::listar();
+
+        return view('paginas.cadastros.tratamento', compact('sistemas','requisitos', 'users'));
     }
 
     /**
@@ -40,7 +44,28 @@ class TratamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $descricao = $request->input('descricao');
+        $dt_entrega = $request->input('dt_entrega');
+        $situacao = $request->input('situacao');
+        $id_usuario_responsavel = $request->input('id_usuario_responsavel');
+        $id_requisito = $request->input('id_requisito');
+        $id_sistema = $request->input('id_sistema');
+        $id_usuario = auth()->user()->id;
+
+        $form = [
+            'descricao' => $descricao,
+            'dt_entrega'=>$dt_entrega,
+            'situacao'=>$situacao,
+            'id_usuario_responsavel'=>$id_usuario_responsavel,
+            'id_requisito'=>$id_requisito,
+            'id_usuario'=>$id_usuario,
+            'id_sistema'=>$id_sistema,
+            'excluido'=> 1
+        ];
+        Tratamento::inserir($form);
+
+        return redirect()->action('TratamentoController@index')
+          ->with('mensagem', 'Tratamento cadastrado com sucesso!');
     }
 
     /**

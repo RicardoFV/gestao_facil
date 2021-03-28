@@ -129,7 +129,8 @@ class RequisitoController extends Controller
         if(!empty($requisito)){
             $tratamento = Requisito::consultarTratamentoPorRequisito($requisito->id);
             if(!empty($tratamento)){
-                return redirect()->back()->with('erro', 'Requisito não pode ser removida');
+                return redirect()->action('RequisitoController@index')
+                    ->with('erro', 'Requisito não pode ser removido');
             }else{
                 $requisito->excluido = 0;
                 Requisito::deletar($requisito);

@@ -132,7 +132,8 @@ class SistemaController extends Controller
         if(!empty($sistema)){
             $tratamento = Sistema::consultarTratamentoPorsistema($sistema->id);
             if(!empty($tratamento)){
-                return redirect()->back()->with('erro', 'Sistema não pode ser removida');
+                return redirect()->action('SistemaController@index')
+                    ->with('erro', 'Sistema não pode ser removido');
             }else{
                 $sistema->excluido = 0;
                 Sistema::deletar($sistema);
