@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Tratamento extends Model
 {
+    // campos que serao usados para cadastro
     protected $fillable =[
         'descricao',
         'dt_entrega',   
@@ -17,6 +18,8 @@ class Tratamento extends Model
         'id_sistema',
         'excluido'
     ];
+    // realiza a consulta dos dados do tratamento, sistema , requisito e usuario , 
+    // vai trazer as informaçoes de tratamento excluido igual a 1 , (ativo)
     public static function listar(){
         return DB::select(
             'select 
@@ -37,7 +40,19 @@ class Tratamento extends Model
             where tra.excluido = 1'
         );
     }
+
+    // cadastrar as informaçoes
     public static function inserir(array $dados){
         self::create($dados);
     }
+
+    // atualiza as informaçoes
+    public static function atualizar(Tratamento $tratamento){
+        $tratamento->push();
+    }
+     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
+    public static function deletar(Tratamento $tratamento){
+        return $tratamento->push();
+    }
+
 }

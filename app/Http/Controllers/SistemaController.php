@@ -17,6 +17,7 @@ class SistemaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
         $sistemas = Sistema::listarVersaoSistema();
@@ -28,6 +29,7 @@ class SistemaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // clama a tela de inicia o cadastro
     public function create()
     {
         $versoes = Versao::listar();
@@ -40,6 +42,7 @@ class SistemaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+     // cadastra as informaçoes 
     public function store(Request $request)
     {
         $nome = $request->input('nome');
@@ -66,6 +69,7 @@ class SistemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes 
     public function show($id)
     {
         // faz a consulta 
@@ -83,6 +87,7 @@ class SistemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes para a edição
     public function edit($id)
     {
          // faz a consulta 
@@ -102,6 +107,7 @@ class SistemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // atualiza as informaçoes
     public function update(Request $request, $id)
     {
         $sistema = Sistema::find($id);
@@ -126,6 +132,7 @@ class SistemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     // realiza a deleçao logica
     public function destroy($id)
     {
         $sistema = Sistema::find($id);

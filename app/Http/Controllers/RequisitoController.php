@@ -16,6 +16,8 @@ class RequisitoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
         $requisitos = Requisito::listar();
@@ -27,6 +29,7 @@ class RequisitoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // clama a tela de inicia o cadastro
     public function create()
     {
         return view('paginas.cadastros.requisito');
@@ -38,6 +41,8 @@ class RequisitoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     // cadastra as informaçoes 
     public function store(Request $request)
     {
         $nome = $request->input('nome');
@@ -64,6 +69,7 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes 
     public function show($id)
     {
         // faz a consulta 
@@ -81,6 +87,7 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes para a edição
     public function edit($id)
     {
         // faz a consulta 
@@ -99,6 +106,7 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // atualiza as informaçoes 
     public function update(Request $request, $id)
     {
         $requisito = Requisito::find($id);
@@ -123,6 +131,7 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // realiza a deleçao logica
     public function destroy($id)
     { 
         $requisito = Requisito::find($id);

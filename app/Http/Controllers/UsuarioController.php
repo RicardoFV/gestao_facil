@@ -23,6 +23,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
         $users = User::listar();
@@ -42,6 +43,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // clama a tela de inicia o cadastro
     public function create()
     {
         //
@@ -53,6 +55,7 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // cadastra as informaçoes
     public function store(Request $request)
     {
         $nome = $request->input('name');
@@ -79,6 +82,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes 
     public function show($id)
     {
         //
@@ -90,6 +94,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes para a edição
     public function edit($id)
     {
         //
@@ -102,6 +107,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // atualiza as informaçoes
     public function update(Request $request, $id)
     {
         //
@@ -113,6 +119,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     // realiza a deleçao logica
     public function destroy($id)
     {
         //

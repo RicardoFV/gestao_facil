@@ -20,14 +20,23 @@
 
         <div class="card-body">
 
-            <form method="POST" action="">
+            <form method="POST" action="{{route('treatments.update', $tratamento->id)}}">
                 @csrf
+                @method('PUT')
 
                 <div class="form-group row">
                     <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id" type="text" class="form-control" readonly>
+                        <input id="id" type="text" value="{{$tratamento->id}}" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="dt_entrega" class="col-md-4 col-form-label text-md-right">{{ __('Data De Entrega') }}</label>
+
+                    <div class="col-md-6">
+                        <input id="dt_entrega" value="{{$tratamento->dt_entrega}}" name="dt_entrega" type="date" class="form-control">
                     </div>
                 </div>
 
@@ -36,7 +45,9 @@
 
                     <div class="col-md-6">
                         <select name="id_sistema" id="id_sistema" class="form-control">
-                            <option value="">Sistema 1</option>
+                            @foreach($sistemas as $sistema)
+                                <option value="{{ $sistema->id_sistema }}" {{ ($tratamento->id_sistema === $sistema->id_sistema)? 'selected': ''}}>{{$sistema->nome_sistema}}</option>
+                            @endforeach
                         </select>
 
                     </div>
@@ -48,8 +59,9 @@
                     <div class="col-md-6">
                         
                         <select name="id_requisito" id="id_requisito" class="form-control">
-                            <option value="">Requisito 1</option>
-                            <option value="">Requisito 2</option>
+                            @foreach($requisitos as $requisito)
+                                <option value="{{ $requisito->id }}" {{ ($tratamento->id_requisito === $requisito->id)? 'selected': ''}}>{{$requisito->nome}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -59,10 +71,10 @@
 
                     <div class="col-md-6">
                         <select name="situacao" id="situacao" class="form-control">
-                            <option value="nao_iniciado">Não Iniciada</option>
-                            <option value="em_andamento">Em Andamento</option>
-                            <option value="parado">Parado</option>
-                            <option value="concluido">Concluído</option>
+                            <option value="nao_iniciado" {{ ($tratamento->situacao == 'nao_iniciado')? 'selected': ''}}>Não Iniciada</option>
+                            <option value="em_andamento" {{ ($tratamento->situacao == 'em_andamento')? 'selected': ''}}>Em Andamento</option>
+                            <option value="parado" {{ ($tratamento->situacao == 'parado')? 'selected': ''}}>Parado</option>
+                            <option value="concluido" {{ ($tratamento->situacao == 'concluido')? 'selected': ''}}>Concluído</option>
                         </select>
 
                     </div>
@@ -72,7 +84,9 @@
 
                     <div class="col-md-6">
                         <select name="id_usuario_responsavel" id="id_sistema" class="form-control">
-                            <option value="">usuario 1</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ ($tratamento->id_usuario === $user->id)? 'selected': ''}}>{{$user->name}}</option>
+                            @endforeach
                         </select>
 
                     </div>
@@ -82,7 +96,9 @@
                     <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
 
                     <div class="col-md-6">
-                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3"></textarea>
+                        <textarea name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
+                            {{$tratamento->descricao}}
+                        </textarea>
                     </div>
                 </div>
 
@@ -91,7 +107,7 @@
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-block btn-success">
-                            {{ __('Cadastrar') }}
+                            {{ __('Atualizar') }}
                         </button>
                     </div>
                 </div>

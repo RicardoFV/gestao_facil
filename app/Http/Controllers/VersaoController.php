@@ -29,6 +29,7 @@ class VersaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // lista as informaçoes , colcoando na tela inicial
     public function create()
     {
         //chama a tela de cadastro
@@ -41,6 +42,7 @@ class VersaoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // cadastra as informaçoes
     public function store(Request $request)
     {
         $nome = $request->input('nome');
@@ -62,6 +64,7 @@ class VersaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes
     public function show($id)
     {
         // faz a consulta 
@@ -79,6 +82,7 @@ class VersaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // consulta as informaçoes para a edição
     public function edit($id)
     {
         // faz a consulta 
@@ -97,6 +101,7 @@ class VersaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // atualiza as informaçoes
     public function update(Request $request, $id)
     {   
         $versao = Versao::find($id);
@@ -121,6 +126,7 @@ class VersaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // realiza a deleçao logica
     public function destroy($id)
     {
         

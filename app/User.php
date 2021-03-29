@@ -16,6 +16,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+    // campos que serao usados para cadastro
     protected $fillable = [
         'name', 'email', 'password', 'perfil_acesso', 'excluido'
     ];
@@ -41,10 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar(){
         return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where excluido = 1 ');
     }
-    
+    // cadastrar as informaçoes
     public static function inserir(array $dados){
         self::create($dados);
     }
