@@ -50,4 +50,13 @@ class User extends Authenticatable
     public static function inserir(array $dados){
         self::create($dados);
     }
+    // atualiza as informaçoes
+    public static function atualizar(User $usuario){
+        $usuario->push();
+    }
+
+     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
+    public static function deletar(User $usuario){
+        return $usuario->push();
+    }
 }
