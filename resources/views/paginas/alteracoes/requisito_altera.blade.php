@@ -38,7 +38,7 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control  name="nome" value="{{$requisito->nome}}" >
+                    <input id="nome" type="text" class="form-control"  name="nome" value="{{$requisito->nome}}" >
                     </div>
                 </div>
 

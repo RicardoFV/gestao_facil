@@ -33,7 +33,7 @@ class UsuarioFormRequest extends FormRequest
     public function messages() {
         return [
              // mensagens em português
-            'name.required'=> 'O campo :attribute é obrigatório',
+            'name.required'=> 'O campo nome é obrigatório',
             'name.min'=> 'O campo :attribute não permite menos de 10 caracteres',
             'nome.max' => 'O campo :attribute não permite mais de 255 caracteres',
             'email.required'=> 'O campo :attribute é obrigatório',
