@@ -16,6 +16,9 @@
 
         <hr />
 
+        <!-- colocando a mensagem de erro -->
+        @include('mensagens.erro_cadastro')
+
         <div class="card-body">
 
             <form method="POST" action="{{ route('requirements.store') }}">
@@ -34,13 +37,7 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" required autocomplete="nome" autofocus>
-
-                        @error('nome')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" autocomplete="nome" autofocus>
                     </div>
                 </div>
 

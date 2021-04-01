@@ -10,7 +10,6 @@ class Sistema extends Model
     // campos que serao usados para cadastro
     protected $fillable = [
         'nome',
-        'imagem',
        // 'caminho_imagem',
         //'nome_imagem',
         'descricao',

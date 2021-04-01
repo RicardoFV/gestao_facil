@@ -18,6 +18,9 @@
 
         <hr />
 
+        <!-- colocando a mensagem de erro -->
+        @include('mensagens.erro_cadastro') 
+     
         <div class="card-body">
 
             <form method="post" action="{{route('versions.update', $versao->id)}}">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Requisito;
+use App\Http\Requests\RequisitoFormRequest;
 
 class RequisitoController extends Controller
 {
@@ -43,7 +44,7 @@ class RequisitoController extends Controller
      */
 
      // cadastra as informaçoes 
-    public function store(Request $request)
+    public function store(RequisitoFormRequest $request)
     {
         $nome = $request->input('nome');
         $tipo_requisito = $request->input('tipo_requisito');
@@ -107,7 +108,7 @@ class RequisitoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes 
-    public function update(Request $request, $id)
+    public function update(RequisitoFormRequest $request, $id)
     {
         $requisito = Requisito::find($id);
         if(!empty($requisito)){

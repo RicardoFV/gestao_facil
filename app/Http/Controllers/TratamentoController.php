@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Tratamento, Requisito, Sistema, User};
+use App\Http\Requests\TratamentoFormReuest;
 
 class TratamentoController extends Controller
 {
@@ -45,7 +46,7 @@ class TratamentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // cadastra as informaçoes
-    public function store(Request $request)
+    public function store(TratamentoFormReuest $request)
     {
         $descricao = $request->input('descricao');
         $dt_entrega = $request->input('dt_entrega');
@@ -123,7 +124,7 @@ class TratamentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(Request $request, $id)
+    public function update(TratamentoFormReuest $request, $id)
     {
         $tratamento = Tratamento::find($id);
         if(!empty($tratamento)){

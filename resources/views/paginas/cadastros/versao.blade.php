@@ -14,6 +14,8 @@
         </div>
 
         <hr />
+        <!-- colocando a mensagem de erro -->
+        @include('mensagens.erro_cadastro')
 
         <div class="card-body">
 
@@ -25,7 +27,6 @@
 
                     <div class="col-md-6">
                         <input id="id" type="text"  value="{{ old('id') }}" class="form-control" readonly/>
-
                     </div>
                 </div>
 
@@ -33,13 +34,7 @@
                     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome">
-
-                        @error('nome')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <input id="nome" type="text" class="form-control name="nome" value="{{ old('nome') }}" >
                     </div>
                 </div>
                 

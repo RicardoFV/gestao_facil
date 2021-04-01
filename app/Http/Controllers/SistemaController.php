@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Sistema, Versao};
+use App\Http\Requests\SistemaFormRequest;
 
 class SistemaController extends Controller
 {
@@ -43,7 +44,7 @@ class SistemaController extends Controller
      * @return \Illuminate\Http\Response
      */
      // cadastra as informaçoes 
-    public function store(Request $request)
+    public function store(SistemaFormRequest $request)
     {
         $nome = $request->input('nome');
         $descricao = $request->input('descricao');
@@ -108,7 +109,7 @@ class SistemaController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(Request $request, $id)
+    public function update(SistemaFormRequest $request, $id)
     {
         $sistema = Sistema::find($id);
         if(!empty($sistema)){

@@ -19,6 +19,8 @@
         </div>
 
         <hr />
+        <!-- colocando a mensagem de erro -->
+        @include('mensagens.erro_cadastro')
 
         <div class="card-body">
             <form method="POST" action="{{ route('systems.update', $sistema->id) }}">

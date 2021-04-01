@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UsuarioFormRequest;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -29,6 +29,7 @@ class UsuarioController extends Controller
         $users = User::listar();
         return view('paginas.listas.usuario_lista', compact('users'));
     }
+    /*
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -37,6 +38,7 @@ class UsuarioController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+    */
 
     /**
      * Show the form for creating a new resource.
@@ -57,7 +59,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     // cadastra as informaçoes
-    public function store(Request $request)
+    public function store(UsuarioFormRequest $request)
     {
         $nome = $request->input('name');
         $email = $request->input('email');
@@ -121,7 +123,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(Request $request, $id)
+    public function update(UsuarioFormRequest $request, $id)
     {
         $usuario = User::find($id);
         if(!empty($usuario)){

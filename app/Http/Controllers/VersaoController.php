@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Versao;
+use App\Http\Requests\VersaoFormRequest;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -43,7 +44,7 @@ class VersaoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // cadastra as informaçoes
-    public function store(Request $request)
+    public function store(VersaoFormRequest $request)
     {
         $nome = $request->input('nome');
         $id_usuario = auth()->user()->id;
@@ -102,7 +103,7 @@ class VersaoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(Request $request, $id)
+    public function update(VersaoFormRequest $request, $id)
     {   
         $versao = Versao::find($id);
         if(!empty($versao)){
