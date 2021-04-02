@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -29,6 +30,7 @@ class UsuarioController extends Controller
         $users = User::listar();
         return view('paginas.listas.usuario_lista', compact('users'));
     }
+    
     /*
     protected function validator(array $data)
     {
@@ -123,7 +125,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(UsuarioFormRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $usuario = User::find($id);
         if(!empty($usuario)){
