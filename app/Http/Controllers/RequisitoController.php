@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Requisito;
 use App\Http\Requests\RequisitoFormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RequisitoController extends Controller
 {
@@ -33,7 +34,12 @@ class RequisitoController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        return view('paginas.cadastros.requisito');
+        if(Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user() )){
+            return view('paginas.cadastros.requisito');
+        }else{
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+        
     }
 
     /**
