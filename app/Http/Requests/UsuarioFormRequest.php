@@ -26,7 +26,8 @@ class UsuarioFormRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string','min:10', 'max:255'],
-            'email' => ['required',Rule::unique('users')->ignore('id')],
+            'email' => [
+            'required',Rule::unique('users')->ignore('id'),'max:255'],
             'password' => ['required', 'string', 'min:8','max:16', 'confirmed'],
         ];
     }
@@ -39,6 +40,7 @@ class UsuarioFormRequest extends FormRequest
             'nome.max' => 'O campo :attribute não permite mais de 255 caracteres',
             'email.required'=> 'O campo :attribute é obrigatório',
             'email.unique' => 'O campo :attribute não pode ser repetido',
+            'email.max' => 'O campo :attribute não permite mais de 255 caracteres',
             'password.required'=> 'O campo :attribute é obrigatório',
             'password.min'=> 'A senha tem que ser pelo menos 8 digitos',
             'password.max' => 'O campo :attribute não permite mais de 16 caracteres',
