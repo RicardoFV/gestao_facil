@@ -19,7 +19,7 @@ class RequisitoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     // lista as informaçoes , colcoando na tela inicial
+    // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
         $requisitos = Requisito::listar();
@@ -34,12 +34,11 @@ class RequisitoController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        if(Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user() )){
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             return view('paginas.cadastros.requisito');
-        }else{
+        } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
-        
     }
 
     /**
@@ -49,25 +48,30 @@ class RequisitoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     // cadastra as informaçoes 
+    // cadastra as informaçoes 
     public function store(RequisitoFormRequest $request)
     {
-        $nome = $request->input('nome');
-        $tipo_requisito = $request->input('tipo_requisito');
-        $descricao = $request->input('descricao');
-        $id_usuario = auth()->user()->id;
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
 
-        $form = [
-            'nome' => $nome, 
-            'tipo_requisito'=> $tipo_requisito,
-            'descricao'=>$descricao,
-            'id_usuario'=>$id_usuario,
-            'excluido'=> 1
-        ];
-        Requisito::inserir($form);
-         
-        return redirect()->action('RequisitoController@index')
-          ->with('mensagem', 'Requisito cadastrado com sucesso!');
+            $nome = $request->input('nome');
+            $tipo_requisito = $request->input('tipo_requisito');
+            $descricao = $request->input('descricao');
+            $id_usuario = auth()->user()->id;
+
+            $form = [
+                'nome' => $nome,
+                'tipo_requisito' => $tipo_requisito,
+                'descricao' => $descricao,
+                'id_usuario' => $id_usuario,
+                'excluido' => 1
+            ];
+            Requisito::inserir($form);
+
+            return redirect()->action('RequisitoController@index')
+                ->with('mensagem', 'Requisito cadastrado com sucesso!');
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
@@ -79,13 +83,17 @@ class RequisitoController extends Controller
     // consulta as informaçoes 
     public function show($id)
     {
-        // faz a consulta 
-        $requisito = Requisito::find($id);
-        if(!empty($requisito)){
-            return view('paginas.decisoes.apagar_requisito', compact('requisito'));
-        }else{
-            return redirect()->back()->with('erro', 'Requisito não encontrado!');
-        }  
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // faz a consulta 
+            $requisito = Requisito::find($id);
+            if (!empty($requisito)) {
+                return view('paginas.decisoes.apagar_requisito', compact('requisito'));
+            } else {
+                return redirect()->back()->with('erro', 'Requisito não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
@@ -97,13 +105,17 @@ class RequisitoController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
-        // faz a consulta 
-        $requisito = Requisito::find($id);
-        if(!empty($requisito)){
-            return view('paginas.alteracoes.requisito_altera', compact('requisito'));
-        }else{
-            return redirect()->back()->with('erro', 'Requisito não encontrado!');
-        }  
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // faz a consulta 
+            $requisito = Requisito::find($id);
+            if (!empty($requisito)) {
+                return view('paginas.alteracoes.requisito_altera', compact('requisito'));
+            } else {
+                return redirect()->back()->with('erro', 'Requisito não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
@@ -116,19 +128,23 @@ class RequisitoController extends Controller
     // atualiza as informaçoes 
     public function update(RequisitoFormRequest $request, $id)
     {
-        $requisito = Requisito::find($id);
-        if(!empty($requisito)){
-            $requisito->id = $id;
-            $requisito->nome =$request->input('nome');
-            $requisito->tipo_requisito =$request->input('tipo_requisito');
-            $requisito->descricao =$request->input('descricao');
-            $requisito->id_usuario= auth()->user()->id;
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            $requisito = Requisito::find($id);
+            if (!empty($requisito)) {
+                $requisito->id = $id;
+                $requisito->nome = $request->input('nome');
+                $requisito->tipo_requisito = $request->input('tipo_requisito');
+                $requisito->descricao = $request->input('descricao');
+                $requisito->id_usuario = auth()->user()->id;
 
-            Requisito::atualizar($requisito);
-            return redirect()->action('RequisitoController@index')
-            ->with('mensagem', 'Requisito Atualizado com sucesso!');
-        }else{
-            return redirect()->back()->with('erro', 'Erro ao atualizar o Requisito!');
+                Requisito::atualizar($requisito);
+                return redirect()->action('RequisitoController@index')
+                    ->with('mensagem', 'Requisito Atualizado com sucesso!');
+            } else {
+                return redirect()->back()->with('erro', 'Erro ao atualizar o Requisito!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 
@@ -140,21 +156,26 @@ class RequisitoController extends Controller
      */
     // realiza a deleçao logica
     public function destroy($id)
-    { 
-        $requisito = Requisito::find($id);
-        if(!empty($requisito)){
-            $tratamento = Requisito::consultarTratamentoPorRequisito($requisito->id);
-            if(!empty($tratamento)){
-                return redirect()->action('RequisitoController@index')
-                    ->with('erro', 'Requisito não pode ser removido');
-            }else{
-                $requisito->excluido = 0;
-                Requisito::deletar($requisito);
-                return redirect()->action('RequisitoController@index')
-                    ->with('mensagem', 'Requisito Excluído com sucesso!');
+    {
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+
+            $requisito = Requisito::find($id);
+            if (!empty($requisito)) {
+                $tratamento = Requisito::consultarTratamentoPorRequisito($requisito->id);
+                if (!empty($tratamento)) {
+                    return redirect()->action('RequisitoController@index')
+                        ->with('erro', 'Requisito não pode ser removido');
+                } else {
+                    $requisito->excluido = 0;
+                    Requisito::deletar($requisito);
+                    return redirect()->action('RequisitoController@index')
+                        ->with('mensagem', 'Requisito Excluído com sucesso!');
+                }
+            } else {
+                return redirect()->back()->with('erro', 'Requisito não encontrado!');
             }
-        }else {
-            return redirect()->back()->with('erro', 'Requisito não encontrado!');
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 }

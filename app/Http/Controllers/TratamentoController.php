@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Tratamento, Requisito, Sistema, User};
 use App\Http\Requests\TratamentoFormReuest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class TratamentoController extends Controller
 {
@@ -36,7 +38,7 @@ class TratamentoController extends Controller
         $requisitos = Requisito::listar();
         $users = User::listar();
 
-        return view('paginas.cadastros.tratamento', compact('sistemas','requisitos', 'users'));
+        return view('paginas.cadastros.tratamento', compact('sistemas', 'requisitos', 'users'));
     }
 
     /**
@@ -58,18 +60,18 @@ class TratamentoController extends Controller
 
         $form = [
             'descricao' => $descricao,
-            'dt_entrega'=>$dt_entrega,
-            'situacao'=>$situacao,
-            'id_usuario_responsavel'=>$id_usuario_responsavel,
-            'id_requisito'=>$id_requisito,
-            'id_usuario'=>$id_usuario,
-            'id_sistema'=>$id_sistema,
-            'excluido'=> 1
+            'dt_entrega' => $dt_entrega,
+            'situacao' => $situacao,
+            'id_usuario_responsavel' => $id_usuario_responsavel,
+            'id_requisito' => $id_requisito,
+            'id_usuario' => $id_usuario,
+            'id_sistema' => $id_sistema,
+            'excluido' => 1
         ];
         Tratamento::inserir($form);
 
         return redirect()->action('TratamentoController@index')
-          ->with('mensagem', 'Tratamento cadastrado com sucesso!');
+            ->with('mensagem', 'Tratamento cadastrado com sucesso!');
     }
 
     /**
@@ -81,12 +83,16 @@ class TratamentoController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
-        // faz a consulta 
-        $tratamento  = Tratamento::find($id);
-        if(!empty($tratamento)){
-           return view('paginas.decisoes.apagar_tratamento', compact('tratamento' ));
-        }else{
-            return redirect()->back()->with('erro', 'Tratamento não encontrada!');
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // faz a consulta 
+            $tratamento  = Tratamento::find($id);
+            if (!empty($tratamento)) {
+                return view('paginas.decisoes.apagar_tratamento', compact('tratamento'));
+            } else {
+                return redirect()->back()->with('erro', 'Tratamento não encontrada!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 
@@ -101,17 +107,17 @@ class TratamentoController extends Controller
     {
         // faz a consulta 
         $tratamento  = Tratamento::find($id);
-        if(!empty($tratamento)){
+        if (!empty($tratamento)) {
             $sistemas = Sistema::listarVersaoSistema();
             $requisitos = Requisito::listar();
             $users = User::listar();
-           return view('paginas.alteracoes.tratamento_altera', compact(
-               'tratamento',
-               'sistemas', 
-               'requisitos',
-               'users'
+            return view('paginas.alteracoes.tratamento_altera', compact(
+                'tratamento',
+                'sistemas',
+                'requisitos',
+                'users'
             ));
-        }else{
+        } else {
             return redirect()->back()->with('erro', 'Tratamento não encontrada!');
         }
     }
@@ -127,20 +133,20 @@ class TratamentoController extends Controller
     public function update(TratamentoFormReuest $request, $id)
     {
         $tratamento = Tratamento::find($id);
-        if(!empty($tratamento)){
+        if (!empty($tratamento)) {
             $tratamento->id = $id;
-            $tratamento->descricao =$request->input('descricao');
-            $tratamento->dt_entrega =$request->input('dt_entrega');
-            $tratamento->situacao =$request->input('situacao');
-            $tratamento->id_usuario_responsavel =$request->input('id_usuario_responsavel');
-            $tratamento->id_requisito =$request->input('id_requisito');
-            $tratamento->id_sistema =$request->input('id_sistema');
-            $tratamento->id_usuario= auth()->user()->id;
+            $tratamento->descricao = $request->input('descricao');
+            $tratamento->dt_entrega = $request->input('dt_entrega');
+            $tratamento->situacao = $request->input('situacao');
+            $tratamento->id_usuario_responsavel = $request->input('id_usuario_responsavel');
+            $tratamento->id_requisito = $request->input('id_requisito');
+            $tratamento->id_sistema = $request->input('id_sistema');
+            $tratamento->id_usuario = auth()->user()->id;
 
             Tratamento::atualizar($tratamento);
             return redirect()->action('TratamentoController@index')
                 ->with('mensagem', 'Tratamento Atualizado com sucesso!');
-        }else{
+        } else {
             return redirect()->action('TratamentoController@index')
                 ->with('erro', 'Erro ao atualizar o Tratamento !');
         }
@@ -152,19 +158,22 @@ class TratamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     // realiza a deleçao logica
+    // realiza a deleçao logica
     public function destroy($id)
     {
-        $tratamento = Tratamento::find($id);
-        if(!empty($tratamento)){
-           
-            $tratamento->excluido = 0;
-            Tratamento::deletar($tratamento);
-            return redirect()->action('SistemaController@index')
-                ->with('mensagem', 'Tratamento Excluído com sucesso!');
-            
-        }else {
-            return redirect()->back()->with('erro', 'Sistema não encontrado!');
+        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            $tratamento = Tratamento::find($id);
+            if (!empty($tratamento)) {
+
+                $tratamento->excluido = 0;
+                Tratamento::deletar($tratamento);
+                return redirect()->action('SistemaController@index')
+                    ->with('mensagem', 'Tratamento Excluído com sucesso!');
+            } else {
+                return redirect()->back()->with('erro', 'Sistema não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 }
