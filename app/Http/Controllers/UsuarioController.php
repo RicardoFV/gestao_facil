@@ -64,6 +64,11 @@ class UsuarioController extends Controller
         }
     }
 
+    public function telaSenha()
+    {
+        return view('paginas.alteracoes.alterar_senha');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -165,6 +170,23 @@ class UsuarioController extends Controller
             }
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
+        }
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $usuario = User::find($id);
+
+        print_r($usuario);
+        dd();
+        if (!empty($usuario)) {
+            $usuario->password = Hash::make($request->input('password'));
+            User::atualizar($usuario);
+            return redirect()->action('HomeController@index')
+                ->with('mensagem', 'Senha Atualizado com sucesso!');
+        } else {
+            return redirect()->action('HomeController@index')
+                ->with('erro', 'Erro ao atualizar a Senha!');
         }
     }
 

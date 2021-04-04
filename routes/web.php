@@ -19,18 +19,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
-    'requirements'=> 'RequisitoController',
-    'systems'=> 'SistemaController',
-    'treatments'=> 'TratamentoController',
-    'versions'=> 'VersaoController',
+    'requirements' => 'RequisitoController',
+    'systems' => 'SistemaController',
+    'treatments' => 'TratamentoController',
+    'versions' => 'VersaoController',
     'settings' => 'ConfigController',
     'users' => 'UsuarioController'
 ]);
 
+// rota de auterar a senah de usuario
+Route::get('/usres/updatepassword/tela', 'UsuarioController@telaSenha')->name('tela_senha');
+Route::post('/usres/updatepassword/{id}', 'UsuarioController@updatePassword')->name('update.password');
+
 Auth::routes();
-
-
