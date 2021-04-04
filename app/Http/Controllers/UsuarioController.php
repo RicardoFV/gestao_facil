@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioFormRequest;
+use App\Http\Requests\ValidaSenhaFormRequest;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -173,12 +174,9 @@ class UsuarioController extends Controller
         }
     }
 
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(ValidaSenhaFormRequest $request, $id)
     {
         $usuario = User::find($id);
-
-        print_r($usuario);
-        dd();
         if (!empty($usuario)) {
             $usuario->password = Hash::make($request->input('password'));
             User::atualizar($usuario);
