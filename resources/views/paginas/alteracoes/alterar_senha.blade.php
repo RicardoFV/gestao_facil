@@ -18,7 +18,6 @@
             <form method="POST" action="{{ route('update.password', Auth::user()->id) }}">
                 @csrf
                
-              
                 <div class="form-group row">
                     <label for="password"
                         class="col-md-4 col-form-label text-md-right">{{ __('Nova Senha') }}</label>

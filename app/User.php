@@ -18,7 +18,7 @@ class User extends Authenticatable
      */
     // campos que serao usados para cadastro
     protected $fillable = [
-        'name', 'email', 'password', 'perfil_acesso', 'excluido'
+        'name', 'email', 'password', 'perfil_acesso', 'excluido', 'id_usuario_ressponsavel'
     ];
 
     // excluido 0 - sim 

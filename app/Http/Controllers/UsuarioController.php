@@ -19,7 +19,7 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     use RegistersUsers;
     /**
@@ -84,13 +84,23 @@ class UsuarioController extends Controller
             $email = $request->input('email');
             $perfil_acesso = $request->input('perfil_acesso');
             $password = $request->input('password');
+            // caso seja o primeir cadastro, como nao tem id cadastro , 
+            //ele vai inserir o numero 1 para registro 
+            // pois se tem usuario logado , o primeiro cadastro sera 1
+            if (empty(auth()->user()->id)) {
+                $id_usuario_ressponsavel = 1;
+            } else {
+                //se nao ele vai receber o id do usuario que esta logado , ou seja responsavel
+                $id_usuario_ressponsavel = auth()->user()->id;
+            }
 
             $form = [
                 'name' => $nome,
                 'email' => $email,
                 'perfil_acesso' => $perfil_acesso,
                 'password' => Hash::make($password),
-                'excluido' => 1
+                'excluido' => 1,
+                'id_usuario_ressponsavel' => $id_usuario_ressponsavel
             ];
 
             User::inserir($form);
@@ -162,6 +172,7 @@ class UsuarioController extends Controller
                 $usuario->name = $request->input('name');
                 $usuario->email = $request->input('email');
                 $usuario->perfil_acesso = $request->input('perfil_acesso');
+                $usuario->id_usuario_ressponsavel = auth()->user()->id;
 
                 User::atualizar($usuario);
                 return redirect()->action('UsuarioController@index')
@@ -178,6 +189,7 @@ class UsuarioController extends Controller
     {
         $usuario = User::find($id);
         if (!empty($usuario)) {
+            $usuario->id_usuario_ressponsavel = auth()->user()->id;
             $usuario->password = Hash::make($request->input('password'));
             User::atualizar($usuario);
             return redirect()->action('HomeController@index')
@@ -200,7 +212,7 @@ class UsuarioController extends Controller
         if (Gate::allows('administrador', Auth::user())) {
             $usuario = User::find($id);
             if (!empty($usuario)) {
-
+                $usuario->id_usuario_ressponsavel = auth()->user()->id;
                 $usuario->excluido = 0;
                 User::deletar($usuario);
                 return redirect()->action('UsuarioController@index')

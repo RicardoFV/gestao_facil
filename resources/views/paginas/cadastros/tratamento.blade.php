@@ -69,6 +69,7 @@
 
                     <div class="col-md-6">
                         <select name="situacao" id="situacao" class="form-control">
+                            <option value="novo">Novo</option>
                             <option value="nao_iniciado">Não Iniciada</option>
                             <option value="em_andamento">Em Andamento</option>
                             <option value="parado">Parado</option>

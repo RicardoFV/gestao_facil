@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->integer('excluido');  // excluido 0 - sim  || excluido 1 - nao
-            $table->enum('perfil_acesso', ['administrador','desenvolvedor', 'usuario']);
+            $table->enum('perfil_acesso', ['administrador', 'desenvolvedor', 'usuario']);
+            $table->integer('id_usuario_ressponsavel');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
