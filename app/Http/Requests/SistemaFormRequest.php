@@ -24,20 +24,21 @@ class SistemaFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' =>['required','min:10' ,'max:255'],
-            'descricao' => ['required', 'string','min:10', 'max:400'],
+            'nome' => ['required', 'min:5', 'max:255'],
+            'descricao' => ['required', 'string', 'min:10', 'max:400'],
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
-             // mensagens em português
-             'nome.required' => 'O campo :attribute é obrigatório',
-             'nome.min' => 'O campo :attribute não permite menos de 10 caracteres',
-             'nome.max' => 'O campo :attribute não permite mais de 255 caracteres',
-             'descricao.required' => 'O campo :attribute é obrigatório',
-             'descricao.min' => 'O campo :attribute não permite menos de 10 caracteres',
-             'descricao.max' => 'O campo :attribute não permite mais de 400 caracteres',
+            // mensagens em português
+            'nome.required' => 'O campo :attribute é obrigatório',
+            'nome.min' => 'O campo :attribute não permite menos de 5 caracteres',
+            'nome.max' => 'O campo :attribute não permite mais de 255 caracteres',
+            'descricao.required' => 'O campo :attribute é obrigatório',
+            'descricao.min' => 'O campo :attribute não permite menos de 10 caracteres',
+            'descricao.max' => 'O campo :attribute não permite mais de 400 caracteres',
         ];
     }
 }

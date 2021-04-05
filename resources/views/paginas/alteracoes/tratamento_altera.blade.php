@@ -73,7 +73,7 @@
 
                     <div class="col-md-6">
                         <select name="situacao" id="situacao" class="form-control">
-                            <option value="nao_iniciado" {{ ($tratamento->situacao == 'novo')? 'selected': ''}}>Novo</option>
+                            <option value="novo" {{ ($tratamento->situacao == 'novo')? 'selected': ''}}>Novo</option>
                             <option value="nao_iniciado" {{ ($tratamento->situacao == 'nao_iniciado')? 'selected': ''}}>Não Iniciada</option>
                             <option value="em_andamento" {{ ($tratamento->situacao == 'em_andamento')? 'selected': ''}}>Em Andamento</option>
                             <option value="parado" {{ ($tratamento->situacao == 'parado')? 'selected': ''}}>Parado</option>

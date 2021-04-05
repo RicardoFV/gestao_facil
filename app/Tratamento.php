@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 class Tratamento extends Model
 {
     // campos que serao usados para cadastro
-    protected $fillable =[
+    protected $fillable = [
         'descricao',
-        'dt_entrega',   
+        'dt_entrega',
         'situacao',
-        'id_usuario_responsavel',  
+        'id_usuario_responsavel',
         'id_usuario',
         'id_requisito',
         'id_sistema',
@@ -20,7 +20,8 @@ class Tratamento extends Model
     ];
     // realiza a consulta dos dados do tratamento, sistema , requisito e usuario , 
     // vai trazer as informaçoes de tratamento excluido igual a 1 , (ativo)
-    public static function listar(){
+    public static function listar()
+    {
         return DB::select(
             'select 
             tra.id , tra.situacao, tra.descricao,
@@ -40,19 +41,46 @@ class Tratamento extends Model
             where tra.excluido = 1'
         );
     }
+    // listar concluidos
+    public static function listarConcluidos()
+    {
+        return self::where('situacao', 'concluido')->count();
+    }
+    // listar novos
+    public static function listarNovos()
+    {
+        return self::where('situacao', 'novo')->count();
+    }
+    // listar andamentos
+    public static function listarAndamento()
+    {
+        return self::where('situacao', 'em_andamento')->count();
+    }
+    // listar parados
+    public static function listarParado()
+    {
+        return self::where('situacao', 'parado')->count();
+    }
+    // listar nao inciado
+    public static function listarNaoIniciado()
+    {
+        return self::where('situacao', 'nao_iniciado')->count();
+    }
 
     // cadastrar as informaçoes
-    public static function inserir(array $dados){
+    public static function inserir(array $dados)
+    {
         self::create($dados);
     }
 
     // atualiza as informaçoes
-    public static function atualizar(Tratamento $tratamento){
+    public static function atualizar(Tratamento $tratamento)
+    {
         $tratamento->push();
     }
-     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
-    public static function deletar(Tratamento $tratamento){
+    // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
+    public static function deletar(Tratamento $tratamento)
+    {
         return $tratamento->push();
     }
-
 }

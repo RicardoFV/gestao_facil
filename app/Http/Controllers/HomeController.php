@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\{Tratamento};
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $novo = Tratamento::listarNovos();
+        $nao_iniciado = Tratamento::listarNaoIniciado();
+        $parado = Tratamento::listarParado();
+        $andamento = Tratamento::listarAndamento();
+        $concluido = Tratamento::listarConcluidos();
+        return view('home', compact('novo', 'nao_iniciado', 'parado', 'andamento', 'concluido'));
     }
 }
