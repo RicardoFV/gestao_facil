@@ -1,8 +1,12 @@
 <!-- mensagem de erro-->
 <div class="container">
-    @if(session('erro'))
-    <div class="alert alert-danger">
-        <p>{{session('erro')}}</p>
-    </div>
+    <!-- mensagem de sucesso-->
+    @if (session('erro'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p>{{ session('erro') }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
 </div>

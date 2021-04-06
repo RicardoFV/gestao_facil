@@ -86,11 +86,6 @@
 
         <main class="py-4">
             <div class="container">
-                <!-- mensagem de Sucesso-->
-                @include('mensagens.sucesso')
-
-                <!-- mensagem de erro-->
-                @include('mensagens.erro')
             </div>
             @yield('content')
         </main>

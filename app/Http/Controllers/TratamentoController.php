@@ -26,6 +26,12 @@ class TratamentoController extends Controller
         return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
     }
 
+    public function listarTratamentos($situacao)
+    {
+        $status = Tratamento::listarConsultasExpecificas($situacao);
+        return view('paginas.atividades.ver_tratamento', compact('status'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

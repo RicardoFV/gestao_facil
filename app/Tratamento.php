@@ -41,6 +41,26 @@ class Tratamento extends Model
             where tra.excluido = 1'
         );
     }
+    // consulta que traz os tratamento nos seguintes situacao (novo, nao_iniciado, parado, em_andamento, concluido)
+    public static function listarConsultasExpecificas($situacao)
+    {
+        return DB::table('tratamentos')
+            ->join('sistemas', 'tratamentos.id_sistema', '=', 'sistemas.id')
+            ->join('requisitos', 'tratamentos.id_requisito', '=', 'requisitos.id')
+            ->join('users', 'tratamentos.id_usuario_responsavel', '=', 'users.id')
+            ->select(
+                'tratamentos.id as id_tratamento',
+                'tratamentos.situacao',
+                'tratamentos.descricao',
+                'tratamentos.created_at as dt_inclusao',
+                'sistemas.id as id_sistema',
+                'sistemas.nome as nome_sistema',
+                'requisitos.id as id_requisito',
+                'requisitos.nome as nome_requisito',
+                'users.id as id_usuario',
+                'users.name as nome_usuario_responsavel'
+            )->where('tratamentos.excluido', 1)->where('tratamentos.situacao', $situacao)->get();
+    }
     // listar concluidos
     public static function listarConcluidos()
     {

@@ -36,4 +36,6 @@ Route::resources([
 Route::get('/usres/updatepassword/tela', 'UsuarioController@telaSenha')->name('tela_senha');
 Route::post('/usres/updatepassword/{id}', 'UsuarioController@updatePassword')->name('update.password');
 
+// rota de tratamento, que mostra os tratamentos
+Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
 Auth::routes();

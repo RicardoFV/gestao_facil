@@ -7,9 +7,7 @@
         <div class="card-header">
             <h1>Alterar Senha</h1>
         </div>
-
-        <hr />
-
+        
         <!-- colocando a mensagem de erro -->
         @include('mensagens.erro_cadastro')
 
