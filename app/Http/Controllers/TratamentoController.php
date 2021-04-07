@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Tratamento, Requisito, Sistema, User};
 use App\Http\Requests\TratamentoFormReuest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\{TratamentoService,RequisitoService,SistemaService, UsuarioService};
 
 class TratamentoController extends Controller
 {
@@ -22,13 +22,13 @@ class TratamentoController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        $tratamentos = Tratamento::listar();
+        $tratamentos = TratamentoService::listar();
         return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
     }
 
     public function listarTratamentos($situacao)
     {
-        $status = Tratamento::listarConsultasExpecificas($situacao);
+        $status = TratamentoService::listarConsultasExpecificas($situacao);
         return view('paginas.atividades.ver_tratamento', compact('status'));
     }
 
@@ -40,9 +40,9 @@ class TratamentoController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        $sistemas = Sistema::listarVersaoSistema();
-        $requisitos = Requisito::listar();
-        $users = User::listar();
+        $sistemas = SistemaService::listarVersaoSistema();
+        $requisitos = RequisitoService::listar();
+        $users = UsuarioService::listar();
 
         return view('paginas.cadastros.tratamento', compact('sistemas', 'requisitos', 'users'));
     }
@@ -74,7 +74,7 @@ class TratamentoController extends Controller
             'id_sistema' => $id_sistema,
             'excluido' => 1
         ];
-        Tratamento::inserir($form);
+        TratamentoService::inserir($form);
 
         return redirect()->action('TratamentoController@index')
             ->with('mensagem', 'Tratamento cadastrado com sucesso!');
@@ -91,7 +91,7 @@ class TratamentoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $tratamento  = Tratamento::find($id);
+            $tratamento  = TratamentoService::consultar($id);
             if (!empty($tratamento)) {
                 return view('paginas.decisoes.apagar_tratamento', compact('tratamento'));
             } else {
@@ -112,11 +112,11 @@ class TratamentoController extends Controller
     public function edit($id)
     {
         // faz a consulta 
-        $tratamento  = Tratamento::find($id);
+        $tratamento  = TratamentoService::consultar($id);
         if (!empty($tratamento)) {
-            $sistemas = Sistema::listarVersaoSistema();
-            $requisitos = Requisito::listar();
-            $users = User::listar();
+            $sistemas = SistemaService::listarVersaoSistema();
+            $requisitos = RequisitoService::listar();
+            $users = UsuarioService::listar();
             return view('paginas.alteracoes.tratamento_altera', compact(
                 'tratamento',
                 'sistemas',
@@ -138,7 +138,7 @@ class TratamentoController extends Controller
     // atualiza as informaçoes
     public function update(TratamentoFormReuest $request, $id)
     {
-        $tratamento = Tratamento::find($id);
+        $tratamento = TratamentoService::consultar($id);
         if (!empty($tratamento)) {
             $tratamento->id = $id;
             $tratamento->descricao = $request->input('descricao');
@@ -149,7 +149,7 @@ class TratamentoController extends Controller
             $tratamento->id_sistema = $request->input('id_sistema');
             $tratamento->id_usuario = auth()->user()->id;
 
-            Tratamento::atualizar($tratamento);
+            TratamentoService::atualizar($tratamento);
             return redirect()->action('TratamentoController@index')
                 ->with('mensagem', 'Tratamento Atualizado com sucesso!');
         } else {
@@ -168,11 +168,13 @@ class TratamentoController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $tratamento = Tratamento::find($id);
+            $tratamento = TratamentoService::consultar($id);
             if (!empty($tratamento)) {
 
                 $tratamento->excluido = 0;
-                Tratamento::deletar($tratamento);
+                $tratamento->id_usuario = auth()->user()->id;
+
+                TratamentoService::deletar($tratamento);
                 return redirect()->action('SistemaController@index')
                     ->with('mensagem', 'Tratamento Excluído com sucesso!');
             } else {

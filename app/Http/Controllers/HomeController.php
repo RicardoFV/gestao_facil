@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\{Tratamento};
+use App\Http\Services\TratamentoService;
 
 class HomeController extends Controller
 {
@@ -24,11 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $novo = Tratamento::listarNovos();
-        $nao_iniciado = Tratamento::listarNaoIniciado();
-        $parado = Tratamento::listarParado();
-        $andamento = Tratamento::listarAndamento();
-        $concluido = Tratamento::listarConcluidos();
+        $novo = TratamentoService::listarNovos();
+        $nao_iniciado = TratamentoService::listarNaoIniciado();
+        $parado = TratamentoService::listarParado();
+        $andamento = TratamentoService::listarAndamento();
+        $concluido = TratamentoService::listarConcluidos();
         return view('home', compact('novo', 'nao_iniciado', 'parado', 'andamento', 'concluido'));
     }
 }

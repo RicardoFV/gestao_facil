@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
-use App\Requisito;
 use App\Http\Requests\RequisitoFormRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\RequisitoService;
 
 class RequisitoController extends Controller
 {
@@ -22,7 +22,7 @@ class RequisitoController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        $requisitos = Requisito::listar();
+        $requisitos = RequisitoService::listar();
         return view('paginas.listas.requisito_lista', compact('requisitos'));
     }
 
@@ -65,7 +65,7 @@ class RequisitoController extends Controller
                 'id_usuario' => $id_usuario,
                 'excluido' => 1
             ];
-            Requisito::inserir($form);
+            RequisitoService::inserir($form);
 
             return redirect()->action('RequisitoController@index')
                 ->with('mensagem', 'Requisito cadastrado com sucesso!');
@@ -85,7 +85,7 @@ class RequisitoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $requisito = Requisito::find($id);
+            $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
                 return view('paginas.decisoes.apagar_requisito', compact('requisito'));
             } else {
@@ -107,7 +107,7 @@ class RequisitoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $requisito = Requisito::find($id);
+            $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
                 return view('paginas.alteracoes.requisito_altera', compact('requisito'));
             } else {
@@ -129,7 +129,7 @@ class RequisitoController extends Controller
     public function update(RequisitoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $requisito = Requisito::find($id);
+            $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
                 $requisito->id = $id;
                 $requisito->nome = $request->input('nome');
@@ -137,7 +137,7 @@ class RequisitoController extends Controller
                 $requisito->descricao = $request->input('descricao');
                 $requisito->id_usuario = auth()->user()->id;
 
-                Requisito::atualizar($requisito);
+                RequisitoService::atualizar($requisito);
                 return redirect()->action('RequisitoController@index')
                     ->with('mensagem', 'Requisito Atualizado com sucesso!');
             } else {
@@ -159,15 +159,17 @@ class RequisitoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
 
-            $requisito = Requisito::find($id);
+            $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
-                $tratamento = Requisito::consultarTratamentoPorRequisito($requisito->id);
+                $tratamento = RequisitoService::consultarTratamentoPorRequisito($requisito->id);
                 if (!empty($tratamento)) {
                     return redirect()->action('RequisitoController@index')
                         ->with('erro', 'Requisito não pode ser removido');
                 } else {
                     $requisito->excluido = 0;
-                    Requisito::deletar($requisito);
+                    $requisito->id_usuario = auth()->user()->id;
+                    // faz uma deleçao logica
+                    RequisitoService::deletar($requisito);
                     return redirect()->action('RequisitoController@index')
                         ->with('mensagem', 'Requisito Excluído com sucesso!');
                 }

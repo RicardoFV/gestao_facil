@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\{Sistema, Versao};
 use App\Http\Requests\SistemaFormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\{SistemaService, VersaoService};
 
 class SistemaController extends Controller
 {
@@ -22,7 +22,7 @@ class SistemaController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        $sistemas = Sistema::listarVersaoSistema();
+        $sistemas = SistemaService::listarVersaoSistema();
         return view('paginas.listas.sistema_lista', ['sistemas' => $sistemas]);
     }
 
@@ -35,7 +35,7 @@ class SistemaController extends Controller
     public function create()
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $versoes = Versao::listar();
+            $versoes = VersaoService::listar();
             return view('paginas.cadastros.sistema', compact('versoes'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -64,7 +64,7 @@ class SistemaController extends Controller
                 'id_versao' => $id_versao,
                 'excluido' => 1
             ];
-            Sistema::inserir($form);
+            SistemaService::inserir($form);
 
             return redirect()->action('SistemaController@index')
                 ->with('mensagem', 'Sistema cadastrado com sucesso!');
@@ -84,7 +84,7 @@ class SistemaController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $sistema = Sistema::find($id);
+            $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 return view('paginas.decisoes.apagar_sistema', compact('sistema'));
             } else {
@@ -106,9 +106,9 @@ class SistemaController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $sistema  = Sistema::find($id);
+            $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $versoes = Versao::listar();
+                $versoes = VersaoService::listar();
                 return view('paginas.alteracoes.sistema_altera', compact('sistema', 'versoes'));
             } else {
                 return redirect()->back()->with('erro', 'Sistema não encontrada!');
@@ -129,7 +129,7 @@ class SistemaController extends Controller
     public function update(SistemaFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $sistema = Sistema::find($id);
+            $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 $sistema->id = $id;
                 $sistema->nome = $request->input('nome');
@@ -137,7 +137,7 @@ class SistemaController extends Controller
                 $sistema->id_usuario = auth()->user()->id;
                 $sistema->id_versao = $request->input('id_versao');
 
-                Sistema::atualizar($sistema);
+                SistemaService::atualizar($sistema);
                 return redirect()->action('SistemaController@index')
                     ->with('mensagem', 'Sistema Atualizado com sucesso!');
             } else {
@@ -158,15 +158,16 @@ class SistemaController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $sistema = Sistema::find($id);
+            $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $tratamento = Sistema::consultarTratamentoPorsistema($sistema->id);
+                $tratamento = SistemaService::consultarTratamentoPorsistema($sistema->id);
                 if (!empty($tratamento)) {
                     return redirect()->action('SistemaController@index')
                         ->with('erro', 'Sistema não pode ser removido');
                 } else {
+                    $sistema->id_usuario = auth()->user()->id;
                     $sistema->excluido = 0;
-                    Sistema::deletar($sistema);
+                    SistemaService::deletar($sistema);
                     return redirect()->action('SistemaController@index')
                         ->with('mensagem', 'Sistema Excluído com sucesso!');
                 }

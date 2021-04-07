@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioFormRequest;
 use App\Http\Requests\ValidaSenhaFormRequest;
 use App\Providers\RouteServiceProvider;
-use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\UsuarioService;
 
 class UsuarioController extends Controller
 {
@@ -31,7 +31,7 @@ class UsuarioController extends Controller
     public function index()
     {
         if (Gate::allows('administrador', Auth::user())) {
-            $users = User::listar();
+            $users = UsuarioService::listar();
             return view('paginas.listas.usuario_lista', compact('users'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -103,7 +103,7 @@ class UsuarioController extends Controller
                 'id_usuario_ressponsavel' => $id_usuario_ressponsavel
             ];
 
-            User::inserir($form);
+            UsuarioService::inserir($form);
             return redirect()->action('UsuarioController@index')
                 ->with('mensagem', 'Usuário cadastrado com sucesso!');
         } else {
@@ -122,7 +122,7 @@ class UsuarioController extends Controller
     {
         if (Gate::allows('administrador', Auth::user())) {
             // faz a consulta 
-            $usuario = User::find($id);
+            $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 return view('paginas.decisoes.apagar_usuario', compact('usuario'));
             } else {
@@ -144,7 +144,7 @@ class UsuarioController extends Controller
     {
         if (Gate::allows('administrador', Auth::user())) {
             // faz a consulta 
-            $usuario = User::find($id);
+            $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 return view('paginas.alteracoes.usuario_altera', compact('usuario'));
             } else {
@@ -166,7 +166,7 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         if (Gate::allows('administrador', Auth::user())) {
-            $usuario = User::find($id);
+            $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 $usuario->id = $id;
                 $usuario->name = $request->input('name');
@@ -174,7 +174,7 @@ class UsuarioController extends Controller
                 $usuario->perfil_acesso = $request->input('perfil_acesso');
                 $usuario->id_usuario_ressponsavel = auth()->user()->id;
 
-                User::atualizar($usuario);
+                UsuarioService::atualizar($usuario);
                 return redirect()->action('UsuarioController@index')
                     ->with('mensagem', 'Usuário Atualizado com sucesso!');
             } else {
@@ -187,11 +187,11 @@ class UsuarioController extends Controller
 
     public function updatePassword(ValidaSenhaFormRequest $request, $id)
     {
-        $usuario = User::find($id);
+        $usuario = UsuarioService::consultar($id);
         if (!empty($usuario)) {
             $usuario->id_usuario_ressponsavel = auth()->user()->id;
             $usuario->password = Hash::make($request->input('password'));
-            User::atualizar($usuario);
+            UsuarioService::atualizar($usuario);
             return redirect()->action('HomeController@index')
                 ->with('mensagem', 'Senha Atualizado com sucesso!');
         } else {
@@ -210,11 +210,11 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user())) {
-            $usuario = User::find($id);
+            $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 $usuario->id_usuario_ressponsavel = auth()->user()->id;
                 $usuario->excluido = 0;
-                User::deletar($usuario);
+                UsuarioService::deletar($usuario);
                 return redirect()->action('UsuarioController@index')
                     ->with('mensagem', 'Usuário Excluído com sucesso!');
             } else {

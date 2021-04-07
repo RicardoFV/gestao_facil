@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\{Versao};
 use App\Http\Requests\VersaoFormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\VersaoService;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -23,7 +22,7 @@ class VersaoController extends Controller
      */
     public function index()
     {
-        $versoes = Versao::listar();
+        $versoes = VersaoService::listar();
         return view('paginas.listas.versao_lista', compact('versoes'));
     }
 
@@ -36,12 +35,11 @@ class VersaoController extends Controller
     public function create()
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-        //chama a tela de cadastro
-        return view('paginas.cadastros.versao');
+            //chama a tela de cadastro
+            return view('paginas.cadastros.versao');
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
-        
     }
 
     /**
@@ -62,7 +60,7 @@ class VersaoController extends Controller
                 'id_usuario' => $id_usuario,
                 'excluido' => 1
             ];
-            Versao::inserir($form);
+            VersaoService::inserir($form);
             return redirect()->action('VersaoController@index')
                 ->with('mensagem', 'Versão cadastrada com sucesso!');
         } else {
@@ -81,7 +79,7 @@ class VersaoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $versao = Versao::find($id);
+            $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
                 return view('paginas.decisoes.apagar_versao', compact('versao'));
             } else {
@@ -103,7 +101,7 @@ class VersaoController extends Controller
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // faz a consulta 
-            $versao = Versao::find($id);
+            $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
                 return view('paginas.alteracoes.versao_altera', compact('versao'));
             } else {
@@ -125,13 +123,13 @@ class VersaoController extends Controller
     public function update(VersaoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $versao = Versao::find($id);
+            $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
                 $versao->id = $id;
                 $versao->nome = $request->input('nome');
                 $versao->id_usuario = auth()->user()->id;
 
-                Versao::atualizar($versao);
+                VersaoService::atualizar($versao);
                 return redirect()->action('VersaoController@index')
                     ->with('mensagem', 'Versão Atualizada com sucesso!');
             } else {
@@ -152,16 +150,17 @@ class VersaoController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $versao = Versao::find($id);
+            $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
-                $sistema = Versao::consultarSistemaPorVersao($versao->id);
+                $sistema = VersaoService::consultarSistemaPorVersao($versao->id);
                 if (!empty($sistema)) {
                     return redirect()->action('VersaoController@index')
                         ->with('erro', 'Versão não pode ser removida');
                 } else {
                     // coloca como excluido 
                     $versao->excluido = 0;
-                    Versao::deletar($versao);
+                    $versao->id_usuario = auth()->user()->id;
+                    VersaoService::deletar($versao);
                     return redirect()->action('VersaoController@index')
                         ->with('mensagem', 'Versão Excluída com sucesso!');
                 }
