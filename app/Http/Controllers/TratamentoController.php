@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TratamentoFormReuest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{TratamentoService,RequisitoService,SistemaService, UsuarioService};
+use App\Http\Services\{TratamentoService, RequisitoService, SistemaService, UsuarioService, DescricaoService};
+
 
 class TratamentoController extends Controller
 {
@@ -56,6 +57,7 @@ class TratamentoController extends Controller
     // cadastra as informaçoes
     public function store(TratamentoFormReuest $request)
     {
+        // pega os atributos
         $descricao = $request->input('descricao');
         $dt_entrega = $request->input('dt_entrega');
         $situacao = $request->input('situacao');
@@ -63,9 +65,8 @@ class TratamentoController extends Controller
         $id_requisito = $request->input('id_requisito');
         $id_sistema = $request->input('id_sistema');
         $id_usuario = auth()->user()->id;
-
+        // insere no array
         $form = [
-            'descricao' => $descricao,
             'dt_entrega' => $dt_entrega,
             'situacao' => $situacao,
             'id_usuario_responsavel' => $id_usuario_responsavel,
@@ -74,8 +75,19 @@ class TratamentoController extends Controller
             'id_sistema' => $id_sistema,
             'excluido' => 1
         ];
+        // faz o cadastro 
         TratamentoService::inserir($form);
+        // busca o ultimo id inserido
+        $id_tratamento = TratamentoService::cconsultarUltimoId();
+        // insere o array
+        $form2 = [
+            'descricao' => $descricao,
+            'id_tratamento' => $id_tratamento
+        ];
 
+        // cadastra a descricao
+        DescricaoService::inserir($form2);
+        // retorna a mensagem
         return redirect()->action('TratamentoController@index')
             ->with('mensagem', 'Tratamento cadastrado com sucesso!');
     }
@@ -137,21 +149,39 @@ class TratamentoController extends Controller
      */
     // atualiza as informaçoes
     public function update(TratamentoFormReuest $request, $id)
-    {
+    {   // consulta o tratamento
         $tratamento = TratamentoService::consultar($id);
+        // verifica se nao veio vazio
         if (!empty($tratamento)) {
-            $tratamento->id = $id;
-            $tratamento->descricao = $request->input('descricao');
-            $tratamento->dt_entrega = $request->input('dt_entrega');
-            $tratamento->situacao = $request->input('situacao');
-            $tratamento->id_usuario_responsavel = $request->input('id_usuario_responsavel');
-            $tratamento->id_requisito = $request->input('id_requisito');
-            $tratamento->id_sistema = $request->input('id_sistema');
-            $tratamento->id_usuario = auth()->user()->id;
+            //pesquisa a descricao na tabela descricoes
+            $id_decricao = DescricaoService::consultar($id);
+            // verifica se nao esta vazio
+            if (!empty($id_decricao)) {
+                // recebe os atributos
+                $tratamento->id = $id;
+                $tratamento->dt_entrega = $request->input('dt_entrega');
+                $tratamento->situacao = $request->input('situacao');
+                $tratamento->id_usuario_responsavel = $request->input('id_usuario_responsavel');
+                $tratamento->id_requisito = $request->input('id_requisito');
+                $tratamento->id_sistema = $request->input('id_sistema');
+                $tratamento->id_usuario = auth()->user()->id;
+                // atuaaliza as informaçoes do tratamento
+                TratamentoService::atualizar($tratamento);
+                // insere o array
+                $form2 = [
+                    'descricao' => $request->input('descricao'),
+                    'id_tratamento' => $tratamento->id = $id
+                ];
 
-            TratamentoService::atualizar($tratamento);
-            return redirect()->action('TratamentoController@index')
-                ->with('mensagem', 'Tratamento Atualizado com sucesso!');
+                // cadastra a descricao
+                DescricaoService::inserir($form2);
+                // retorna a mensagem
+                return redirect()->action('TratamentoController@index')
+                    ->with('mensagem', 'Tratamento Atualizado com sucesso!');
+            } else {
+                return redirect()->action('TratamentoController@index')
+                    ->with('erro', 'Erro ao atualizar o Tratamento !');
+            }
         } else {
             return redirect()->action('TratamentoController@index')
                 ->with('erro', 'Erro ao atualizar o Tratamento !');

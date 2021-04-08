@@ -4,15 +4,16 @@ namespace App\Http\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Tratamento;
+
 class TratamentoService
 {
-      // realiza a consulta dos dados do tratamento, sistema , requisito e usuario , 
+    // realiza a consulta dos dados do tratamento, sistema , requisito e usuario , 
     // vai trazer as informaçoes de tratamento excluido igual a 1 , (ativo)
     public static function listar()
     {
         return DB::select(
             'select 
-            tra.id , tra.situacao, tra.descricao,
+            tra.id , tra.situacao, des.descricao,
             sis.id as id_sistema, sis.nome as nome_sistema,
             res.id as id_requisito , res.nome as nome_requisito,
             usuario.id as id_usuario , usuario.name as nome_usuario
@@ -25,9 +26,17 @@ class TratamentoService
             
             inner join users usuario
             on tra.id_usuario_responsavel = usuario.id
+
+            inner join descricoes des
+            on des.id_tratamento = tra.id
             
             where tra.excluido = 1'
         );
+    }
+    // traz o ultimo id 
+    public static function cconsultarUltimoId()
+    {
+        return Tratamento::all()->max('id');
     }
     //consultar por id
     public static function consultar($id)
@@ -42,10 +51,11 @@ class TratamentoService
             ->join('sistemas', 'tratamentos.id_sistema', '=', 'sistemas.id')
             ->join('requisitos', 'tratamentos.id_requisito', '=', 'requisitos.id')
             ->join('users', 'tratamentos.id_usuario_responsavel', '=', 'users.id')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
             ->select(
                 'tratamentos.id as id_tratamento',
                 'tratamentos.situacao',
-                'tratamentos.descricao',
+                'descricoes.descricao',
                 'tratamentos.created_at as dt_inclusao',
                 'sistemas.id as id_sistema',
                 'sistemas.nome as nome_sistema',
@@ -98,4 +108,3 @@ class TratamentoService
         return $tratamento->push();
     }
 }
-

@@ -8,7 +8,6 @@ class Tratamento extends Model
 {
     // campos que serao usados para cadastro
     protected $fillable = [
-        'descricao',
         'dt_entrega',
         'situacao',
         'id_usuario_responsavel',
@@ -17,5 +16,4 @@ class Tratamento extends Model
         'id_sistema',
         'excluido'
     ];
-  
 }
