@@ -68,27 +68,37 @@ class TratamentoService
     // listar concluidos
     public static function listarConcluidos()
     {
-        return Tratamento::where('situacao', 'concluido')->count();
+        return DB::table('tratamentos')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
+            ->where('situacao', 'concluido')->count();
     }
     // listar novos
     public static function listarNovos()
     {
-        return Tratamento::where('situacao', 'novo')->count();
+        return DB::table('tratamentos')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
+            ->where('situacao', 'novo')->count();
     }
     // listar andamentos
     public static function listarAndamento()
     {
-        return Tratamento::where('situacao', 'em_andamento')->count();
+        return DB::table('tratamentos')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
+            ->where('situacao', 'em_andamento')->count();
     }
     // listar parados
     public static function listarParado()
     {
-        return Tratamento::where('situacao', 'parado')->count();
+        return DB::table('tratamentos')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
+            ->where('situacao', 'parado')->count();
     }
     // listar nao inciado
     public static function listarNaoIniciado()
     {
-        return Tratamento::where('situacao', 'nao_iniciado')->count();
+        return DB::table('tratamentos')
+            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
+            ->where('situacao', 'nao_iniciado')->count();
     }
 
     // cadastrar as informaçoes
