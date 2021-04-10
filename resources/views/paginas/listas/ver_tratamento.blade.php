@@ -5,8 +5,14 @@
 <div class="container">
     <div class="card mt-1">
         <div class="card-header">
-            <h1>Meus Tratamentos</h1>
+            <h1>Tratamento</h1>
         </div>
+        <div class="form-row col-sm-12 justify-content-center">
+            <div class="form-group col-sm-6 d-flex inline mt-3">
+                <a href="{{ route('treatments.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
+            </div>    
+        </div>
+        <hr>
         <!-- criação da tabela  -->
         <div class="container">
             <table class="table table-hover table-sm">
@@ -15,7 +21,6 @@
                         <th scope="col">Id. Tratamento</th>
                         <th scope="col">N. Sistema</th>
                         <th scope="col">Dt. Inclusão</th>
-                        <th scope="col">Descriçao</th>
                         <th scope="col">Usuário Resp.</th>
                         <th scope="col">Situação</th>
                         <th scope="col">Ações</th>
@@ -27,11 +32,10 @@
                             <td>{{ $situacao->id_tratamento }}</td>
                             <td>{{ $situacao->nome_sistema }}</td>
                             <td>{{ $situacao->dt_inclusao }}</td>
-                            <td>{{ $situacao->descricao }}</td>
                             <td>{{ $situacao->nome_usuario_responsavel }}</td>
                             <td>{{ $situacao->situacao }}</td>
                             <td>
-                                <a href="" class="btn btn-info btn-sm">
+                                <a href="{{ action('TratamentoController@edit', $situacao->id_tratamento)}}" class="btn btn-primary btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>

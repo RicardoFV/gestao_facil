@@ -13,7 +13,7 @@ class TratamentoService
     {
         return DB::select(
             'select 
-            tra.id , tra.situacao, des.descricao,
+            tra.id , tra.situacao, tra.created_at as dt_inclusao ,
             sis.id as id_sistema, sis.nome as nome_sistema,
             res.id as id_requisito , res.nome as nome_requisito,
             usuario.id as id_usuario , usuario.name as nome_usuario
@@ -26,10 +26,6 @@ class TratamentoService
             
             inner join users usuario
             on tra.id_usuario_responsavel = usuario.id
-
-            inner join descricoes des
-            on des.id_tratamento = tra.id
-            
             where tra.excluido = 1'
         );
     }
@@ -51,11 +47,9 @@ class TratamentoService
             ->join('sistemas', 'tratamentos.id_sistema', '=', 'sistemas.id')
             ->join('requisitos', 'tratamentos.id_requisito', '=', 'requisitos.id')
             ->join('users', 'tratamentos.id_usuario_responsavel', '=', 'users.id')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
             ->select(
                 'tratamentos.id as id_tratamento',
                 'tratamentos.situacao',
-                'descricoes.descricao',
                 'tratamentos.created_at as dt_inclusao',
                 'sistemas.id as id_sistema',
                 'sistemas.nome as nome_sistema',
@@ -75,30 +69,22 @@ class TratamentoService
     // listar novos
     public static function listarNovos()
     {
-        return DB::table('tratamentos')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
-            ->where('situacao', 'novo')->count();
+        return Tratamento::where('situacao', 'novo')->count();
     }
     // listar andamentos
     public static function listarAndamento()
     {
-        return DB::table('tratamentos')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
-            ->where('situacao', 'em_andamento')->count();
+        return Tratamento::where('situacao', 'em_andamento')->count();
     }
     // listar parados
     public static function listarParado()
     {
-        return DB::table('tratamentos')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
-            ->where('situacao', 'parado')->count();
+        return Tratamento::where('situacao', 'parado')->count();
     }
     // listar nao inciado
     public static function listarNaoIniciado()
     {
-        return DB::table('tratamentos')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
-            ->where('situacao', 'nao_iniciado')->count();
+        return Tratamento::where('situacao', 'nao_iniciado')->count();
     }
 
     // cadastrar as informaçoes

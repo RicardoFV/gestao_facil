@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Descricoes;
 use Illuminate\Http\Request;
 use App\Http\Requests\TratamentoFormReuest;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +31,7 @@ class TratamentoController extends Controller
     public function listarTratamentos($situacao)
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
-        return view('paginas.atividades.ver_tratamento', compact('status'));
+        return view('paginas.listas.ver_tratamento', compact('status'));
     }
 
     /**
@@ -129,11 +130,13 @@ class TratamentoController extends Controller
             $sistemas = SistemaService::listarVersaoSistema();
             $requisitos = RequisitoService::listar();
             $users = UsuarioService::listar();
+            $descricoes = DescricaoService::consultar($id);
             return view('paginas.alteracoes.tratamento_altera', compact(
                 'tratamento',
                 'sistemas',
                 'requisitos',
-                'users'
+                'users',
+                'descricoes'
             ));
         } else {
             return redirect()->back()->with('erro', 'Tratamento não encontrada!');
