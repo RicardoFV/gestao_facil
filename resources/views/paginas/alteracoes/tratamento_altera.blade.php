@@ -38,16 +38,17 @@
                                             readonly>
                                     </div>
                                 </div>
-
+                                @if ($tratamento->situacao == 'concluido')
                                 <div class="form-group">
                                     <label for="dt_entrega"
                                         class="col-md-12 col-form-label">{{ __('Data De Entrega') }}</label>
 
                                     <div class="col-md-12">
                                         <input id="dt_entrega" value="{{ $tratamento->dt_entrega }}" name="dt_entrega"
-                                            type="date" class="form-control">
+                                            type="date" class="form-control" readonly>
                                     </div>
                                 </div>
+                                @endif
 
                                 <div class="form-group ">
                                     <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }}</label>
@@ -128,13 +129,13 @@
                                     <div class="col-md-12">
                                         <textarea name="descricao" placeholder="Digite a descrição" class="form-control"
                                             id="descricao" cols="35" rows="4">
-                                          {{ $tratamento->descricao }}
-                                      </textarea>
+                                              {{ $tratamento->descricao }}
+                                          </textarea>
                                     </div>
                                 </div>
                                 <h6 class="text-center">Descrições Anteriores</h6>
                                 <hr />
-                                   
+
                                 @foreach ($descricoes as $descricao)
 
                                     <p class="text-right mr-3">
@@ -152,14 +153,15 @@
 
                     </div>
 
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-block btn-success">
-                                {{ __('Atualizar') }}
-                            </button>
+                    @if ($tratamento->situacao != 'concluido')
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-block btn-success">
+                                    {{ __('Atualizar') }}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </form>
             </div>
         </div>

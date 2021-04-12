@@ -16,4 +16,9 @@ class Tratamento extends Model
         'id_sistema',
         'excluido'
     ];
+    //formatar data 
+    public static function formatarData($data)
+    {
+        return date("d-m-Y", strtotime($data));
+    }
 }

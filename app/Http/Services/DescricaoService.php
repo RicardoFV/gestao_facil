@@ -13,7 +13,10 @@ class DescricaoService
         Descricoes::create($dados);
     }
     // consulta descricao por id_tratamento
-    public static function consultar($id_tratamento){
-        return Descricoes::where('id_tratamento', $id_tratamento)->get();
+    public static function consultar($id_tratamento)
+    {
+        return Descricoes::where('id_tratamento', $id_tratamento)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 }

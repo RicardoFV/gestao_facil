@@ -47,7 +47,7 @@
                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }}</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" value="{{$usuario->email}}" class="form-control" name="email">
+                        <input id="email" type="email" value="{{$usuario->email}}" class="form-control" name="email" readonly >
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@
                         </select>
                     </div>
                 </div>
-
+                
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-block btn-success">

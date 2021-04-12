@@ -30,7 +30,6 @@
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Perfil</th>
-                    <th scope="col">Dt Inclusão</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -40,7 +39,6 @@
                     <td>{{$user->name }}</td>
                     <td>{{$user->email }}</td>
                     <td>{{$user->perfil_acesso }}</td>
-                    <td>{{$user->created_at }}</td>
                     <td>
                         <a href="{{ action('UsuarioController@edit', $user->id)}}" class="btn btn-primary btn-sm">
                             <i class="fas fa-external-link-alt"></i>

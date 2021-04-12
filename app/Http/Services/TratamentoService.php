@@ -62,9 +62,7 @@ class TratamentoService
     // listar concluidos
     public static function listarConcluidos()
     {
-        return DB::table('tratamentos')
-            ->join('descricoes', 'descricoes.id_tratamento', '=', 'tratamentos.id')
-            ->where('situacao', 'concluido')->count();
+        return Tratamento::where('situacao', 'concluido')->count();
     }
     // listar novos
     public static function listarNovos()

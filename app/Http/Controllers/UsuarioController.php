@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UsuarioFormRequest;
-use App\Http\Requests\ValidaSenhaFormRequest;
+use App\Http\Requests\{UsuarioFormRequest, ValidaSenhaFormRequest, UsuarioAlteracaoFormRequest};
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -81,7 +80,7 @@ class UsuarioController extends Controller
     {
         if (Gate::allows('administrador', Auth::user())) {
             $nome = $request->input('name');
-            $email = $request->input('email');
+            //$email = $request->input('email');
             $perfil_acesso = $request->input('perfil_acesso');
             $password = $request->input('password');
             // caso seja o primeir cadastro, como nao tem id cadastro , 
@@ -163,7 +162,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     // atualiza as informaçoes
-    public function update(Request $request, $id)
+    public function update(UsuarioAlteracaoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user())) {
             $usuario = UsuarioService::consultar($id);
