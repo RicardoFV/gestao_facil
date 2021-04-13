@@ -38,17 +38,17 @@
                                             readonly>
                                     </div>
                                 </div>
-                                @if ($tratamento->situacao == 'concluido')
+                                
                                 <div class="form-group">
                                     <label for="dt_entrega"
                                         class="col-md-12 col-form-label">{{ __('Data De Entrega') }}</label>
 
                                     <div class="col-md-12">
                                         <input id="dt_entrega" value="{{ $tratamento->dt_entrega }}" name="dt_entrega"
-                                            type="date" class="form-control" readonly>
+                                            type="date" class="form-control">
                                     </div>
                                 </div>
-                                @endif
+                                
 
                                 <div class="form-group ">
                                     <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }}</label>
@@ -153,7 +153,7 @@
 
                     </div>
 
-                    @if ($tratamento->situacao != 'concluido')
+                  
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-block btn-success">
@@ -161,7 +161,7 @@
                                 </button>
                             </div>
                         </div>
-                    @endif
+                    
                 </form>
             </div>
         </div>

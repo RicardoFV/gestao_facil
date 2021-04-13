@@ -31,6 +31,10 @@ class TratamentoController extends Controller
     public function listarTratamentos($situacao)
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
+
+        if ($status[0]->situacao === 'concluido') {
+            return view('paginas.listas.mostrar_concluidos', compact('status'));
+        }
         return view('paginas.listas.ver_tratamento', compact('status'));
     }
 

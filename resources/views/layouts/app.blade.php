@@ -53,6 +53,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="">Finalizados</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('settings.index') }}">Configurações</a>
                         </li>
 
