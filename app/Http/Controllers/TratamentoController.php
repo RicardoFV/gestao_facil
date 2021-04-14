@@ -28,10 +28,11 @@ class TratamentoController extends Controller
         return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
     }
 
+    // lista os tratamentos
     public function listarTratamentos($situacao)
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
-
+        // caso a situaçao for igual concluido, ele listara para mostrar concluidos
         if ($status[0]->situacao === 'concluido') {
             return view('paginas.listas.mostrar_concluidos', compact('status'));
         }
@@ -131,10 +132,22 @@ class TratamentoController extends Controller
         // faz a consulta 
         $tratamento  = TratamentoService::consultar($id);
         if (!empty($tratamento)) {
+            // recebe as informaçoes
             $sistemas = SistemaService::listarVersaoSistema();
             $requisitos = RequisitoService::listar();
             $users = UsuarioService::listar();
             $descricoes = DescricaoService::consultar($id);
+            // caso seja o status seja concluido, levara para a tela mostrar concluidos detalhes 
+            if ($tratamento['situacao'] === 'concluido') {
+                return view('paginas.listas.mostrar_concluidos_detalhes', compact(
+                    'tratamento',
+                    'sistemas',
+                    'requisitos',
+                    'users',
+                    'descricoes'
+                ));
+            }
+            // retorna para alteraçao
             return view('paginas.alteracoes.tratamento_altera', compact(
                 'tratamento',
                 'sistemas',
@@ -174,18 +187,18 @@ class TratamentoController extends Controller
                 $tratamento->id_usuario = auth()->user()->id;
                 // atuaaliza as informaçoes do tratamento
                 TratamentoService::atualizar($tratamento);
-                // insere o array
+                // insere o array, uma nova descriçao
                 $form2 = [
                     'descricao' => $request->input('descricao'),
                     'id_tratamento' => $tratamento->id = $id
                 ];
-
                 // cadastra a descricao
                 DescricaoService::inserir($form2);
                 // retorna a mensagem
                 return redirect()->action('TratamentoController@index')
                     ->with('mensagem', 'Tratamento Atualizado com sucesso!');
             } else {
+                // caso de erro , nao atualiza o tratamento
                 return redirect()->action('TratamentoController@index')
                     ->with('erro', 'Erro ao atualizar o Tratamento !');
             }
@@ -204,17 +217,20 @@ class TratamentoController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
+        // somente adm e desenvolvedor pode remover
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             $tratamento = TratamentoService::consultar($id);
             if (!empty($tratamento)) {
-
+                // atuzaliza o excluido para 0 -- inativado
+                // passa o usuario que fez a açao
                 $tratamento->excluido = 0;
                 $tratamento->id_usuario = auth()->user()->id;
-
+                // executa o delete
                 TratamentoService::deletar($tratamento);
                 return redirect()->action('SistemaController@index')
                     ->with('mensagem', 'Tratamento Excluído com sucesso!');
             } else {
+                // se deu erro , o sistema nao faz a açao
                 return redirect()->back()->with('erro', 'Sistema não encontrado!');
             }
         } else {

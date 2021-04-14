@@ -20,6 +20,7 @@ class VersaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // lista as versoes
     public function index()
     {
         $versoes = VersaoService::listar();
@@ -51,16 +52,19 @@ class VersaoController extends Controller
     // cadastra as informaçoes
     public function store(VersaoFormRequest $request)
     {
+        // permissoa somente administrador ou desnvolvvedor
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             $nome = $request->input('nome');
             $id_usuario = auth()->user()->id;
-
+            // recebe as informaçoes em forma de array
             $form = [
                 'nome' => $nome,
                 'id_usuario' => $id_usuario,
                 'excluido' => 1
             ];
+            // cadastra as informaçoes
             VersaoService::inserir($form);
+            // retorna para a listagem 
             return redirect()->action('VersaoController@index')
                 ->with('mensagem', 'Versão cadastrada com sucesso!');
         } else {
@@ -123,19 +127,25 @@ class VersaoController extends Controller
     public function update(VersaoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // consulta as informaçoes 
             $versao = VersaoService::consultar($id);
+            // caso nao esteja vazio
             if (!empty($versao)) {
+                // recebe os novos dados
                 $versao->id = $id;
                 $versao->nome = $request->input('nome');
                 $versao->id_usuario = auth()->user()->id;
-
+                // atualiza as informaçoes
                 VersaoService::atualizar($versao);
                 return redirect()->action('VersaoController@index')
                     ->with('mensagem', 'Versão Atualizada com sucesso!');
             } else {
+                // caso de erro , o sistema nao faz a mudança
                 return redirect()->back()->with('erro', 'Erro ao atualizar a Versão!');
             }
         } else {
+            // se nao for o tipo de permissao de usuario, o sistema levara para uma 
+            // tela de restriçao
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
@@ -150,21 +160,29 @@ class VersaoController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // consulta as informaçoes
             $versao = VersaoService::consultar($id);
+            // caso nao esteja vazio 
             if (!empty($versao)) {
+                // consulta se tem alguma versao usado em algum sistema
                 $sistema = VersaoService::consultarSistemaPorVersao($versao->id);
+                // caso nao vazio
                 if (!empty($sistema)) {
+                    //sera retornado pelo o sistema que nao pode ser removido
                     return redirect()->action('VersaoController@index')
                         ->with('erro', 'Versão não pode ser removida');
                 } else {
                     // coloca como excluido 
+                    // o usuario responsavel
                     $versao->excluido = 0;
                     $versao->id_usuario = auth()->user()->id;
+                    // executa a atividade
                     VersaoService::deletar($versao);
                     return redirect()->action('VersaoController@index')
                         ->with('mensagem', 'Versão Excluída com sucesso!');
                 }
             } else {
+                // se em caso de erro , nao sera removido.
                 return redirect()->back()->with('erro', 'Versão não encontrada!');
             }
         } else {

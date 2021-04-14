@@ -11,6 +11,7 @@ class RequisitoController extends Controller
 {
     public function __construct()
     {
+        // permite acesso somente logado
         $this->middleware('auth');
     }
     /**
@@ -52,12 +53,12 @@ class RequisitoController extends Controller
     public function store(RequisitoFormRequest $request)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-
+            // recebe as informaçoes 
             $nome = $request->input('nome');
             $tipo_requisito = $request->input('tipo_requisito');
             $descricao = $request->input('descricao');
             $id_usuario = auth()->user()->id;
-
+            // passa para um array
             $form = [
                 'nome' => $nome,
                 'tipo_requisito' => $tipo_requisito,
@@ -65,11 +66,13 @@ class RequisitoController extends Controller
                 'id_usuario' => $id_usuario,
                 'excluido' => 1
             ];
+            // executa a inserçao
             RequisitoService::inserir($form);
-
+            // retorna a mensagem de sucesso
             return redirect()->action('RequisitoController@index')
                 ->with('mensagem', 'Requisito cadastrado com sucesso!');
         } else {
+            // em caso de erro 
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
@@ -129,21 +132,27 @@ class RequisitoController extends Controller
     public function update(RequisitoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+            // consulta as informaçoes 
             $requisito = RequisitoService::consultar($id);
+            // caso nao esteja vazio
             if (!empty($requisito)) {
+                // recebe as novas informaçoes
                 $requisito->id = $id;
                 $requisito->nome = $request->input('nome');
                 $requisito->tipo_requisito = $request->input('tipo_requisito');
                 $requisito->descricao = $request->input('descricao');
                 $requisito->id_usuario = auth()->user()->id;
-
+                // atualiza os dados
                 RequisitoService::atualizar($requisito);
+                // apresenta a mensagem de sucesso
                 return redirect()->action('RequisitoController@index')
                     ->with('mensagem', 'Requisito Atualizado com sucesso!');
             } else {
+                // caso de erro , o sistema informa que nao foi possivel realizar a atividade
                 return redirect()->back()->with('erro', 'Erro ao atualizar o Requisito!');
             }
         } else {
+            // em caso de restriçao de acesso , sera encaminhada para uma tela informando a restriçao
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
@@ -158,18 +167,24 @@ class RequisitoController extends Controller
     public function destroy($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-
+            // consulta as informaçoes
             $requisito = RequisitoService::consultar($id);
+            // em caso de nao vazio
             if (!empty($requisito)) {
+                // consulta se tem tratamento
                 $tratamento = RequisitoService::consultarTratamentoPorRequisito($requisito->id);
+                // caso de nao vazio
                 if (!empty($tratamento)) {
+                    // sera informado que nao pode ser removido
                     return redirect()->action('RequisitoController@index')
                         ->with('erro', 'Requisito não pode ser removido');
                 } else {
+                    // atualiza as informaçoes
                     $requisito->excluido = 0;
                     $requisito->id_usuario = auth()->user()->id;
                     // faz uma deleçao logica
                     RequisitoService::deletar($requisito);
+                    // retorna a mensagem de erro 
                     return redirect()->action('RequisitoController@index')
                         ->with('mensagem', 'Requisito Excluído com sucesso!');
                 }

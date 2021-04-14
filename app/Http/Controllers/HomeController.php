@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // retorna a contagem dos tratamentos por situaçao
         $novo = TratamentoService::listarNovos();
         $nao_iniciado = TratamentoService::listarNaoIniciado();
         $parado = TratamentoService::listarParado();

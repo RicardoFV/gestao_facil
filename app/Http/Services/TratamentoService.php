@@ -51,6 +51,7 @@ class TratamentoService
                 'tratamentos.id as id_tratamento',
                 'tratamentos.situacao',
                 'tratamentos.created_at as dt_inclusao',
+                'tratamentos.updated_at as finalizado',
                 'sistemas.id as id_sistema',
                 'sistemas.nome as nome_sistema',
                 'requisitos.id as id_requisito',
