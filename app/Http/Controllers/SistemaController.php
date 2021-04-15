@@ -160,17 +160,17 @@ class SistemaController extends Controller
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $tratamento = SistemaService::consultarTratamentoPorsistema($sistema->id);
-                if (!empty($tratamento)) {
-                    return redirect()->action('SistemaController@index')
-                        ->with('erro', 'Sistema não pode ser removido');
-                } else {
+                //$tratamento = SistemaService::consultarTratamentoPorsistema($sistema->id);
+                //if (!empty($tratamento)) {
+                  //  return redirect()->action('SistemaController@index')
+                  //      ->with('erro', 'Sistema não pode ser removido');
+               //  } else {
                     $sistema->id_usuario = auth()->user()->id;
                     $sistema->excluido = 0;
                     SistemaService::deletar($sistema);
                     return redirect()->action('SistemaController@index')
                         ->with('mensagem', 'Sistema Excluído com sucesso!');
-                }
+                //}
             } else {
                 return redirect()->back()->with('erro', 'Sistema não encontrado!');
             }

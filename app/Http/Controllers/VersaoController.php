@@ -165,13 +165,13 @@ class VersaoController extends Controller
             // caso nao esteja vazio 
             if (!empty($versao)) {
                 // consulta se tem alguma versao usado em algum sistema
-                $sistema = VersaoService::consultarSistemaPorVersao($versao->id);
+               // $sistema = VersaoService::consultarSistemaPorVersao($versao->id);
                 // caso nao vazio
-                if (!empty($sistema)) {
+               // if (!empty($sistema)) {
                     //sera retornado pelo o sistema que nao pode ser removido
-                    return redirect()->action('VersaoController@index')
-                        ->with('erro', 'Versão não pode ser removida');
-                } else {
+                   // return redirect()->action('VersaoController@index')
+                     //   ->with('erro', 'Versão não pode ser removida');
+               // } else {
                     // coloca como excluido 
                     // o usuario responsavel
                     $versao->excluido = 0;
@@ -180,7 +180,7 @@ class VersaoController extends Controller
                     VersaoService::deletar($versao);
                     return redirect()->action('VersaoController@index')
                         ->with('mensagem', 'Versão Excluída com sucesso!');
-                }
+              //  }
             } else {
                 // se em caso de erro , nao sera removido.
                 return redirect()->back()->with('erro', 'Versão não encontrada!');

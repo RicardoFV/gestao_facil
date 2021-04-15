@@ -172,13 +172,13 @@ class RequisitoController extends Controller
             // em caso de nao vazio
             if (!empty($requisito)) {
                 // consulta se tem tratamento
-                $tratamento = RequisitoService::consultarTratamentoPorRequisito($requisito->id);
+                //$tratamento = RequisitoService::consultarTratamentoPorRequisito($requisito->id);
                 // caso de nao vazio
-                if (!empty($tratamento)) {
+               // if (!empty($tratamento)) {
                     // sera informado que nao pode ser removido
-                    return redirect()->action('RequisitoController@index')
-                        ->with('erro', 'Requisito não pode ser removido');
-                } else {
+               //     return redirect()->action('RequisitoController@index')
+                 //       ->with('erro', 'Requisito não pode ser removido');
+                //} else {
                     // atualiza as informaçoes
                     $requisito->excluido = 0;
                     $requisito->id_usuario = auth()->user()->id;
@@ -187,7 +187,7 @@ class RequisitoController extends Controller
                     // retorna a mensagem de erro 
                     return redirect()->action('RequisitoController@index')
                         ->with('mensagem', 'Requisito Excluído com sucesso!');
-                }
+                //}
             } else {
                 return redirect()->back()->with('erro', 'Requisito não encontrado!');
             }
