@@ -60,7 +60,7 @@ class UsuarioController extends Controller
             //chama a tela de cadastro
             return view('auth.register');
         } else {
-            return view('paginas.restricao_acesso.restricao_acesso');
+           return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 
@@ -80,7 +80,7 @@ class UsuarioController extends Controller
     {
         if (Gate::allows('administrador', Auth::user())) {
             $nome = $request->input('name');
-            //$email = $request->input('email');
+            $email = $request->input('email');
             $perfil_acesso = $request->input('perfil_acesso');
             $password = $request->input('password');
             // caso seja o primeir cadastro, como nao tem id cadastro , 
