@@ -35,7 +35,6 @@ class TratamentoController extends Controller
     public function listarTratamentos($situacao)
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
-
         // caso seja igual a 0, retorna para a tela anterior
         if (sizeof($status) == 0) {
             return redirect()->back()->with('erro', 'Nao ha Tratamento com status Concluído!');
