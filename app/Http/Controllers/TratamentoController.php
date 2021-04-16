@@ -8,7 +8,10 @@ use App\Http\Requests\TratamentoFormReuest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\{TratamentoService, RequisitoService, SistemaService, UsuarioService, DescricaoService};
+use Hamcrest\Arrays\IsArray;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
+use function PHPUnit\Framework\isEmpty;
 
 class TratamentoController extends Controller
 {
@@ -32,10 +35,15 @@ class TratamentoController extends Controller
     public function listarTratamentos($situacao)
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
-        // caso a situaçao for igual concluido, ele listara para mostrar concluidos
-        if ($status[0]->situacao === 'concluido') {
+
+        // caso seja igual a 0, retorna para a tela anterior
+        if (sizeof($status) == 0) {
+            return redirect()->back()->with('erro', 'Nao ha Tratamento com status Concluído!');
+        } else if ($status[0]->situacao === 'concluido') {
+            // caso a situaçao for igual concluido, ele listara para mostrar concluidos
             return view('paginas.listas.mostrar_concluidos', compact('status'));
         }
+
         return view('paginas.listas.ver_tratamento', compact('status'));
     }
 
