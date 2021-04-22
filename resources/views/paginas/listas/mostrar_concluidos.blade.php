@@ -32,7 +32,7 @@
                             <td>{{ $situacao->id_tratamento }}</td>
                             <td>{{ $situacao->nome_sistema }}</td>
                             <td>{{ $situacao->dt_inclusao }}</td>
-                            <td>{{ $situacao->nome_usuario_responsavel }}</td>
+                            <td>{{ $situacao->nome_usuario }}</td>
                             <td>{{ $situacao->situacao }}</td>
                             <td>
                                 <a href="{{ action('TratamentoController@edit', $situacao->id_tratamento)}}" class="btn btn-primary btn-sm">

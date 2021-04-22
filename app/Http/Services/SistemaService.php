@@ -10,8 +10,7 @@ class SistemaService
     // consulta que traz a versao e o sistema desde que sistema o campo excluir seja igual a 1 (ativo)
     public static function listarVersaoSistema()
     {
-        return DB::select('select v.id as id, s.id as id_sistema, v.nome as nome_versao , s.nome as nome_sistema, s.descricao as descricao from versaos v inner join sistemas s 
-        on v.id = s.id_versao where s.excluido = 1');
+        return DB::select('select * from v_versao_sistema where excluido = 1');
     }
     // cadastrar as informaçoes
     public static function inserir(array $dados)

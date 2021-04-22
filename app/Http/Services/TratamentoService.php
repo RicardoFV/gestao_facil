@@ -11,23 +11,7 @@ class TratamentoService
     // vai trazer as informaçoes de tratamento excluido igual a 1 , (ativo)
     public static function listar()
     {
-        return DB::select(
-            'select 
-            tra.id , tra.situacao, tra.created_at as dt_inclusao ,
-            sis.id as id_sistema, sis.nome as nome_sistema,
-            res.id as id_requisito , res.nome as nome_requisito,
-            usuario.id as id_usuario , usuario.name as nome_usuario
-            from 
-            tratamentos  tra inner join sistemas sis
-            on tra.id_sistema = sis.id
-            
-            inner join requisitos res
-            on tra.id_requisito = res.id
-            
-            inner join users usuario
-            on tra.id_usuario_responsavel = usuario.id
-            where tra.excluido = 1'
-        );
+        return DB::select('select * from v_list_tsru_dados');
     }
     // traz o ultimo id 
     public static function cconsultarUltimoId()
@@ -43,22 +27,7 @@ class TratamentoService
     // consulta que traz os tratamento nos seguintes situacao (novo, nao_iniciado, parado, em_andamento, concluido)
     public static function listarConsultasExpecificas($situacao)
     {
-        return DB::table('tratamentos')
-            ->join('sistemas', 'tratamentos.id_sistema', '=', 'sistemas.id')
-            ->join('requisitos', 'tratamentos.id_requisito', '=', 'requisitos.id')
-            ->join('users', 'tratamentos.id_usuario_responsavel', '=', 'users.id')
-            ->select(
-                'tratamentos.id as id_tratamento',
-                'tratamentos.situacao',
-                'tratamentos.created_at as dt_inclusao',
-                'tratamentos.updated_at as finalizado',
-                'sistemas.id as id_sistema',
-                'sistemas.nome as nome_sistema',
-                'requisitos.id as id_requisito',
-                'requisitos.nome as nome_requisito',
-                'users.id as id_usuario',
-                'users.name as nome_usuario_responsavel'
-            )->where('tratamentos.excluido', 1)->where('tratamentos.situacao', $situacao)->get();
+        return DB::select("select * from v_list_tsru_dados where situacao = '$situacao'");
     }
     // listar concluidos
     public static function listarConcluidos()

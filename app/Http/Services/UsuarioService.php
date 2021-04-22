@@ -22,7 +22,7 @@ class UsuarioService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarPorUsuarioLogado($id)
     {
-        return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where id =' . $id);
+        return DB::select('select id, name, email, perfil_acesso, excluido, created_at from users where id =' . $id);
     }
 
     // cadastrar as informaçoes
