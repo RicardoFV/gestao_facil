@@ -11,11 +11,11 @@
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('requirements.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
-            
+
         </div>
 
         <!-- mensagem de Sucesso-->
-        @include('mensagens.sucesso') 
+        @include('mensagens.sucesso')
 
         <!-- mensagem de erro-->
         @include('mensagens.erro')
@@ -42,7 +42,7 @@
                             $requisito->tipo_requisito = 'Funcional';
                         }else if($requisito->tipo_requisito === 'nao_funcional'){
                             $requisito->tipo_requisito = 'Não Funcional';
-                        }             
+                        }
                     ?>
                         <tr>
                             <td>{{$requisito->id }}</td>
@@ -50,21 +50,23 @@
                             <td>{{$requisito->tipo_requisito }}</td>
                             <td>{{$requisito->descricao }}</td>
                             <td>
-                            
+
                                 <a href="{{ action('RequisitoController@edit', $requisito->id)}}" class="btn btn-primary btn-sm">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                
+
                                 <a href="{{ action('RequisitoController@show', $requisito->id)}}" class="btn btn-danger btn-sm">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
-                                
+
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
-
             </table>
+            <div class="align-items-center">
+                {{$requisitos->links()}}
+            </div>
         </div>
     </div>
 </div>

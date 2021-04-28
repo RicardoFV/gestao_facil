@@ -11,11 +11,11 @@
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('systems.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
-            
+
         </div>
 
         <!-- mensagem de Sucesso-->
-        @include('mensagens.sucesso') 
+        @include('mensagens.sucesso')
 
         <!-- mensagem de erro-->
             @include('mensagens.erro')
@@ -42,7 +42,7 @@
                         <a href="{{ action('SistemaController@edit', $sistema->id_sistema)}}" class="btn btn-primary btn-sm">
                             <i class="fas fa-external-link-alt"></i>
                         </a>
-                        
+
                         <a href="{{ action('SistemaController@show', $sistema->id_sistema)}}" class="btn btn-danger btn-sm">
                             <i class="far fa-trash-alt"></i>
                         </a>
@@ -50,6 +50,9 @@
                 </tr>
             @endforeach
         </tbody>
+        <div class="align-items-center">
+            {{$sistemas->links()}}
+        </div>
     </table>
 </div>
     </div>

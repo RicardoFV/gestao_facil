@@ -7,13 +7,14 @@ use App\Tratamento;
 
 class TratamentoService
 {
-    // realiza a consulta dos dados do tratamento, sistema , requisito e usuario , 
-    // vai trazer as informaçoes de tratamento excluido igual a 1 , (ativo)
+    // realiza a consulta dos dados do tratamento, sistema , requisito e usuario ,
+    // vai trazer as informaçoes de tratamento, faz toda a listagem
     public static function listar()
     {
-        return DB::select('select * from v_list_tsru_dados');
+        return DB::table('v_list_tsru_dados')->paginate(6);
+       // return DB::select('select * from v_list_tsru_dados');
     }
-    // traz o ultimo id 
+    // traz o ultimo id
     public static function cconsultarUltimoId()
     {
         return Tratamento::all()->max('id');
@@ -27,7 +28,8 @@ class TratamentoService
     // consulta que traz os tratamento nos seguintes situacao (novo, nao_iniciado, parado, em_andamento, concluido)
     public static function listarConsultasExpecificas($situacao)
     {
-        return DB::select("select * from v_list_tsru_dados where situacao = '$situacao'");
+        return DB::table('v_list_tsru_dados')->where('situacao', $situacao)->paginate(6);
+       // return DB::select("select * from v_list_tsru_dados where situacao = '$situacao'");
     }
     // listar concluidos
     public static function listarConcluidos()

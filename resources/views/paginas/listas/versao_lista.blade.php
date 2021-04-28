@@ -14,7 +14,7 @@
             </div>
         </div>
         <!-- mensagem de Sucesso-->
-            @include('mensagens.sucesso') 
+            @include('mensagens.sucesso')
 
         <!-- mensagem de erro-->
             @include('mensagens.erro')
@@ -38,7 +38,7 @@
                         <td>{{$versao->id }}</td>
                         <td>{{$versao->nome }}</td>
                         <td>
-                            
+
                             <a href="{{ action('VersaoController@edit', $versao->id)}}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
@@ -49,9 +49,12 @@
                         </td>
                     </tr>
                 @endforeach
-               
+
                 </tbody>
             </table>
+            <div class="align-items-center">
+                {{$versoes->links()}}
+            </div>
         </div>
     </div>
 </div>

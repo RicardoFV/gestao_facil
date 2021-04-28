@@ -14,7 +14,7 @@
             </div>
         </div>
         <!-- mensagem de Sucesso-->
-            @include('mensagens.sucesso') 
+            @include('mensagens.sucesso')
 
         <!-- mensagem de erro-->
             @include('mensagens.erro')
@@ -51,6 +51,9 @@
                 </tr>
             @endforeach
         </table>
+           <div class="align-items-center">
+                {{$users->links()}}
+           </div>
     </div>
     </div>
 </div>

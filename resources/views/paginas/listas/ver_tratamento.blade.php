@@ -10,7 +10,7 @@
         <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{ route('treatments.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
-            </div>    
+            </div>
         </div>
         <hr>
         <!-- criação da tabela  -->
@@ -40,10 +40,12 @@
                                 </a>
                             </td>
                         </tr>
-                    @endforeach    
+                    @endforeach
                 </tbody>
-                
             </table>
+            <div class="align-items-center">
+                {{$status->links()}}
+            </div>
         </div>
     </div>
 </div>

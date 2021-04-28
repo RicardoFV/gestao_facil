@@ -10,7 +10,8 @@ class RequisitoService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar()
     {
-        return DB::select('select * from requisitos where excluido = 1  ');
+        return Requisito::paginate(6);
+        //return DB::select('select * from requisitos where excluido = 1  ');
     }
 
     // cadastrar as informaçoes
