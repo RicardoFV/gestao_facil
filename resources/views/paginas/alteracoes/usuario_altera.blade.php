@@ -21,6 +21,8 @@
         <!-- colocando a mensagem de erro -->
         @include('mensagens.erro_cadastro')
 
+        <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
+
         <div class="card-body">
             <form method="POST" action="{{route('users.update', $usuario->id)}}">
                 @csrf
@@ -36,7 +38,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" value="{{$usuario->name}}" class="form-control" name="name">
@@ -44,7 +46,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }}</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="email" type="email" value="{{$usuario->email}}" class="form-control" name="email">
@@ -52,10 +54,10 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="perfil_acesso" class="col-md-4 col-form-label text-md-right">{{ __('Perfil Acesso') }}</label>
+                    <label for="perfil_acesso" class="col-md-4 col-form-label text-md-right">{{ __('Perfil Acesso') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
-                        
+
                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
                             <option value="administrador" {{ ($usuario->perfil_acesso == 'administrador')? 'selected': ''}}>Administrador(a)</option>
                             <option value="desenvolvedor" {{ ($usuario->perfil_acesso == 'desenvolvedor')? 'selected': ''}}>Desenvoldor(a)</option>
@@ -63,7 +65,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-block btn-success">

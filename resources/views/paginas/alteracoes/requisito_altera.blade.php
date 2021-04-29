@@ -10,7 +10,7 @@
         <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{route('requirements.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
-            </div>     
+            </div>
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{route('requirements.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
             </div>
@@ -19,6 +19,8 @@
         <hr />
         <!-- colocando a mensagem de erro -->
         @include('mensagens.erro_cadastro')
+
+        <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
 
         <div class="card-body">
 
@@ -35,7 +37,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                     <input id="nome" type="text" class="form-control"  name="nome" value="{{$requisito->nome}}" >
@@ -43,10 +45,10 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="tipo_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Tipo Requisito') }}</label>
+                    <label for="tipo_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Tipo Requisito') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
-                        
+
                         <select name="tipo_requisito" id="tipo_requisito" class="form-control">
                             <option value="funcional" {{ ($requisito->tipo_requisito == 'funcional')? 'selected': ''}}>Funcional</option>
                             <option value="nao_funcional" {{ ($requisito->tipo_requisito == 'nao_funcional')? 'selected': ''}}>Não Funcional</option>
@@ -55,7 +57,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }}</label>
+                    <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">

@@ -19,8 +19,9 @@
         <hr />
 
         <!-- colocando a mensagem de erro -->
-        @include('mensagens.erro_cadastro') 
-     
+        @include('mensagens.erro_cadastro')
+        <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
+
         <div class="card-body">
 
             <form method="post" action="{{route('versions.update', $versao->id)}}">
@@ -36,13 +37,13 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="nome" type="text" class="form-control" name="nome" value="{{ $versao->nome }}" >
                     </div>
                 </div>
-              
+
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

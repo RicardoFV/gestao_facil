@@ -12,19 +12,21 @@
             <div class="form-group col-sm-6 d-flex inline mt-3">
                 <a href="{{route('users.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
             </div>
-            
+
         </div>
 
         <hr />
         <!-- colocando a mensagem de erro -->
         @include('mensagens.erro_cadastro')
 
+        <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
+
         <div class="card-body">
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
-                
+
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" >
@@ -32,7 +34,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }}</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -40,20 +42,20 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="perfil_acesso" class="col-md-4 col-form-label text-md-right">{{ __('Perfil Acesso') }}</label>
+                    <label for="perfil_acesso" class="col-md-4 col-form-label text-md-right">{{ __('Perfil Acesso') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
-                        
+
                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
-                            <option value="administrador" >Administrador(a)</option> 
-                            <option value="desenvolvedor" >Desenvoldor(a)</option> 
+                            <option value="administrador" >Administrador(a)</option>
+                            <option value="desenvolvedor" >Desenvoldor(a)</option>
                             <option value="usuario" >Usuário(a)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Senha') }}</label>
+                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control" name="password">
@@ -61,7 +63,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Senha') }}</label>
+                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >

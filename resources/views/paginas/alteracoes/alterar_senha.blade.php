@@ -7,18 +7,20 @@
         <div class="card-header">
             <h1>Alterar Senha</h1>
         </div>
-        
+
         <!-- colocando a mensagem de erro -->
         @include('mensagens.erro_cadastro')
+
+        <span class="ml-4 mt-2 cor_mensagem"> * Campos Obrigatorios </span>
 
         <div class="card-body">
 
             <form method="POST" action="{{ route('update.password', Auth::user()->id) }}">
                 @csrf
-               
+
                 <div class="form-group row">
                     <label for="password"
-                        class="col-md-4 col-form-label text-md-right">{{ __('Nova Senha') }}</label>
+                        class="col-md-4 col-form-label text-md-right">{{ __('Nova Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control" name="password">
@@ -27,7 +29,7 @@
 
                 <div class="form-group row">
                     <label for="password-confirm"
-                        class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Senha') }}</label>
+                        class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control"
@@ -43,7 +45,7 @@
                     </div>
                 </div>
             </form>
-            
+
         </div>
 
     </div>

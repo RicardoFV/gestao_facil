@@ -19,6 +19,7 @@
             <hr />
             <!-- colocando a mensagem de erro -->
             @include('mensagens.erro_cadastro')
+            <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
 
             <div class="card-body">
 
@@ -38,20 +39,20 @@
                                             readonly>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="dt_entrega"
-                                        class="col-md-12 col-form-label">{{ __('Data De Entrega') }}</label>
+                                        class="col-md-12 col-form-label">{{ __('Data De Entrega') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <input id="dt_entrega" value="{{ $tratamento->dt_entrega }}" name="dt_entrega"
                                             type="date" class="form-control">
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="form-group ">
-                                    <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }}</label>
+                                    <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="id_sistema" id="id_sistema" class="form-control">
@@ -67,7 +68,7 @@
 
                                 <div class="form-group">
                                     <label for="id_requisito"
-                                        class="col-md-12 col-form-label">{{ __('Requisito') }}</label>
+                                        class="col-md-12 col-form-label">{{ __('Requisito') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
 
@@ -82,7 +83,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="situacao" class="col-md-12 col-form-label">{{ __('Situacao') }}</label>
+                                    <label for="situacao" class="col-md-12 col-form-label">{{ __('Situacao') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="situacao" id="situacao" class="form-control">
@@ -105,7 +106,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="id_usuario_responsavel"
-                                        class="col-md-10 col-form-label">{{ __('Usuário Responsável') }}</label>
+                                        class="col-md-10 col-form-label">{{ __('Usuário Responsável') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="id_usuario_responsavel" id="id_sistema" class="form-control">
@@ -124,7 +125,7 @@
                             <div class="col-sm-8">
 
                                 <div class="form-group ">
-                                    <label for="descricao" class="col-md-4 col-form-label ">{{ __('Descrição') }}</label>
+                                    <label for="descricao" class="col-md-4 col-form-label ">{{ __('Descrição') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <textarea name="descricao" placeholder="Digite a descrição" class="form-control"
@@ -153,7 +154,7 @@
 
                     </div>
 
-                  
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-block btn-success">
@@ -161,7 +162,7 @@
                                 </button>
                             </div>
                         </div>
-                    
+
                 </form>
             </div>
         </div>
