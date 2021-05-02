@@ -2,8 +2,9 @@
 
 namespace App\Http\Services;
 
+use App\User;
 use Illuminate\Support\Facades\DB;
-use App\Tratamento;
+use App\{Tratamento, Requisito};
 
 class TratamentoService
 {
@@ -13,6 +14,36 @@ class TratamentoService
     {
         return DB::table('v_list_tsru_dados')->paginate(6);
        // return DB::select('select * from v_list_tsru_dados');
+    }
+    // realiza a consulta por sistema, listando no relatorio
+    public static function consultarPorSistema( $sistema){
+        return DB::table('v_list_tsru_dados')
+            ->where('nome_sistema','LIKE', '%'. $sistema .'%')
+            ->paginate(6);
+    }
+    // realiza a consulta por usuario, listando no relatorio
+    public static function consultarPorUsuario( $usuario){
+        return DB::table('v_list_tsru_dados')
+            ->where('nome_usuario','LIKE', '%'. $usuario .'%')
+            ->paginate(6);
+    }
+    // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
+    public static function listarUsuario()
+    {
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'excluido', 'created_at')->get();
+        //return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where excluido = 1 ');
+    }
+    // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
+    public static function listarRequisito()
+    {
+        return Requisito::all();
+        //return DB::select('select * from requisitos where excluido = 1  ');
+    }
+    // consulta que traz a versao e o sistema desde que sistema o campo excluir seja igual a 1 (ativo)
+    public static function listarVersaoSistema()
+    {
+        return DB::table('v_versao_sistema')->where('excluido', 1)->get();
+        //return DB::select('select * from v_versao_sistema where excluido = 1');
     }
     // traz o ultimo id
     public static function cconsultarUltimoId()

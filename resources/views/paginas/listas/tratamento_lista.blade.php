@@ -19,19 +19,31 @@
             <!-- mensagem de erro-->
             @include('mensagens.erro')
 
+        <!-- colocando a mensagem de erro -->
+            @include('mensagens.erro_cadastro')
+
             <hr />
-            <div class="form-group ml-4 row mb-4">
-                <label for="" class="col-form-label">Consultar Por :</label>
-                <div class="col-md-4">
-                    <select name="" id="" class="form-control">
-                        <option value="">Sistema</option>
-                        <option value="">Usuario</option>
-                    </select>
+            <form method="post" action="{{route('cunnsulta_parametro')}}">
+                @csrf
+                <div class="form-group ml-4 row mb-4">
+                    <label for="" class="col-form-label">Consultar Por :</label>
+                    <div class="col-md-2">
+                        <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-control">
+                            <option value="sistema">Sistema</option>
+                            <option value="usuario">Usuario</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="search" name="pesquisa" class="form-control" id="pesquisa" placeholder="Digite a sua Pesquisa">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            {{ __('Filtrar') }}
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <input type="text" name="pesquisa" class="form-control" id="pesquisa" placeholder="Digite a sua Pesquisa">
-                </div>
-            </div>
+            </form>
+
 
 
             <!-- criação da tabela  -->

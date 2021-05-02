@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Versao;
 use Illuminate\Support\Facades\DB;
 use App\Sistema;
 
@@ -12,6 +13,10 @@ class SistemaService
     {
         return DB::table('v_versao_sistema')->where('excluido', 1)->paginate(6);
         //return DB::select('select * from v_versao_sistema where excluido = 1');
+    }
+
+    public static function listarVersao(){
+        return Versao::where('excluido' ,1)->get();
     }
     // cadastrar as informaçoes
     public static function inserir(array $dados)

@@ -38,4 +38,5 @@ Route::post('/usres/updatepassword/{id}', 'UsuarioController@updatePassword')->n
 
 // rota de tratamento, que mostra os tratamentos
 Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
+Route::post('treatments','TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
 Auth::routes();

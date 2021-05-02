@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SistemaFormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{SistemaService, VersaoService};
+use App\Http\Services\SistemaService;
 
 class SistemaController extends Controller
 {
@@ -35,7 +35,7 @@ class SistemaController extends Controller
     public function create()
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            $versoes = VersaoService::listar();
+            $versoes = SistemaService::listarVersao();
             return view('paginas.cadastros.sistema', compact('versoes'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -48,7 +48,7 @@ class SistemaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // cadastra as informaçoes 
+    // cadastra as informaçoes
     public function store(SistemaFormRequest $request)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
@@ -79,11 +79,11 @@ class SistemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // consulta as informaçoes 
+    // consulta as informaçoes
     public function show($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 return view('paginas.decisoes.apagar_sistema', compact('sistema'));
@@ -105,10 +105,10 @@ class SistemaController extends Controller
     public function edit($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $versoes = VersaoService::listar();
+                $versoes = SistemaService::listarVersao();
                 return view('paginas.alteracoes.sistema_altera', compact('sistema', 'versoes'));
             } else {
                 return redirect()->back()->with('erro', 'Sistema não encontrada!');
