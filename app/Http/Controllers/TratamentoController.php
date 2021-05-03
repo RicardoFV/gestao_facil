@@ -28,6 +28,7 @@ class TratamentoController extends Controller
         return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
     }
 
+    // metodo que faz a busca do tratamento que é passodo por parametro
     public function consultarPorParametro(PesquisaFormRequest $request)
     {
         // recebe o tipo de pesquisa

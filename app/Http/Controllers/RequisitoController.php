@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\RequisitoFormRequest;
+use App\Http\Requests\{RequisitoFormRequest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\RequisitoService;
 
@@ -25,6 +25,10 @@ class RequisitoController extends Controller
     {
         $requisitos = RequisitoService::listar();
         return view('paginas.listas.requisito_lista', compact('requisitos'));
+    }
+    // metodo que faz a busca do tratamento que é passodo por parametro
+    public function consultarPorParametro(PesquisaFormRequest $request){
+
     }
 
     /**
@@ -49,11 +53,11 @@ class RequisitoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // cadastra as informaçoes 
+    // cadastra as informaçoes
     public function store(RequisitoFormRequest $request)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // recebe as informaçoes 
+            // recebe as informaçoes
             $nome = $request->input('nome');
             $tipo_requisito = $request->input('tipo_requisito');
             $descricao = $request->input('descricao');
@@ -72,7 +76,7 @@ class RequisitoController extends Controller
             return redirect()->action('RequisitoController@index')
                 ->with('mensagem', 'Requisito cadastrado com sucesso!');
         } else {
-            // em caso de erro 
+            // em caso de erro
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
@@ -83,11 +87,11 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // consulta as informaçoes 
+    // consulta as informaçoes
     public function show($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
                 return view('paginas.decisoes.apagar_requisito', compact('requisito'));
@@ -109,7 +113,7 @@ class RequisitoController extends Controller
     public function edit($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
                 return view('paginas.alteracoes.requisito_altera', compact('requisito'));
@@ -128,11 +132,11 @@ class RequisitoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // atualiza as informaçoes 
+    // atualiza as informaçoes
     public function update(RequisitoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // consulta as informaçoes 
+            // consulta as informaçoes
             $requisito = RequisitoService::consultar($id);
             // caso nao esteja vazio
             if (!empty($requisito)) {
@@ -184,7 +188,7 @@ class RequisitoController extends Controller
                     $requisito->id_usuario = auth()->user()->id;
                     // faz uma deleçao logica
                     RequisitoService::deletar($requisito);
-                    // retorna a mensagem de erro 
+                    // retorna a mensagem de erro
                     return redirect()->action('RequisitoController@index')
                         ->with('mensagem', 'Requisito Excluído com sucesso!');
                 //}

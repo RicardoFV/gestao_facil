@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VersaoFormRequest;
+use App\Http\Requests\{PesquisaFormRequest,VersaoFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\VersaoService;
@@ -25,6 +25,10 @@ class VersaoController extends Controller
     {
         $versoes = VersaoService::listar();
         return view('paginas.listas.versao_lista', compact('versoes'));
+    }
+    // metodo que faz a busca do tratamento que é passodo por parametro
+    public function consultarPorParametro(PesquisaFormRequest $request){
+
     }
 
     /**
@@ -64,7 +68,7 @@ class VersaoController extends Controller
             ];
             // cadastra as informaçoes
             VersaoService::inserir($form);
-            // retorna para a listagem 
+            // retorna para a listagem
             return redirect()->action('VersaoController@index')
                 ->with('mensagem', 'Versão cadastrada com sucesso!');
         } else {
@@ -82,7 +86,7 @@ class VersaoController extends Controller
     public function show($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
                 return view('paginas.decisoes.apagar_versao', compact('versao'));
@@ -104,7 +108,7 @@ class VersaoController extends Controller
     public function edit($id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
                 return view('paginas.alteracoes.versao_altera', compact('versao'));
@@ -127,7 +131,7 @@ class VersaoController extends Controller
     public function update(VersaoFormRequest $request, $id)
     {
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
-            // consulta as informaçoes 
+            // consulta as informaçoes
             $versao = VersaoService::consultar($id);
             // caso nao esteja vazio
             if (!empty($versao)) {
@@ -144,7 +148,7 @@ class VersaoController extends Controller
                 return redirect()->back()->with('erro', 'Erro ao atualizar a Versão!');
             }
         } else {
-            // se nao for o tipo de permissao de usuario, o sistema levara para uma 
+            // se nao for o tipo de permissao de usuario, o sistema levara para uma
             // tela de restriçao
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -162,7 +166,7 @@ class VersaoController extends Controller
         if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
             // consulta as informaçoes
             $versao = VersaoService::consultar($id);
-            // caso nao esteja vazio 
+            // caso nao esteja vazio
             if (!empty($versao)) {
                 // consulta se tem alguma versao usado em algum sistema
                // $sistema = VersaoService::consultarSistemaPorVersao($versao->id);
@@ -172,7 +176,7 @@ class VersaoController extends Controller
                    // return redirect()->action('VersaoController@index')
                      //   ->with('erro', 'Versão não pode ser removida');
                // } else {
-                    // coloca como excluido 
+                    // coloca como excluido
                     // o usuario responsavel
                     $versao->excluido = 0;
                     $versao->id_usuario = auth()->user()->id;

@@ -31,10 +31,18 @@ Route::resources([
     'settings' => 'ConfigController',
     'users' => 'UsuarioController'
 ]);
+// rota de requisito
+Route::post('requirements','RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
+// rota de sistema
+Route::post('systems','SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
+
+// rota de versao
+Route::post('versions','VersaoController@consultarPorParametro')->name('cunnsulta_parametro_versao');
 
 // rota de auterar a senah de usuario
 Route::get('/usres/updatepassword/tela', 'UsuarioController@telaSenha')->name('tela_senha');
 Route::post('/usres/updatepassword/{id}', 'UsuarioController@updatePassword')->name('update.password');
+Route::post('users','UsuarioController@consultarPorParametro')->name('cunnsulta_parametro_usuario');
 
 // rota de tratamento, que mostra os tratamentos
 Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');

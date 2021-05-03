@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\{UsuarioFormRequest, ValidaSenhaFormRequest, UsuarioAlteracaoFormRequest};
+use App\Http\Requests\{PesquisaFormRequest, UsuarioFormRequest, ValidaSenhaFormRequest, UsuarioAlteracaoFormRequest};
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +35,11 @@ class UsuarioController extends Controller
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
+    }
+
+    // metodo que faz a busca do tratamento que é passodo por parametro
+    public function consultarPorParametro(PesquisaFormRequest $request){
+
     }
 
     /*
@@ -83,8 +88,8 @@ class UsuarioController extends Controller
             $email = $request->input('email');
             $perfil_acesso = $request->input('perfil_acesso');
             $password = $request->input('password');
-            // caso seja o primeir cadastro, como nao tem id cadastro , 
-            //ele vai inserir o numero 1 para registro 
+            // caso seja o primeir cadastro, como nao tem id cadastro ,
+            //ele vai inserir o numero 1 para registro
             // pois se tem usuario logado , o primeiro cadastro sera 1
             if (empty(auth()->user()->id)) {
                 $id_usuario_ressponsavel = 1;
@@ -116,11 +121,11 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // consulta as informaçoes 
+    // consulta as informaçoes
     public function show($id)
     {
         if (Gate::allows('administrador', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 return view('paginas.decisoes.apagar_usuario', compact('usuario'));
@@ -142,7 +147,7 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         if (Gate::allows('administrador', Auth::user())) {
-            // faz a consulta 
+            // faz a consulta
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 return view('paginas.alteracoes.usuario_altera', compact('usuario'));

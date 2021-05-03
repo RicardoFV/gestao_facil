@@ -21,6 +21,27 @@
         @include('mensagens.erro')
 
         <hr />
+        <form method="post" action="">
+            @csrf
+            <div class="form-group ml-4 row mb-4">
+                <label for="" class="col-form-label">Consultar Por :</label>
+                <div class="col-md-2">
+                    <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-control">
+                        <option value="sistema">Sistema</option>
+                        <option value="usuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="search" name="pesquisa" class="form-control" id="pesquisa"
+                           placeholder="Digite a sua Pesquisa">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {{ __('Filtrar') }}
+                    </button>
+                </div>
+            </div>
+        </form>
 
         <!-- criação da tabela  -->
         <div class="container">

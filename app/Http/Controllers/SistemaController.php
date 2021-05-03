@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SistemaFormRequest;
+use App\Http\Requests\{SistemaFormRequest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\SistemaService;
@@ -24,6 +24,11 @@ class SistemaController extends Controller
     {
         $sistemas = SistemaService::listarVersaoSistema();
         return view('paginas.listas.sistema_lista', ['sistemas' => $sistemas]);
+    }
+
+    // metodo que faz a busca do tratamento que é passodo por parametro
+    public function consultarPorParametro(PesquisaFormRequest $request){
+
     }
 
     /**

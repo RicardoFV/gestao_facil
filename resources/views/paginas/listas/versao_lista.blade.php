@@ -14,22 +14,43 @@
             </div>
         </div>
         <!-- mensagem de Sucesso-->
-            @include('mensagens.sucesso')
+    @include('mensagens.sucesso')
 
-        <!-- mensagem de erro-->
-            @include('mensagens.erro')
+    <!-- mensagem de erro-->
+        @include('mensagens.erro')
 
-        <hr />
+        <hr/>
+        <form method="post" action="">
+            @csrf
+            <div class="form-group ml-4 row mb-4">
+                <label for="" class="col-form-label">Consultar Por :</label>
+                <div class="col-md-2">
+                    <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-control">
+                        <option value="sistema">Sistema</option>
+                        <option value="usuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="search" name="pesquisa" class="form-control" id="pesquisa"
+                           placeholder="Digite a sua Pesquisa">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {{ __('Filtrar') }}
+                    </button>
+                </div>
+            </div>
+        </form>
 
         <!-- criação da tabela  -->
         <div class="container">
             <table class="table table-hover table-sm">
                 <thead class="text-center">
-                    <tr>
-                        <th scope="col">Codigo</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Ações</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Ações</th>
+                </tr>
                 </thead>
                 <tbody class="text-center">
 
