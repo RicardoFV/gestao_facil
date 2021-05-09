@@ -20,9 +20,9 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
 
+// rotas padroes 
 Route::resources([
     'requirements' => 'RequisitoController',
     'systems' => 'SistemaController',
@@ -31,20 +31,23 @@ Route::resources([
     'settings' => 'ConfigController',
     'users' => 'UsuarioController'
 ]);
-// rota de requisito
-Route::post('requirements','RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
-// rota de sistema
-Route::post('systems','SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
 
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
+// rota de requisito
+Route::post('requirements/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
+// rota de sistema
+Route::post('systems/consulta', 'SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
 // rota de versao
-Route::post('versions','VersaoController@consultarPorParametro')->name('cunnsulta_parametro_versao');
+Route::post('versions/consuta', 'VersaoController@consultarPorParametro')->name('cunnsulta_parametro_versao');
 
 // rota de auterar a senah de usuario
 Route::get('/usres/updatepassword/tela', 'UsuarioController@telaSenha')->name('tela_senha');
 Route::post('/usres/updatepassword/{id}', 'UsuarioController@updatePassword')->name('update.password');
-Route::post('users','UsuarioController@consultarPorParametro')->name('cunnsulta_parametro_usuario');
+Route::post('users/consulta', 'UsuarioController@consultarPorParametro')->name('cunnsulta_parametro_usuario');
 
 // rota de tratamento, que mostra os tratamentos
 Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
-Route::post('treatments','TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
-Auth::routes();
+Route::post('treatments/tratamentos', 'TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
