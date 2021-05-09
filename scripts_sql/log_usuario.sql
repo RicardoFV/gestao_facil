@@ -29,8 +29,3 @@ begin
     values (new.id_usuario_ressponsavel, 'alterando dados dados de usuario', now());
 
 end//
-
-
-
-
-select * from log_usuario;

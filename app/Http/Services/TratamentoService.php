@@ -13,24 +13,26 @@ class TratamentoService
     public static function listar()
     {
         return DB::table('v_list_tsru_dados')->paginate(6);
-       // return DB::select('select * from v_list_tsru_dados');
+        // return DB::select('select * from v_list_tsru_dados');
     }
     // realiza a consulta por sistema, listando no relatorio
-    public static function consultarPorSistema( $sistema){
+    public static function consultarPorSistema($sistema)
+    {
         return DB::table('v_list_tsru_dados')
-            ->where('nome_sistema','LIKE', '%'. $sistema .'%')
+            ->where('nome_sistema', 'LIKE', '%' . $sistema . '%')
             ->paginate(6);
     }
     // realiza a consulta por usuario, listando no relatorio
-    public static function consultarPorUsuario( $usuario){
+    public static function consultarPorUsuario($usuario)
+    {
         return DB::table('v_list_tsru_dados')
-            ->where('nome_usuario','LIKE', '%'. $usuario .'%')
+            ->where('nome_usuario', 'LIKE', '%' . $usuario . '%')
             ->paginate(6);
     }
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarUsuario()
     {
-        return User::select('id', 'name', 'email', 'perfil_acesso', 'excluido', 'created_at')->get();
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'created_at')->get();
         //return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where excluido = 1 ');
     }
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
@@ -60,7 +62,7 @@ class TratamentoService
     public static function listarConsultasExpecificas($situacao)
     {
         return DB::table('v_list_tsru_dados')->where('situacao', $situacao)->paginate(6);
-       // return DB::select("select * from v_list_tsru_dados where situacao = '$situacao'");
+        // return DB::select("select * from v_list_tsru_dados where situacao = '$situacao'");
     }
     // listar concluidos
     public static function listarConcluidos()
