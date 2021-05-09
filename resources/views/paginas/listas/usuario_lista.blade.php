@@ -51,24 +51,18 @@
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Perfil</th>
-                    <th scope="col">Situacao</th>
+                    <th scope="col">Data Acesso</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             @foreach($users as $user)
-                <?php
-                    if($user->excluido == 0){
-                        $user->excluido = 'Desativado';
-                    }elseif ($user->excluido == 1) {
-                        $user->excluido = 'Ativado';
-                    } 
-                ?>
+               
                 <tr>
                     <td>{{$user->id }}</td>
                     <td>{{$user->name }}</td>
                     <td>{{$user->email }}</td>
                     <td>{{$user->perfil_acesso }}</td>
-                    <td>{{$user->excluido }}</td>
+                    <td>{{$user->deleted_at }}</td>
                     <td>
                         <a href="{{ action('UsuarioController@edit', $user->id)}}" class="btn btn-primary btn-sm">
                             <i class="fas fa-external-link-alt"></i>

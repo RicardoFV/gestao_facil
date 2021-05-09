@@ -22,6 +22,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
 // rotas padroes 
 Route::resources([
     'requirements' => 'RequisitoController',
@@ -33,8 +36,6 @@ Route::resources([
 ]);
 
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
 
 // rota de requisito
 Route::post('requirements/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');

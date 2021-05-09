@@ -17,13 +17,13 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->integer('excluido');  // excluido 0 - sim  || excluido 1 - nao
             $table->enum('perfil_acesso', ['administrador', 'desenvolvedor', 'usuario']);
             $table->integer('id_usuario_ressponsavel');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +34,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->dropSoftDeletes();
+        });
     }
 }

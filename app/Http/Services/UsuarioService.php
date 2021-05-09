@@ -10,7 +10,9 @@ class UsuarioService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar()
     {
-        return User::select('id', 'name', 'email', 'perfil_acesso', 'excluido', 'created_at')->paginate(6);
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
+            ->withTrashed()
+            ->paginate(6);
         //return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where excluido = 1 ');
     }
 
@@ -23,7 +25,7 @@ class UsuarioService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarPorUsuarioLogado($id)
     {
-        return DB::select('select id, name, email, perfil_acesso, excluido, created_at from users where id =' . $id);
+        return DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id =' . $id);
     }
 
     // cadastrar as informaçoes
@@ -40,6 +42,6 @@ class UsuarioService
     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
     public static function deletar(User $usuario)
     {
-        return $usuario->push();
+        return User::destroy($usuario->id);
     }
 }

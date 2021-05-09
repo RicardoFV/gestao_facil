@@ -38,8 +38,8 @@ class UsuarioController extends Controller
     }
 
     // metodo que faz a busca do tratamento que é passodo por parametro
-    public function consultarPorParametro(PesquisaFormRequest $request){
-
+    public function consultarPorParametro(PesquisaFormRequest $request)
+    {
     }
 
     /*
@@ -65,7 +65,7 @@ class UsuarioController extends Controller
             //chama a tela de cadastro
             return view('auth.register');
         } else {
-           return view('paginas.restricao_acesso.restricao_acesso');
+            return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
 
@@ -103,7 +103,6 @@ class UsuarioController extends Controller
                 'email' => $email,
                 'perfil_acesso' => $perfil_acesso,
                 'password' => Hash::make($password),
-                'excluido' => 1,
                 'id_usuario_ressponsavel' => $id_usuario_ressponsavel
             ];
 
@@ -217,7 +216,6 @@ class UsuarioController extends Controller
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 $usuario->id_usuario_ressponsavel = auth()->user()->id;
-                $usuario->excluido = 0;
                 UsuarioService::deletar($usuario);
                 return redirect()->action('UsuarioController@index')
                     ->with('mensagem', 'Usuário Excluído com sucesso!');
