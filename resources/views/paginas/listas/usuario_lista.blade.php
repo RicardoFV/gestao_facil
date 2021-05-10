@@ -65,7 +65,9 @@
                     <td>{{$user->deleted_at }}</td>
                     <td>
                         @if(isset($user->deleted_at))
-                            <a href=""  class="btn btn-primary btn-sm">Ativar</a>
+                            <a href="{{ action('UsuarioController@consultarUsuarioInativo', $user->id)}}"  class="btn btn-secondary btn-sm">
+                                <i class="fas fa-power-off" alt="ativar"></i>
+                            </a>
                         @endif
                         <a href="{{ action('UsuarioController@edit', $user->id)}}" class="btn btn-primary btn-sm">
                             <i class="fas fa-external-link-alt"></i>

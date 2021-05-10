@@ -135,6 +135,37 @@ class UsuarioController extends Controller
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
+    // metodo que ativa usuario 
+    public function consultarUsuarioInativo($id)
+    {
+        if (Gate::allows('administrador', Auth::user())) {
+            $usuario = UsuarioService::consultarUsuarioDeletado($id);
+            if (!empty($usuario)) {
+                return view('paginas.decisoes.ativar_usuario', compact('usuario'));
+            } else {
+                return redirect()->back()->with('erro', 'Usuário não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+    }
+
+    public function ativarUsuario($id)
+    {
+        if (Gate::allows('administrador', Auth::user())) {
+            $usuario = UsuarioService::consultarUsuarioDeletado($id);
+            if (!empty($usuario)) {
+                $usuario->id_usuario_ressponsavel = auth()->user()->id;
+                UsuarioService::ativarUsuario($usuario);
+                return redirect()->action('UsuarioController@index')
+                    ->with('mensagem', 'Usuário Ativado com sucesso!');
+            } else {
+                return redirect()->back()->with('erro', 'Usuario não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.

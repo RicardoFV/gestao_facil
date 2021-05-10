@@ -22,6 +22,12 @@ class UsuarioService
         return User::find($id);
     }
 
+    //consultar por id do usuario deletado
+    public static function consultarUsuarioDeletado($id)
+    {
+        return User::onlyTrashed()->find($id);
+    }
+
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarPorUsuarioLogado($id)
     {
@@ -37,6 +43,11 @@ class UsuarioService
     public static function atualizar(User $usuario)
     {
         $usuario->push();
+    }
+    // reativa o usuario 
+    public static function ativarUsuario(User $usuario)
+    {
+        return $usuario->restore();
     }
 
     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
