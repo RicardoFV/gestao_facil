@@ -19,8 +19,7 @@ class TratamentoService
     public static function consultarPorSistema($sistema)
     {
         return DB::table('v_list_tsru_dados')
-            ->where('nome_sistema', 'LIKE', '%' . $sistema . '%')
-            ->paginate(6);
+            ->where('nome_sistema', 'LIKE', '%' . $sistema . '%');
     }
     // realiza a consulta por usuario, listando no relatorio
     public static function consultarPorUsuario($usuario)

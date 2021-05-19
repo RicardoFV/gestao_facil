@@ -10,7 +10,18 @@ class RequisitoService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar()
     {
-        return Requisito::paginate(6);
+        $requisitos = Requisito::paginate(6);
+        foreach ($requisitos as $requisito) {
+            if ($requisito->tipo_requisito === 'funcional') {
+                $requisito->tipo_requisito = 'Funcional';
+            } elseif ($requisito->tipo_requisito === 'nao_funcional') {
+                $requisito->tipo_requisito = 'Não Funcional';
+            }
+        }
+       // print_r($requisito->tipo_requisito);
+        //dd();
+
+        return $requisitos;
         //return DB::select('select * from requisitos where excluido = 1  ');
     }
 
@@ -24,6 +35,15 @@ class RequisitoService
     {
         return Requisito::find($id);
     }
+
+    //consultar por id
+    public static function consultarPorNomeRequisito($nome)
+    {
+        return  DB::table('requisitos')->where('nome', 'LIKE', '%' . $nome . '%');
+     
+        
+    }
+
     // atualiza as informaçoes
     public static function atualizar(Requisito $requisito)
     {

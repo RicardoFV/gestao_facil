@@ -21,14 +21,13 @@
             @include('mensagens.erro')
 
             <hr />
-            <form method="post" action="">
+            <form method="post" action="{{route('cunnsulta_parametro_requisito')}}">
                 @csrf
                 <div class="form-group ml-4 row mb-4">
                     <label for="" class="col-form-label">Consultar Por :</label>
                     <div class="col-md-2">
                         <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-control">
-                            <option value="sistema">Sistema</option>
-                            <option value="usuario">Usuario</option>
+                            <option value="nome">nome</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -57,12 +56,7 @@
                     </thead>
                     <tbody class="text-center">
                         @foreach ($requisitos as $requisito)
-                            <?php // valida o que foi recebido e muda os nomes
-                            if ($requisito->tipo_requisito === 'funcional') {
-                            $requisito->tipo_requisito = 'Funcional';
-                            } elseif ($requisito->tipo_requisito === 'nao_funcional') {
-                            $requisito->tipo_requisito = 'Não Funcional';
-                            } ?>
+                           
                             <tr>
                                 <td>{{ $requisito->id }}</td>
                                 <td>{{ $requisito->nome }}</td>

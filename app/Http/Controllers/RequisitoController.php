@@ -27,8 +27,20 @@ class RequisitoController extends Controller
         return view('paginas.listas.requisito_lista', compact('requisitos'));
     }
     // metodo que faz a busca do tratamento que é passodo por parametro
-    public function consultarPorParametro(PesquisaFormRequest $request){
-
+    public function consultarPorParametro(PesquisaFormRequest $request)
+    {
+        // recebe o tipo de pesquisa
+        $valor = $request->input('tipo_pesquisa');
+        // verifica se e sistema
+        if ($valor === "nome") {
+            $requisito = RequisitoService::consultarPorNomeRequisito($request->input('pesquisa'));
+         
+            dd($requisito);
+            return view('paginas.listas.requisito_lista')->with('requisito', $requisito);
+            // veriifica se é usuario
+        }else{
+            return $this->index();
+        }
     }
 
     /**
@@ -178,19 +190,19 @@ class RequisitoController extends Controller
                 // consulta se tem tratamento
                 //$tratamento = RequisitoService::consultarTratamentoPorRequisito($requisito->id);
                 // caso de nao vazio
-               // if (!empty($tratamento)) {
-                    // sera informado que nao pode ser removido
-               //     return redirect()->action('RequisitoController@index')
-                 //       ->with('erro', 'Requisito não pode ser removido');
+                // if (!empty($tratamento)) {
+                // sera informado que nao pode ser removido
+                //     return redirect()->action('RequisitoController@index')
+                //       ->with('erro', 'Requisito não pode ser removido');
                 //} else {
-                    // atualiza as informaçoes
-                    $requisito->excluido = 0;
-                    $requisito->id_usuario = auth()->user()->id;
-                    // faz uma deleçao logica
-                    RequisitoService::deletar($requisito);
-                    // retorna a mensagem de erro
-                    return redirect()->action('RequisitoController@index')
-                        ->with('mensagem', 'Requisito Excluído com sucesso!');
+                // atualiza as informaçoes
+                $requisito->excluido = 0;
+                $requisito->id_usuario = auth()->user()->id;
+                // faz uma deleçao logica
+                RequisitoService::deletar($requisito);
+                // retorna a mensagem de erro
+                return redirect()->action('RequisitoController@index')
+                    ->with('mensagem', 'Requisito Excluído com sucesso!');
                 //}
             } else {
                 return redirect()->back()->with('erro', 'Requisito não encontrado!');

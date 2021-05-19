@@ -39,6 +39,7 @@ Route::resources([
 
 // rota de requisito
 Route::post('/requirements/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
+Route::post('requirements/consult/', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
 // rota de sistema
 Route::post('/systems/consulta', 'SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
 // rota de versao

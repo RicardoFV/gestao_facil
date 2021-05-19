@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\{TratamentoFormReuest,PesquisaFormRequest};
+use App\Http\Requests\{TratamentoFormReuest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\{TratamentoService, DescricaoService};
@@ -52,7 +52,7 @@ class TratamentoController extends Controller
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
         // caso seja igual a 0, retorna para a tela anterior
-        if (sizeof($status) == 0) {
+        if (sizeof($status[0]) == 0) {
             return redirect()->back()->with('erro', 'Nao ha Tratamento com status Concluído!');
         } else if ($status[0]->situacao === 'concluido') {
             // caso a situaçao for igual concluido, ele listara para mostrar concluidos
