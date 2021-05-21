@@ -21,7 +21,8 @@
             @include('mensagens.erro')
 
             <hr />
-            <form method="post" action="{{route('cunnsulta_parametro_requisito')}}">
+            <!---
+            <form method="post" action="">
                 @csrf
                 <div class="form-group ml-4 row mb-4">
                     <label for="" class="col-form-label">Consultar Por :</label>
@@ -41,6 +42,7 @@
                     </div>
                 </div>
             </form>
+            -->
 
             <!-- criação da tabela  -->
             <div class="container">
@@ -56,7 +58,7 @@
                     </thead>
                     <tbody class="text-center">
                         @foreach ($requisitos as $requisito)
-                           
+
                             <tr>
                                 <td>{{ $requisito->id }}</td>
                                 <td>{{ $requisito->nome }}</td>

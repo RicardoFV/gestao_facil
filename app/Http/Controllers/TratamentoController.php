@@ -32,7 +32,9 @@ class TratamentoController extends Controller
     public function consultarPorParametro(PesquisaFormRequest $request)
     {
         // recebe o tipo de pesquisa
-        $valor = $request->input('tipo_pesquisa');
+
+        $valor = $request->input('pesquisa');
+
         // verifica se e sistema
         if ($valor === "sistema") {
             $tratamentos = TratamentoService::consultarPorSistema($request->input('pesquisa'));
@@ -52,7 +54,7 @@ class TratamentoController extends Controller
     {
         $status = TratamentoService::listarConsultasExpecificas($situacao);
         // caso seja igual a 0, retorna para a tela anterior
-        if (sizeof($status[0]) == 0) {
+        if (sizeof($status) == 0) {
             return redirect()->back()->with('erro', 'Nao ha Tratamento com status Concluído!');
         } else if ($status[0]->situacao === 'concluido') {
             // caso a situaçao for igual concluido, ele listara para mostrar concluidos

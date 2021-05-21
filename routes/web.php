@@ -25,7 +25,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
-// rotas padroes 
+// rotas padroes
 Route::resources([
     'requirements' => 'RequisitoController',
     'systems' => 'SistemaController',

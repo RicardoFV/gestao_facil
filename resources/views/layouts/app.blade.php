@@ -55,7 +55,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('ver_tratamento', 'concluido') }}">Finalizados</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Relatórios</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('settings.index') }}">Configurações</a>
                         </li>
