@@ -25,8 +25,10 @@ class CreateEnderecosTable extends Migration
             $table->string('gia');
             $table->string('ddd');
             $table->string('siafi');
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_usuario_inclusao')->unsigned();
+            $table->foreign('id_usuario_inclusao')->references('id')->on('users');
+            $table->integer('id_usuario_alteracao')->unsigned();
+            $table->foreign('id_usuario_alteracao')->references('id')->on('users');
             $table->timestamps();
         });
     }

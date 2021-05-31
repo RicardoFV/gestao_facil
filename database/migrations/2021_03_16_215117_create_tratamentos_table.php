@@ -20,8 +20,10 @@ class CreateTratamentosTable extends Migration
             $table->enum('situacao', ['novo', 'nao_iniciado', 'em_andamento', 'parado', 'concluido']);
             $table->integer('id_usuario_responsavel')->unsigned();
             $table->foreign('id_usuario_responsavel')->references('id')->on('users');
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_usuario_inclusao')->unsigned();
+            $table->foreign('id_usuario_inclusao')->references('id')->on('users');
+            $table->integer('id_usuario_alteracao')->unsigned();
+            $table->foreign('id_usuario_alteracao')->references('id')->on('users');
             $table->integer('id_requisito')->unsigned();
             $table->foreign('id_requisito')->references('id')->on('requisitos');
             $table->integer('id_sistema')->unsigned();
