@@ -20,12 +20,12 @@ class CreateSistemasTable extends Migration
             //$table->string('nome_imagem');
             $table->string('descricao');
             $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
-            $table->integer('id_usuario_inclusao')->unsigned();
-            $table->foreign('id_usuario_inclusao')->references('id')->on('users');
-            $table->integer('id_usuario_alteracao')->unsigned();
-            $table->foreign('id_usuario_alteracao')->references('id')->on('users');
+            $table->integer('id_usuario')->unsigned();
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_versao')->unsigned();
             $table->foreign('id_versao')->references('id')->on('versaos');
+            $table->integer('id_empresa')->unsigned();
+            $table->foreign('id_empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

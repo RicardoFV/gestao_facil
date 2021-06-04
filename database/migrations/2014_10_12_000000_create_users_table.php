@@ -17,9 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('perfil_acesso', ['administrador', 'desenvolvedor', 'usuario']);
+            $table->enum('perfil_acesso', ['super_admin','administrador', 'desenvolvedor', 'usuario']);
             $table->integer('id_usuario_ressponsavel');
-            $table->integer('id_usuario_ressponsavel_alteracao');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

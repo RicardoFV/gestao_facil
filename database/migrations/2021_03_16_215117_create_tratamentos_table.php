@@ -15,19 +15,20 @@ class CreateTratamentosTable extends Migration
     {
         Schema::create('tratamentos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('numeor_chamado');
             $table->date('dt_entrega');
             $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->enum('situacao', ['novo', 'nao_iniciado', 'em_andamento', 'parado', 'concluido']);
             $table->integer('id_usuario_responsavel')->unsigned();
             $table->foreign('id_usuario_responsavel')->references('id')->on('users');
-            $table->integer('id_usuario_inclusao')->unsigned();
-            $table->foreign('id_usuario_inclusao')->references('id')->on('users');
-            $table->integer('id_usuario_alteracao')->unsigned();
-            $table->foreign('id_usuario_alteracao')->references('id')->on('users');
+            $table->integer('id_usuario')->unsigned();
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_requisito')->unsigned();
             $table->foreign('id_requisito')->references('id')->on('requisitos');
             $table->integer('id_sistema')->unsigned();
             $table->foreign('id_sistema')->references('id')->on('sistemas');
+            $table->integer('id_empresa')->unsigned();
+            $table->foreign('id_empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }
