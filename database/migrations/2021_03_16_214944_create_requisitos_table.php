@@ -21,6 +21,8 @@ class CreateRequisitosTable extends Migration
             $table->enum('tipo_requisito', ['funcional', 'nao_funcional']);
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_empresa')->unsigned();
+            $table->foreign('id_empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class RequisitoController extends Controller
     public function __construct()
     {
         // permite acesso somente logado
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class RequisitoController extends Controller
         // verifica se e sistema
         if ($valor === "nome") {
             $requisito = RequisitoService::consultarPorNomeRequisito($request->input('pesquisa'));
-         
+
             dd($requisito);
             return view('paginas.listas.requisito_lista')->with('requisito', $requisito);
             // veriifica se é usuario

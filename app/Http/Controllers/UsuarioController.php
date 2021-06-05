@@ -18,7 +18,7 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     use RegistersUsers;
     /**
@@ -29,7 +29,11 @@ class UsuarioController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $users = UsuarioService::listar();
             return view('paginas.listas.usuario_lista', compact('users'));
         } else {
@@ -61,7 +65,11 @@ class UsuarioController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ){
             //chama a tela de cadastro
             return view('auth.register');
         } else {
@@ -83,7 +91,11 @@ class UsuarioController extends Controller
     // cadastra as informaçoes
     public function store(UsuarioFormRequest $request)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $nome = $request->input('name');
             $email = $request->input('email');
             $perfil_acesso = $request->input('perfil_acesso');
@@ -123,7 +135,11 @@ class UsuarioController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // faz a consulta
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
@@ -135,10 +151,14 @@ class UsuarioController extends Controller
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
-    // metodo que ativa usuario 
+    // metodo que ativa usuario
     public function consultarUsuarioInativo($id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $usuario = UsuarioService::consultarUsuarioDeletado($id);
             if (!empty($usuario)) {
                 return view('paginas.decisoes.ativar_usuario', compact('usuario'));
@@ -152,7 +172,11 @@ class UsuarioController extends Controller
 
     public function ativarUsuario($id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $usuario = UsuarioService::consultarUsuarioDeletado($id);
             if (!empty($usuario)) {
                 $usuario->id_usuario_ressponsavel = auth()->user()->id;
@@ -176,7 +200,11 @@ class UsuarioController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // faz a consulta
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
@@ -199,7 +227,11 @@ class UsuarioController extends Controller
     // atualiza as informaçoes
     public function update(UsuarioAlteracaoFormRequest $request, $id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 $usuario->id = $id;
@@ -243,7 +275,11 @@ class UsuarioController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
-        if (Gate::allows('administrador', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
                 $usuario->id_usuario_ressponsavel = auth()->user()->id;

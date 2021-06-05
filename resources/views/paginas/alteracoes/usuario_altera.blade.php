@@ -59,9 +59,11 @@
                     <div class="col-md-6">
 
                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
+                            <option value="super_admin" {{ ($usuario->perfil_acesso == 'super_admin')? 'selected': ''}}>Super</option>
                             <option value="administrador" {{ ($usuario->perfil_acesso == 'administrador')? 'selected': ''}}>Administrador(a)</option>
+                            <option value="administrador_gestor" {{ ($usuario->perfil_acesso == 'administrador_gestor')? 'selected': ''}}>Gestor(a)</option>
                             <option value="desenvolvedor" {{ ($usuario->perfil_acesso == 'desenvolvedor')? 'selected': ''}}>Desenvoldor(a)</option>
-                            <option value="usuario" {{ ($usuario->perfil_acesso == 'usuario')? 'selected': ''}}>Usuário(a)</option>
+                            <option value="suporte" {{ ($usuario->perfil_acesso == 'suporte')? 'selected': ''}}>Suporte</option>
                         </select>
                     </div>
                 </div>
