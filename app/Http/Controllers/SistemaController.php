@@ -12,7 +12,7 @@ class SistemaController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +39,13 @@ class SistemaController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             $versoes = SistemaService::listarVersao();
             return view('paginas.cadastros.sistema', compact('versoes'));
         } else {
@@ -56,7 +62,13 @@ class SistemaController extends Controller
     // cadastra as informaçoes
     public function store(SistemaFormRequest $request)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             $nome = $request->input('nome');
             $descricao = $request->input('descricao');
             $id_versao = $request->input('id_versao');
@@ -87,7 +99,13 @@ class SistemaController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // faz a consulta
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
@@ -109,7 +127,13 @@ class SistemaController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // faz a consulta
             $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
@@ -133,7 +157,13 @@ class SistemaController extends Controller
     // atualiza as informaçoes
     public function update(SistemaFormRequest $request, $id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ){
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 $sistema->id = $id;
@@ -162,7 +192,12 @@ class SistemaController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 //$tratamento = SistemaService::consultarTratamentoPorsistema($sistema->id);

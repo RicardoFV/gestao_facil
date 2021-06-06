@@ -9,6 +9,7 @@ begin
 if (select count(*) from users) = 0 then 
 	insert into users(name, email, perfil_acesso, id_usuario_ressponsavel, password, created_at, updated_at)
     values('Super Admin', 'superadmin@gmail.com','super_admin', 1, '$2y$10$GgmTkF8lJ6/bBhzqCDBm/OO1KMuhRXzBGWgcOFzWYGIlF2uISV/D2' , now(), now());
+    -- senha : 12345678
     else
 		-- retorna o erro 
 		signal sqlstate '45000' set message_text = 'Tabela já existe usuario, não pode ser inserido';    

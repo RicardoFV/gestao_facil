@@ -25,17 +25,15 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
-// colocando a autenticaçao na rota
-Route::middleware('auth')->group(function () {
-    /// rotas padroes
-    Route::resources([
-        'requirements' => 'RequisitoController',
-        'systems' => 'SistemaController',
-        'treatments' => 'TratamentoController',
-        'versions' => 'VersaoController',
-        'settings' => 'ConfigController',
-        'users' => 'UsuarioController'
-    ]);
+// rotas padroes
+Route::resources([
+    'requirements' => 'RequisitoController',
+    'systems' => 'SistemaController',
+    'treatments' => 'TratamentoController',
+    'versions' => 'VersaoController',
+    'settings' => 'ConfigController',
+    'users' => 'UsuarioController'
+]);
 
     // rota de requisito
     Route::post('/requirements/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
@@ -55,18 +53,3 @@ Route::middleware('auth')->group(function () {
     // rota de tratamento, que mostra os tratamentos
     Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
     Route::post('treatments/tratamentos', 'TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
-});
-/*
-
-*/
-/*
-// rotas padroes
-Route::resources([
-    'requirements' => 'RequisitoController',
-    'systems' => 'SistemaController',
-    'treatments' => 'TratamentoController',
-    'versions' => 'VersaoController',
-    'settings' => 'ConfigController',
-   //  'users' => 'UsuarioController'
-]);
-*/

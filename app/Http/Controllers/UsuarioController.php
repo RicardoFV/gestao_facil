@@ -18,7 +18,7 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
     use RegistersUsers;
     /**
@@ -29,6 +29,7 @@ class UsuarioController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -65,6 +66,7 @@ class UsuarioController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -91,6 +93,7 @@ class UsuarioController extends Controller
     // cadastra as informaçoes
     public function store(UsuarioFormRequest $request)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -135,6 +138,7 @@ class UsuarioController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -154,6 +158,7 @@ class UsuarioController extends Controller
     // metodo que ativa usuario
     public function consultarUsuarioInativo($id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -172,6 +177,7 @@ class UsuarioController extends Controller
 
     public function ativarUsuario($id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -200,6 +206,7 @@ class UsuarioController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -227,6 +234,7 @@ class UsuarioController extends Controller
     // atualiza as informaçoes
     public function update(UsuarioAlteracaoFormRequest $request, $id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -275,6 +283,7 @@ class UsuarioController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
+        // configurando as permissoes
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||

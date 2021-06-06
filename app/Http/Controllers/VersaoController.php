@@ -13,7 +13,7 @@ class VersaoController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +39,11 @@ class VersaoController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function create()
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             //chama a tela de cadastro
             return view('paginas.cadastros.versao');
         } else {
@@ -56,8 +60,12 @@ class VersaoController extends Controller
     // cadastra as informaçoes
     public function store(VersaoFormRequest $request)
     {
-        // permissoa somente administrador ou desnvolvvedor
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             $nome = $request->input('nome');
             $id_usuario = auth()->user()->id;
             // recebe as informaçoes em forma de array
@@ -85,7 +93,12 @@ class VersaoController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
@@ -107,7 +120,12 @@ class VersaoController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
@@ -130,7 +148,12 @@ class VersaoController extends Controller
     // atualiza as informaçoes
     public function update(VersaoFormRequest $request, $id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // consulta as informaçoes
             $versao = VersaoService::consultar($id);
             // caso nao esteja vazio
@@ -163,7 +186,12 @@ class VersaoController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // consulta as informaçoes
             $versao = VersaoService::consultar($id);
             // caso nao esteja vazio

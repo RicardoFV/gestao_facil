@@ -12,7 +12,7 @@ class RequisitoController extends Controller
     public function __construct()
     {
         // permite acesso somente logado
-       // $this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class RequisitoController extends Controller
             dd($requisito);
             return view('paginas.listas.requisito_lista')->with('requisito', $requisito);
             // veriifica se é usuario
-        }else{
+        } else {
             return $this->index();
         }
     }
@@ -51,7 +51,13 @@ class RequisitoController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             return view('paginas.cadastros.requisito');
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -68,7 +74,13 @@ class RequisitoController extends Controller
     // cadastra as informaçoes
     public function store(RequisitoFormRequest $request)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // recebe as informaçoes
             $nome = $request->input('nome');
             $tipo_requisito = $request->input('tipo_requisito');
@@ -102,7 +114,13 @@ class RequisitoController extends Controller
     // consulta as informaçoes
     public function show($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
@@ -124,7 +142,13 @@ class RequisitoController extends Controller
     // consulta as informaçoes para a edição
     public function edit($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
@@ -147,7 +171,13 @@ class RequisitoController extends Controller
     // atualiza as informaçoes
     public function update(RequisitoFormRequest $request, $id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
             // consulta as informaçoes
             $requisito = RequisitoService::consultar($id);
             // caso nao esteja vazio
@@ -182,7 +212,12 @@ class RequisitoController extends Controller
     // realiza a deleçao logica
     public function destroy($id)
     {
-        if (Gate::allows('administrador', Auth::user()) || Gate::allows('desenvolvedor', Auth::user())) {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
             // consulta as informaçoes
             $requisito = RequisitoService::consultar($id);
             // em caso de nao vazio
