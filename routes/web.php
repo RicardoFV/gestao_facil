@@ -32,7 +32,8 @@ Route::resources([
     'treatments' => 'TratamentoController',
     'versions' => 'VersaoController',
     'settings' => 'ConfigController',
-    'users' => 'UsuarioController'
+    'users' => 'UsuarioController',
+    'companies' =>'EmpresaController'
 ]);
 
     // rota de requisito

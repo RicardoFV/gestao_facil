@@ -13,7 +13,7 @@
             <div class="row mt-5">
                 <div class="col-6">
                     <h1>
-                        <a href="" class="badge badge-light">Empresa</a>
+                        <a href="{{route('companies.index')}}" class="badge badge-light">Empresa</a>
                     </h1>
                 </div>
                 <div class="col-6">

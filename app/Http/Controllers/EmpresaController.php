@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Services\EmpresaService;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $versoes = EmpresaService::listar();
+        return view('paginas.listas.empresa_lista');
     }
 
     /**
@@ -23,7 +32,16 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
+            //chama a tela de cadastro
+            return view('paginas.cadastros.empresa');
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
