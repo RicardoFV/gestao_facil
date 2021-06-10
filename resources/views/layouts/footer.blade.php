@@ -1,3 +1,3 @@
-<footer class="fixed-bottom mb-4 text-center">
+<footer class="fixed-bottom mt-5 mb-3 text-center">
     &copy; Copyright 2000-2025 - Todos os Direitos Reservados
 </footer>
