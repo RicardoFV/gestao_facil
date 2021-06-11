@@ -34,13 +34,10 @@
                                 <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}">
                             </div>
                             <div class="col-4">
-                                <label for="id_usuario_gestor" class="col-form-label">{{ __('Gestor Responsável') }}<span
-                                        class="ml-1 cor_mensagem">*</span></label>
+                                <label for="cnpj" class="col-form-label">{{ __('CNPJ') }}<span
+                                    class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_usuario_gestor" class="form-control">
-                                    <option value="ativo">responsavel</option>
-
-                                </select>
+                            <input id="cnpj" type="text" class="form-control" name="cnpj" value="{{ old('cnpj') }}">
 
                             </div>
                             <div class="col-2">
@@ -76,12 +73,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
-                                <label for="cnpj" class="col-form-label">{{ __('CNPJ') }}<span
-                                        class="ml-1 cor_mensagem">*</span></label>
 
-                                <input id="cnpj" type="text" class="form-control" name="cnpj" value="{{ old('cnpj') }}">
-                            </div>
                             <div class="col-6">
                                 <label for="id_endereco" class="col-form-label">{{ __('Endereço') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>

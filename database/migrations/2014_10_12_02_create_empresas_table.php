@@ -23,8 +23,6 @@ class CreateEmpresasTable extends Migration
             $table->string('situacao_empresa');
             $table->integer('id_endereco')->unsigned();
             $table->foreign('id_endereco')->references('id')->on('enderecos');
-            $table->integer('id_usuario_gestor')->unsigned();
-            $table->foreign('id_usuario_gestor')->references('id')->on('users');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();

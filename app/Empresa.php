@@ -15,7 +15,6 @@ class Empresa extends Model
         'cnpj',
         'situacao_empresa',
         'id_endereco',
-        'id_usuario_gestor',
         'id_usuario'
     ];
 }
