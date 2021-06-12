@@ -19,6 +19,8 @@ class CreateVinculosTable extends Migration
             $table->foreign('id_gestor')->references('id')->on('users');
             $table->integer('id_empresa')->unsigned();
             $table->foreign('id_empresa')->references('id')->on('empresas');
+            $table->integer('id_usuario_responsavel')->unsigned();
+            $table->foreign('id_usuario_responsavel')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -154,5 +154,27 @@ begin
     values (new.id_usuario, 'Alterando dados do endereço', new.updated_at, new.id);
 end;
 
+--  log vinculo empresa
+DELIMITER //
+create trigger trig_log_vinculo_empresa
+after insert on vinculos for each row
+begin
+	-- cadastra o logs na tabela logs tratamento
+    
+    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    values (new.id_usuario_responsavel, 'inserindo dados do vinculo empresa', new.created_at, new.id);
+end;
+
+-- trigger para logs de vinculo empresa (atualizaçao)
+DELIMITER //
+create trigger trig_log_vinculo_empresa_alteracao
+after update on vinculos for each row
+begin
+	-- cadastra o logs na tabela logs tratamento
+    
+    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    values (new.id_usuario_responsavel, 'Alterando dados do vinculo empresa', new.updated_at, new.id);
+end;
+
 
 

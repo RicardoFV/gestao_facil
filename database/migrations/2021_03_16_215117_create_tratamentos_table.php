@@ -15,7 +15,6 @@ class CreateTratamentosTable extends Migration
     {
         Schema::create('tratamentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('numeor_chamado');
             $table->date('dt_entrega');
             $table->integer('excluido'); // excluido 0 - sim  || excluido 1 - nao
             $table->enum('situacao', ['novo', 'nao_iniciado', 'em_andamento', 'parado', 'concluido']);
