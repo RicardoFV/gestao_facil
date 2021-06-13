@@ -27,30 +27,32 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // rotas padroes
 Route::resources([
-    'requirements' => 'RequisitoController',
-    'systems' => 'SistemaController',
-    'treatments' => 'TratamentoController',
-    'versions' => 'VersaoController',
-    'settings' => 'ConfigController',
-    'users' => 'UsuarioController',
-    'companies' =>'EmpresaController'
+    'requisitos' => 'RequisitoController',
+    'sistemas' => 'SistemaController',
+    'chamados' => 'TratamentoController',
+    'versoes' => 'VersaoController',
+    'configuracoes' => 'ConfigController',
+    'usuarios' => 'UsuarioController',
+    'empresas' =>'EmpresaController',
+    'enderecos' =>'EnderecoController',
+    'vinculos' =>'EnderecoController',
 ]);
 
     // rota de requisito
-    Route::post('/requirements/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
-    Route::post('requirements/consult/', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
+    Route::post('/requisitos/consulta', 'RequisitoController@consultarPorParametro')->name('cunnsulta_parametro_requisito');
+
     // rota de sistema
-    Route::post('/systems/consulta', 'SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
+    Route::post('/sistemas/consulta', 'SistemaController@consultarPorParametro')->name('cunnsulta_parametro_sistema');
     // rota de versao
-    Route::post('/versions/consuta', 'VersaoController@consultarPorParametro')->name('cunnsulta_parametro_versao');
+    Route::post('/versoes/consuta', 'VersaoController@consultarPorParametro')->name('cunnsulta_parametro_versao');
 
     // rota de auterar a senah de usuario
-    Route::get('/users/updatepassword/tela', 'UsuarioController@telaSenha')->name('tela_senha');
-    Route::post('/users/updatepassword/{id}', 'UsuarioController@updatePassword')->name('update.password');
-    Route::post('/users/consulta', 'UsuarioController@consultarPorParametro')->name('cunnsulta_parametro_usuario');
-    Route::post('/users/ativar/{id}', 'UsuarioController@ativarUsuario')->name('ativar_usuario');
-    Route::any('/users/consulta/inativo/{id}', 'UsuarioController@consultarUsuarioInativo')->name('cunnsulta_usuario_inativo');
+    Route::get('/usuarios/atualizasenha/tela', 'UsuarioController@telaSenha')->name('tela_senha');
+    Route::post('/usuarios/atualizasenha/{id}', 'UsuarioController@updatePassword')->name('update.password');
+    Route::post('/usuarios/consulta', 'UsuarioController@consultarPorParametro')->name('cunnsulta_parametro_usuario');
+    Route::post('/usuarios/ativar/{id}', 'UsuarioController@ativarUsuario')->name('ativar_usuario');
+    Route::any('/usuarios/consulta/inativo/{id}', 'UsuarioController@consultarUsuarioInativo')->name('cunnsulta_usuario_inativo');
 
     // rota de tratamento, que mostra os tratamentos
-    Route::get('/treatments/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
-    Route::post('treatments/tratamentos', 'TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
+    Route::get('/chamados/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
+    Route::post('chamados/tratamentos', 'TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');

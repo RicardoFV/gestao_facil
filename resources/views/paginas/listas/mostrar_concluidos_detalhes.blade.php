@@ -5,20 +5,20 @@
     <div class="container cadastro">
         <div class="card mt-1">
             <div class="card-header">
-                <h1>Tratamento</h1>
+                <h1>Chamados</h1>
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('treatments.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
+                    <a href="{{ route('chamados.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
                 </div>
             </div>
 
             <hr />
-           
+
             <div class="card-body">
 
                 <form>
-                  
+
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-4">
@@ -31,7 +31,7 @@
                                             readonly>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="dt_entrega"
                                         class="col-md-12 col-form-label">{{ __('Data De Entrega') }}</label>
@@ -41,7 +41,7 @@
                                             type="date" class="form-control" readonly>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="form-group ">
                                     <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }}</label>
@@ -136,7 +136,7 @@
                             </div>
                         </div>
 
-                    </div>                
+                    </div>
                 </form>
             </div>
         </div>

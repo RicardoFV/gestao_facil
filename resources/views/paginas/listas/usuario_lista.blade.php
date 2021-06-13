@@ -6,11 +6,11 @@
 
         <div class="card mt-1">
             <div class="card-header">
-                <h1>Usuário</h1>
+                <h1>Usuários</h1>
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('users.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
+                    <a href="{{ route('usuarios.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
                 </div>
             </div>
             <!-- mensagem de Sucesso-->

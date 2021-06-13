@@ -49,7 +49,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('treatments.index') }}">Tratamentos</a>
+                            <a class="nav-link" href="{{ route('chamados.index') }}">Tratamentos</a>
                         </li>
 
                         <li class="nav-item">
@@ -59,7 +59,7 @@
                             <a class="nav-link" href="">Relatórios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('settings.index') }}">Configurações</a>
+                            <a class="nav-link" href="{{ route('configuracoes.index') }}">Configurações</a>
                         </li>
 
                     </ul>

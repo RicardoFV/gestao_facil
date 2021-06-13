@@ -15,7 +15,7 @@ class VinculoController extends Controller
      */
     public function index()
     {
-
+        return view('paginas.cadastros.vincular_usuario_empresa');
     }
 
     /**

@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="card mt-1">
-        
+
         <div class="card-body">
 
             <h1 class="text-center">Tem certeza que deseja remover essa Versão  ?</h1>
@@ -15,24 +15,24 @@
             </p>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3 justify-content-sm-end">
-                    
-                    <form method="post" action="{{route('versions.destroy',$versao->id )}}">
+
+                    <form method="post" action="{{route('versoes.destroy',$versao->id )}}">
                             @csrf
                             <!-- colocando o segundo metodo para ser executad -->
                                 @method('DELETE')
-                                    
+
                                 <button class="btn btn-danger btn-sm">
                                 <!-- ou inves do nome excluir , coloco um icone -->
                                     Sim
                                 </button>
                     </form>
 
-                </div>     
+                </div>
                 <div class="form-group col-sm-6 d-flex inline mt-3 justify-content-sm-start">
-                    <a href="{{route('versions.index')}}" class="btn btn-primary btn-sm">Não</a>
+                    <a href="{{route('versoes.index')}}" class="btn btn-primary btn-sm">Não</a>
                 </div>
             </div>
-            
+
         </div>
 
     </div>

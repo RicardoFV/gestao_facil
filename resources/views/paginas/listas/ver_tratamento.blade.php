@@ -5,11 +5,11 @@
 <div class="container">
     <div class="card mt-1">
         <div class="card-header">
-            <h1>Tratamento</h1>
+            <h1>Chamados</h1>
         </div>
         <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
-                <a href="{{ route('treatments.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
+                <a href="{{ route('chamados.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
         </div>
         <hr>

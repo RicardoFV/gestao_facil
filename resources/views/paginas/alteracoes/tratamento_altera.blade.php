@@ -9,10 +9,10 @@
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('treatments.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
+                    <a href="{{ route('chamados.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
                 </div>
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('treatments.index') }}" class="btn btn-block btn-primary">Ver Registro</a>
+                    <a href="{{ route('chamados.index') }}" class="btn btn-block btn-primary">Ver Registro</a>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
 
             <div class="card-body">
 
-                <form method="POST" action="{{ route('treatments.update', $tratamento->id) }}">
+                <form method="POST" action="{{ route('chamados.update', $tratamento->id) }}">
                     @csrf
                     @method('PUT')
 

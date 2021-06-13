@@ -5,11 +5,11 @@
     <div class="container">
         <div class="card mt-1">
             <div class="card-header">
-                <h1>Sistema</h1>
+                <h1>Sistemas</h1>
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('systems.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
+                    <a href="{{ route('sistemas.create') }}" class="btn btn-block btn-primary">Novo Registro</a>
                 </div>
 
             </div>

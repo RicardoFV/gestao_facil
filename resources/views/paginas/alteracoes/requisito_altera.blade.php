@@ -9,10 +9,10 @@
         </div>
         <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
-                <a href="{{route('requirements.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
+                <a href="{{route('requisitos.create')}}" class="btn btn-block btn-primary">Novo Registro</a>
             </div>
             <div class="form-group col-sm-6 d-flex inline mt-3">
-                <a href="{{route('requirements.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
+                <a href="{{route('requisitos.index')}}" class="btn btn-block btn-primary">Ver Registro</a>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="{{route('requirements.update', $requisito->id)}}">
+            <form method="POST" action="{{route('requisitos.update', $requisito->id)}}">
                 @csrf
                 @method('PUT')
 
