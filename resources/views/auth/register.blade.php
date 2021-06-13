@@ -25,55 +25,60 @@
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
 
-                <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="name">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" >
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                    <div class="col-4">
+                        <label for="email">{{ __('E-mail') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="perfil_acesso" class="col-md-4 col-form-label text-md-right">{{ __('Perfil Acesso') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
-
-                        <select id="perfil_acesso" name="perfil_acesso" class="form-control">
-                            <option value="super_admin" >Super</option>
-                            <option value="administrador" >Administrador(a)</option>
-                            <option value="administrador_gestor" >Gestor(a)</option>
-                            <option value="desenvolvedor" >Desenvoldor(a)</option>
-                            <option value="suporte" >Suporte</option>
-                        </select>
+                    <div class="col-4">
+                        <label for="perfil_acesso">{{ __('Perfil Acesso') }} <span class="ml-1 cor_mensagem">*</span></label>
+                         <!-- caso seja super admin-->
+                         @can('super_admin', Auth::user())
+                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
+                             <option value="super_admin" >Super</option>
+                             <option value="administrador" >Administrador(a)</option>
+                             <option value="administrador_gestor" >Gestor(a)</option>
+                             <option value="desenvolvedor" >Desenvoldor(a)</option>
+                             <option value="suporte" >Suporte</option>
+                         </select>
+                         @endcan
+                         <!-- caso seja super administrador-->
+                         @can('administrador', Auth::user())
+                         ]<select id="perfil_acesso" name="perfil_acesso" class="form-control">
+                             <option value="administrador" >Administrador(a)</option>
+                             <option value="administrador_gestor" >Gestor(a)</option>
+                             <option value="desenvolvedor" >Desenvoldor(a)</option>
+                             <option value="suporte" >Suporte</option>
+                         </select>
+                         @endcan
+                         <!-- caso seja super administrador_gestor-->
+                         @can('administrador_gestor', Auth::user())
+                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
+                             <option value="administrador_gestor" >Gestor(a)</option>
+                             <option value="desenvolvedor" >Desenvoldor(a)</option>
+                             <option value="suporte" >Suporte</option>
+                         </select>
+                         @endcan
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                <div class="row">
+                    <div class="col">
+                        <label for="password">{{ __('Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <input id="password" type="password" class="form-control" name="password">
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                    <div class="col">
+                        <label for="password-confirm">{{ __('Confirmar Senha') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                     </div>
-                </div>
+                  </div>
 
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
+                <div class="row mb-3 mt-4">
+                    <div class="col-md-6 offset-md-3">
                         <button type="submit" class="btn btn-block btn-success">
                             {{ __('Cadastrar') }}
                         </button>

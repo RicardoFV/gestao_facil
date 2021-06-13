@@ -27,47 +27,44 @@
             <form method="POST" action="{{route('requirements.update', $requisito->id)}}">
                 @csrf
                 @method('PUT')
-                <div class="form-group row">
-                    <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Id') }}</label>
 
-                    <div class="col-md-6">
+                <div class="row">
+                    <!--
+                    <div class="col-1">
+                        <label for="id"></label>
                         <input id="id" type="text" value="{{$requisito->id}}" class="form-control" readonly/>
-
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
-                    <input id="nome" type="text" class="form-control"  name="nome" value="{{$requisito->nome}}" >
+                    -->
+                    <div class="col-4">
+                        <label for="nome">{{ __('Nome') }} <span class="ml-1 cor_mensagem">*</span></label>
+                        <input id="nome" type="text" class="form-control"  name="nome" value="{{$requisito->nome}}" >
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="tipo_requisito" class="col-md-4 col-form-label text-md-right">{{ __('Tipo Requisito') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
-
+                    <div class="col-4">
+                        <label for="tipo_requisito">{{ __('Tipo Requisito') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <select name="tipo_requisito" id="tipo_requisito" class="form-control">
                             <option value="funcional" {{ ($requisito->tipo_requisito == 'funcional')? 'selected': ''}}>Funcional</option>
                             <option value="nao_funcional" {{ ($requisito->tipo_requisito == 'nao_funcional')? 'selected': ''}}>Não Funcional</option>
                         </select>
                     </div>
-                </div>
+                    <div class="col-4">
+                        <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
+                        <select name="tipo_reqempresauisito" id="empresa" class="form-control">
+                            <option value="empresa">Empresa</option>
+                        </select>
+                    </div>
+                  </div>
 
-                <div class="form-group row">
-                    <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }} <span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-6">
+                        <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }} <span class="ml-1 cor_mensagem">*</span></label>
                         <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
                             {{$requisito->descricao}}
                         </textarea>
                     </div>
-                </div>
+                  </div>
 
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
+                <div class="row mb-3 mt-4">
+                    <div class="col-md-6 offset-md-2">
                         <button type="submit" class="btn btn-block btn-success">
                             {{ __('Atualizar') }}
                         </button>

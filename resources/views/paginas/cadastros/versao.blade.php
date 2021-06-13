@@ -24,17 +24,21 @@
             <form method="POST" action="{{route('versions.store')}}">
                 @csrf
 
-                <div class="form-group row">
-                    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}<span class="ml-1 cor_mensagem">*</span></label>
-
-                    <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="nome">{{ __('Nome') }}<span class="ml-1 cor_mensagem">*</span></label>
                         <input id="nome" type="text" class="form-control"name="nome" value="{{ old('nome') }}" >
+                    </div>
+                    <div class="col-4">
+                        <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
+                        <select name="tipo_reqempresauisito" id="empresa" class="form-control">
+                            <option value="empresa">Empresa</option>
+                        </select>
                     </div>
                 </div>
 
-
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
+                <div class="row mb-3 mt-4">
+                    <div class="col-md-6 offset-md-3">
                         <button type="submit" class="btn btn-block btn-success">
                             {{ __('Cadastrar') }}
                         </button>
