@@ -1,5 +1,6 @@
+
 // funcao para identar o texto no textarea
-$(document).ready(function() {
+$(document).ready(() => {
 
     // recebe o textarea
     var campo = $('#descricao')
@@ -9,11 +10,3 @@ $(document).ready(function() {
     $('#descricao').val(digitado)
 
 })
-
-// funcao reponsavel por deletar
-// nao usar
-function deletar(url, nome) {
-    if (window.confirm('Deseja realmente excluir este(a) ' + nome + '?')) {
-        window.location = url
-    }
-}

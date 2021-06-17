@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
                 'administrador',
                 'administrador_gestor',
                 'desenvolvedor',
-                'suporte']);
+                'suporte',
+                'usuario'
+            ]);
             $table->integer('id_usuario_ressponsavel');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

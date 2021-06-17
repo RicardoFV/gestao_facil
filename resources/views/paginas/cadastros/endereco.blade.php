@@ -30,7 +30,7 @@
                             <div class="col-3">
                                 <label for="meu_cep" class="col-form-label">{{ __('Cep') }}<span
                                     class="ml-1 cor_mensagem">*</span></label>
-                                <input type="text" class="form-control" id="meu_cep" placeholder="Digite seu Cep">
+                                <input type="text" onchange="consultarCep()" class="form-control" id="meu_cep" placeholder="Digite seu Cep">
                             </div>
                         </div>
 
@@ -46,26 +46,26 @@
                                 <label for="logradouro" class="col-form-label">{{ __('Logradouro') }}</label>
                                 <input type="text" class="form-control" id="logradouro" name="logradouro" disabled="disabled">
                             </div>
-
-                            <div class="col-3">
-                                <label for="complemento" class="col-form-label">{{ __('Complemento') }}</label>
-                                <input type="text" class="form-control" name="complemento" id="complemento" disabled="disabled">
-                            </div>
-                        </div>
-
-                        <div class="row offset-md-2">
-
-                            <div class="col-3">
-                                <label for="bairro" class="col-form-label">{{ __('Bairro') }}</label>
-                                <input type="text" class="form-control" name="bairro" id="bairro" disabled="disabled">
-                            </div>
-
                             <div class="col-3">
                                 <label for="localidade" class="col-form-label">{{ __('Localidade') }}</label>
                                 <input type="text" class="form-control" id="localidade" name="localidade" disabled="disabled">
                             </div>
 
-                            <div class="col-3">
+                        </div>
+
+                        <div class="row offset-md-2">
+
+                            <div class="col-5">
+                                <label for="bairro" class="col-form-label">{{ __('Bairro') }}</label>
+                                <input type="text" class="form-control" name="bairro" id="bairro" disabled="disabled">
+                            </div>
+
+                            <div class="col-2">
+                                <label for="complemento" class="col-form-label">{{ __('Complemento') }}</label>
+                                <input type="text" class="form-control" name="complemento" id="complemento" disabled="disabled">
+                            </div>
+
+                            <div class="col-2">
                                 <label for="uf" class="col-form-label">{{ __('Uf') }}</label>
                                 <input type="text" class="form-control" name="uf" id="uf" disabled="disabled">
                             </div>
