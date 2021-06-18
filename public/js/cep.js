@@ -1,7 +1,7 @@
 function consultarCep() {
     // recebe o que foi digitado
     let cep = document.getElementById('meu_cep').value
-        // verifica a quantidade de digitos
+    // verifica a quantidade de digitos
     if (cep === '' || cep === null) {
         alert('CEP não pode ser vazio')
     } else if (cep.length < 8) { // verifica se esta vazio
@@ -10,35 +10,42 @@ function consultarCep() {
 
         // chama a url passando o cep
         let url = 'https://viacep.com.br/ws/' + cep + '/json/'
-            // cria a instancia do request
+        // cria a instancia do request
         let request = new XMLHttpRequest()
-            // abre a requisiçao
+        // abre a requisiçao
         request.open('GET', url, true)
-            // captura a resposta da requisiao
-        request.onreadystatechange = function() {
-                // numero 4 significa a transaçao concluida
-                if (request.readyState == 4) {
-                    // se status 200 significa que deu certo
-                    if (request.status == 200) {
-                        // passa a resposta para a funçao de preencher os campos
-                        preencherCampos(JSON.parse(request.responseText))
-                            // limpa a campo
-                        document.getElementById('meu_cep').value = ''
-                    }
+        // captura a resposta da requisiao
+        request.onreadystatechange = function () {
+            // numero 4 significa a transaçao concluida
+            if (request.readyState == 4) {
+                // se status 200 significa que deu certo
+                if (request.status == 200) {
+                    // passa a resposta para a funçao de preencher os campos
+                    preencherCampos(JSON.parse(request.responseText))
+                    // limpa a campo
+                    document.getElementById('meu_cep').value = ''
                 }
             }
-            // finaliza a requisiçao
+        }
+        // finaliza a requisiçao
         request.send();
     }
 
 
 }
 
-   // preenche os campos do formulario
+// preenche os campos do formulario
 function preencherCampos(cep) {
-    document.getElementById('cep').value = cep.cep
+    // passa o cep para uma nova variavel
+    let novo_cep = cep.cep
+    // tira o sext caractere que e o tracho -
+    document.getElementById('cep').value = novo_cep.replace('-','')
     document.getElementById('logradouro').value = cep.logradouro
-    document.getElementById('complemento').value = cep.complemento
+    if (cep.complemento == '') {
+        document.getElementById('complemento').value = 0
+    } else {
+        document.getElementById('complemento').value = cep.complemento
+    }
     document.getElementById('bairro').value = cep.bairro
     document.getElementById('localidade').value = cep.localidade
     document.getElementById('uf').value = cep.uf

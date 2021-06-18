@@ -21,10 +21,12 @@ class CreateEnderecosTable extends Migration
             $table->string('bairro');
             $table->string('localidade');
             $table->string('uf');
+            /*
             $table->string('ibge');
             $table->string('gia');
             $table->string('ddd');
             $table->string('siafi');
+            */
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();

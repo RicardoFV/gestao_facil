@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\EnderecoFormulario;
+use Illuminate\Support\Facades\{Gate, Auth};
+use App\Http\Services\EnderecoService;
 
 class EnderecoController extends Controller
 {
@@ -32,9 +35,21 @@ class EnderecoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EnderecoFormulario $request)
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ){
+            EnderecoService::inserir($request->all());
+            return redirect()->action('RequisitoController@index')
+            ->with('mensagem', 'Endereco cadastrado com sucesso!');
+        }else {
+            // em caso de erro
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**

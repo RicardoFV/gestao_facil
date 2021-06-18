@@ -24,10 +24,6 @@ class Endereco extends Model
         'bairro',
         'localidade',
         'uf',
-        'ibge',
-        'gia',
-        'ddd',
-        'siafi',
         'id_usuario'
     ];
 }
