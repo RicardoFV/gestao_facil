@@ -26,12 +26,14 @@
                     <form method="POST" action="{{ route('empresas.store') }}">
                         @csrf
 
+                        <input type="hidden" id="id_usuario" name="id_usuario" value="{{Auth::user()->id}}">
+
                         <div class="row">
                             <div class="col-6">
-                                <label for="nome" class="col-form-label">{{ __('Nome') }}<span
+                                <label for="name" class="col-form-label">{{ __('Nome') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}">
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('nome') }}">
                             </div>
                             <div class="col-4">
                                 <label for="cnpj" class="col-form-label">{{ __('CNPJ') }}<span
@@ -43,13 +45,53 @@
                             <div class="col-2">
                                 <label for="situacao_empresa" class="col-form-label">{{ __('Situação') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
-                                <select id="situacao_empresa" class="form-control">
-                                    <option value="ativo">Ativo</option>
-                                    <option value="inativo">Inativo</option>
+                                <select id="situacao_empresa" name="situacao_empresa" class="form-control">
+                                    <option value="ativo" >Ativo</option>
+                                    <option value="inativo" >Inativo</option>
                                 </select>
                             </div>
                         </div>
+                        <fieldset>
+                            <legend>Endereço</legend>
+                            <div class="row">
 
+                                <div class="col-3">
+                                    <label for="cep" class="col-form-label">{{ __('Cep') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('cep') }}" maxlength="9" onchange="consultarCep()" class="form-control" name="cep" id="cep" placeholder="Digite seu Cep">
+                                </div>
+
+                                <div class="col-3">
+                                    <label for="logradouro" class="col-form-label">{{ __('Logradouro') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('logradouro') }}" class="form-control" id="logradouro" name="logradouro" readonly>
+                                </div>
+                                <div class="col-2">
+                                    <label for="localidade" class="col-form-label">{{ __('Localidade') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('localidade') }}" class="form-control" id="localidade" name="localidade" readonly>
+                                </div>
+
+                                <div class="col-2">
+                                    <label for="complemento" class="col-form-label">{{ __('Complemento') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('complemento') }}" class="form-control" name="complemento" id="complemento" readonly>
+                                </div>
+                                <div class="col-2">
+                                    <label for="uf" class="col-form-label">{{ __('Uf') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('uf') }}" class="form-control" name="uf" id="uf" readonly>
+                                </div>
+
+                                <div class="col-5">
+                                    <label for="bairro" class="col-form-label">{{ __('Bairro') }}<span
+                                        class="ml-1 cor_mensagem">*</span></label>
+                                    <input type="text" value="{{ old('bairro') }}" class="form-control" name="bairro" id="bairro" readonly>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
 
                         <div class="row">
                             <div class="col-6">
@@ -72,27 +114,6 @@
                             </div>
                         </div>
 
-                        <div class="row inline-flex">
-
-                            <div class="col-1">
-                                <label for="id_endereco" class="col-form-label">{{ __('Endereço') }}<span
-                                        class="ml-1 cor_mensagem">*</span></label>
-
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-auto my-3">
-                                <label></label>
-                                <input type="text" class="form-control mt-2">
-
-                            </div>
-                            <div class="col-auto my-4 pt-2">
-                                <!-- Botão para acionar modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modalExemplo">
-                                    Abrir modal de demonstração
-                                </button>
-                            </div>
-                        </div>
 
                         <div class="row mb-3 mt-4">
 
@@ -119,64 +140,3 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- criação da tabela  -->
-                <div class="container">
-                    <table class="table table-hover table-sm">
-                        <thead class="text-center">
-                            <tr>
-
-                                <th scope="col">Cep</th>
-                                <th scope="col">Bairro</th>
-                                <th scope="col">Uf</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @foreach ($enderecos as $endereco)
-
-                                <tr>
-
-                                    <td>{{ $endereco->cep }}</td>
-                                    <td>{{ $endereco->bairro }}</td>
-                                    <td>{{ $endereco->uf }}</td>
-                                    <td>
-
-                                        <a href="{{ action('EnderecoController@edit', $endereco->id) }}"
-                                            class="btn btn-primary btn-sm">
-                                            <i class="fas fa-external-link-alt"></i>
-                                        </a>
-
-                                        <a href="{{ action('EnderecoController@show', $endereco->id) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="align-items-center">
-                        {{ $enderecos->links() }}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar mudanças</button>
-            </div>
-        </div>
-    </div>
-</div>

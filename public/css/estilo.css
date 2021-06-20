@@ -19,3 +19,13 @@ body {
 .cor_mensagem{
     color: red;
 }
+
+
+fieldset {
+
+    border: 2px solid #999;
+    /* controla a distancia entre os elementos e a borda */
+    width:inherit;
+    padding: 15px;
+    /* margem para alinhar o fieldset com o restante do grid */
+  }

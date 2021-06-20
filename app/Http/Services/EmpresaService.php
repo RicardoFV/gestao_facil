@@ -10,13 +10,13 @@ class EmpresaService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar()
     {
-        //return Versao::where('excluido' ,1)->paginate(6);
+        return DB::table('empresas')->paginate(6);
         //return DB::select('select * from versaos where excluido = 1');
     }
     // cadastrar as informaçoes
     public static function inserir(array $dados)
     {
-       // Versao::create($dados);
+        Empresa::create($dados);
     }
     //consultar por id
     public static function consultar($id)

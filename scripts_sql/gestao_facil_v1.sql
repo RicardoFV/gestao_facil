@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18-Jun-2021 às 02:09
+-- Tempo de geração: 20-Jun-2021 às 17:10
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 7.4.15
 
@@ -69,10 +69,16 @@ CREATE TABLE `empresas` (
   `telefone_2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cnpj` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `situacao_empresa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_endereco` int(10) UNSIGNED NOT NULL,
+  `cep` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `complemento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_usuario` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -100,48 +106,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `enderecos`
---
-
-CREATE TABLE `enderecos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `cep` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `complemento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `localidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_usuario` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Acionadores `enderecos`
---
-DELIMITER $$
-CREATE TRIGGER `trig_log_endereco_alteracao` AFTER UPDATE ON `enderecos` FOR EACH ROW begin
-	-- cadastra o logs na tabela logs tratamento
-    
-    insert into log_endereco (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
-    values (new.id_usuario, 'Alterando dados do endereço', new.updated_at, new.id);
-end
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `trig_log_endereco_cadastro` AFTER INSERT ON `enderecos` FOR EACH ROW begin
-	-- cadastra o logs na tabela logs tratamento
-    
-    insert into log_endereco (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
-    values (new.id_usuario, 'inserindo dados do endereço', new.created_at, new.id);
-end
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `failed_jobs`
 --
 
@@ -161,20 +125,6 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `log_empresa` (
-  `id` bigint(20) NOT NULL,
-  `id_usuario_acao` int(11) DEFAULT NULL,
-  `atividade` varchar(255) DEFAULT NULL,
-  `data_inclusao` datetime DEFAULT NULL,
-  `id_usuario_cadastrado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `log_endereco`
---
-
-CREATE TABLE `log_endereco` (
   `id` bigint(20) NOT NULL,
   `id_usuario_acao` int(11) DEFAULT NULL,
   `atividade` varchar(255) DEFAULT NULL,
@@ -257,7 +207,7 @@ CREATE TABLE `log_usuario` (
 --
 
 INSERT INTO `log_usuario` (`id`, `id_usuario_acao`, `atividade`, `data_inclusao`, `id_usuario_cadastrado`) VALUES
-(1, 1, 'inserindo dados de usuario', '2021-06-17 21:06:08', 1);
+(1, 1, 'inserindo dados de usuario', '2021-06-20 12:07:49', 1);
 
 -- --------------------------------------------------------
 
@@ -305,16 +255,15 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_01_create_enderecos_table', 1),
-(3, '2014_10_12_02_create_empresas_table', 1),
-(4, '2014_10_12_100000_create_password_resets_table', 1),
-(5, '2019_08_19_000000_create_failed_jobs_table', 1),
-(6, '2021_03_16_214944_create_requisitos_table', 1),
-(7, '2021_03_16_215055_create_versaos_table', 1),
-(8, '2021_03_16_215116_create_sistemas_table', 1),
-(9, '2021_03_16_215117_create_tratamentos_table', 1),
-(10, '2021_04_07_200117_create_descricoes_table', 1),
-(11, '2021_06_10_212249_create_vinculos_table', 1);
+(2, '2014_10_12_02_create_empresas_table', 1),
+(3, '2014_10_12_100000_create_password_resets_table', 1),
+(4, '2019_08_19_000000_create_failed_jobs_table', 1),
+(5, '2021_03_16_214944_create_requisitos_table', 1),
+(6, '2021_03_16_215055_create_versaos_table', 1),
+(7, '2021_03_16_215116_create_sistemas_table', 1),
+(8, '2021_03_16_215117_create_tratamentos_table', 1),
+(9, '2021_04_07_200117_create_descricoes_table', 1),
+(10, '2021_06_10_212249_create_vinculos_table', 1);
 
 -- --------------------------------------------------------
 
@@ -475,7 +424,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `perfil_acesso`, `id_usuario_ressponsavel`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Super Admin', 'superadmin@gmail.com', 'super_admin', 1, NULL, '$2y$10$GgmTkF8lJ6/bBhzqCDBm/OO1KMuhRXzBGWgcOFzWYGIlF2uISV/D2', NULL, '2021-06-18 00:06:08', '2021-06-18 00:06:08', NULL);
+(1, 'Super Admin', 'superadmin@gmail.com', 'super_admin', 1, NULL, '$2y$10$GgmTkF8lJ6/bBhzqCDBm/OO1KMuhRXzBGWgcOFzWYGIlF2uISV/D2', NULL, '2021-06-20 15:07:49', '2021-06-20 15:07:49', NULL);
 
 --
 -- Acionadores `users`
@@ -590,15 +539,7 @@ ALTER TABLE `descricoes`
 --
 ALTER TABLE `empresas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `empresas_id_endereco_foreign` (`id_endereco`),
   ADD KEY `empresas_id_usuario_foreign` (`id_usuario`);
-
---
--- Índices para tabela `enderecos`
---
-ALTER TABLE `enderecos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `enderecos_id_usuario_foreign` (`id_usuario`);
 
 --
 -- Índices para tabela `failed_jobs`
@@ -610,12 +551,6 @@ ALTER TABLE `failed_jobs`
 -- Índices para tabela `log_empresa`
 --
 ALTER TABLE `log_empresa`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `log_endereco`
---
-ALTER TABLE `log_endereco`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -741,12 +676,6 @@ ALTER TABLE `empresas`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `enderecos`
---
-ALTER TABLE `enderecos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -756,12 +685,6 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de tabela `log_empresa`
 --
 ALTER TABLE `log_empresa`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `log_endereco`
---
-ALTER TABLE `log_endereco`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
@@ -810,7 +733,7 @@ ALTER TABLE `log_vinculo`
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `requisitos`
@@ -862,14 +785,7 @@ ALTER TABLE `descricoes`
 -- Limitadores para a tabela `empresas`
 --
 ALTER TABLE `empresas`
-  ADD CONSTRAINT `empresas_id_endereco_foreign` FOREIGN KEY (`id_endereco`) REFERENCES `enderecos` (`id`),
   ADD CONSTRAINT `empresas_id_usuario_foreign` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`);
-
---
--- Limitadores para a tabela `enderecos`
---
-ALTER TABLE `enderecos`
-  ADD CONSTRAINT `enderecos_id_usuario_foreign` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`);
 
 --
 -- Limitadores para a tabela `requisitos`

@@ -34,16 +34,6 @@ create table log_empresa
     data_inclusao datetime,
     id_usuario_cadastrado int   
 );
-
-create table log_endereco
-( 
-	id bigint not null primary key auto_increment,
-    id_usuario_acao int, 
-    atividade varchar(255), 
-    data_inclusao datetime,
-    id_usuario_cadastrado int   
-);
-
 create table log_tratamento
 ( 
 	id bigint not null primary key auto_increment,

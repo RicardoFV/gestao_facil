@@ -23,11 +23,6 @@
                 </div>
                 <div class="col-6">
                     <h1>
-                        <a href="{{route('enderecos.index')}}" class="badge badge-light">Endereços</a>
-                    </h1>
-                </div>
-                <div class="col-6">
-                    <h1>
                         <a href="{{route('requisitos.index') }}" class="badge badge-light">Requisitos</a>
                     </h1>
                 </div>

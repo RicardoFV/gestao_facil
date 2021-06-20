@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empresa extends Model
 {
+    use SoftDeletes;
     //passando os atributos
     protected $fillable = [
         'name',
@@ -14,7 +16,12 @@ class Empresa extends Model
         'telefone_2',
         'cnpj',
         'situacao_empresa',
-        'id_endereco',
+        'cep',
+        'logradouro',
+        'complemento',
+        'bairro',
+        'localidade',
+        'uf',
         'id_usuario'
     ];
 }

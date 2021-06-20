@@ -6,14 +6,16 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Respect\Validation\Rules as RespectRules;
 
-class ValidacoesService extends ServiceProvider {
+class ValidacoesService extends ServiceProvider
+{
 
     /**
      * Register services.
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         //
     }
 
@@ -22,12 +24,15 @@ class ValidacoesService extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         // cep
-        Validator::extend('cep', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('cep', function ($attribute, $value, $parameters, $validator) {
             return (new RespectRules\PostalCode('BR'))->validate($value);
         });
-
+        // cnpj
+        Validator::extend('cnpj', function ($attribute, $value, $parameters, $validator) {
+            return (new RespectRules\Cnpj())->validate($value);
+        });
     }
-
 }

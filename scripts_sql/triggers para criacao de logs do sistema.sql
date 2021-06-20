@@ -108,30 +108,6 @@ begin
     insert into log_requisito (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
     values (new.id_usuario, 'Alterando dados do requisito', new.updated_at, new.id);
 end;
-
---  log enderecos
-DELIMITER //
-create trigger trig_log_endereco_cadastro 
-after insert on enderecos for each row
-begin
-	-- cadastra o logs na tabela logs tratamento
-    
-    insert into log_endereco (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
-    values (new.id_usuario, 'inserindo dados do endereço', new.created_at, new.id);
-end;
-
--- trigger para logs de sistemas (atualizaçao)
-DELIMITER //
-create trigger trig_log_endereco_alteracao
-after update on enderecos for each row
-begin
-	-- cadastra o logs na tabela logs tratamento
-    
-    insert into log_endereco (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
-    values (new.id_usuario, 'Alterando dados do endereço', new.updated_at, new.id);
-end;
-
-
 --  log empresas
 DELIMITER //
 create trigger trig_log_empresa_cadastro 

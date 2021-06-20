@@ -21,11 +21,16 @@ class CreateEmpresasTable extends Migration
             $table->string('telefone_2');
             $table->string('cnpj');
             $table->string('situacao_empresa');
-            $table->integer('id_endereco')->unsigned();
-            $table->foreign('id_endereco')->references('id')->on('enderecos');
+            $table->string('cep');
+            $table->string('logradouro');
+            $table->string('complemento');
+            $table->string('bairro');
+            $table->string('localidade');
+            $table->string('uf');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,7 +41,7 @@ class CreateEmpresasTable extends Migration
      */
     public function down()
     {
-        Schema::table('enderecos', function (Blueprint $table) {
+        Schema::table('empresas', function (Blueprint $table) {
 
             $table->dropSoftDeletes();
         });

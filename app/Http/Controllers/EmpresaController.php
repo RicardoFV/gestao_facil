@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
+use App\Http\Requests\EmpresaFormulario;
 use Illuminate\Http\Request;
-use App\Http\Services\{EmpresaService, EnderecoService};
+use App\Http\Services\{EmpresaService};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +23,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-
-        return view('paginas.listas.empresa_lista');
+        $empresas = EmpresaService::listar();
+        return view('paginas.listas.empresa_lista', compact('empresas'));
     }
 
     /**
@@ -37,9 +39,9 @@ class EmpresaController extends Controller
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user())
         ) {
-            $enderecos = EnderecoService::listar();
+
             //chama a tela de cadastro
-            return view('paginas.cadastros.empresa', compact('enderecos'));
+            return view('paginas.cadastros.empresa');
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -51,9 +53,23 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpresaFormulario $request)
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
+            //dd($request->all());;
+
+            EmpresaService::inserir($request->all());
+             // retorna a mensagem de sucesso
+             return redirect()->action('EmpresaController@index')
+             ->with('mensagem', 'Empresa cadastrada com sucesso!');
+
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**

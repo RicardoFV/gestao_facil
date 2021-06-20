@@ -34,7 +34,6 @@ Route::resources([
     'configuracoes' => 'ConfigController',
     'usuarios' => 'UsuarioController',
     'empresas' =>'EmpresaController',
-    'enderecos' =>'EnderecoController',
     'vinculos' =>'EnderecoController',
 ]);
 
