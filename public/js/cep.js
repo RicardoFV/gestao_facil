@@ -1,11 +1,11 @@
 function consultarCep() {
     // recebe o que foi digitado
-    let cep = document.getElementById('meu_cep').value
+    let cep = document.getElementById('cep').value
     // verifica a quantidade de digitos
     if (cep === '' || cep === null) {
-        alert('CEP não pode ser vazio')
+        swal ( "Erro" , " CEP não pode ser vazio " , "error" )
     } else if (cep.length < 8) { // verifica se esta vazio
-        alert('CEP não pode ser menor que 8')
+        swal ( "Erro" , " CEP não pode ser menor que 8 " ,"error" )   ;
     } else { // realiza a consulta
 
         // chama a url passando o cep
@@ -18,14 +18,16 @@ function consultarCep() {
         request.onreadystatechange = function () {
             // numero 4 significa a transaçao concluida
             if (request.readyState == 4) {
+                console.log(request)
                 // se status 200 significa que deu certo
                 if (request.status == 200) {
                     // passa a resposta para a funçao de preencher os campos
                     preencherCampos(JSON.parse(request.responseText))
-                    // limpa a campo
-                    document.getElementById('meu_cep').value = ''
+                } else if (request.status == 0) {
+                    swal ( "Erro" , " CPF digitado e incorreto " , "error" )   ;
                 }
             }
+
         }
         // finaliza a requisiçao
         request.send();
@@ -39,7 +41,7 @@ function preencherCampos(cep) {
     // passa o cep para uma nova variavel
     let novo_cep = cep.cep
     // tira o sext caractere que e o tracho -
-    document.getElementById('cep').value = novo_cep.replace('-','')
+    document.getElementById('cep').value = novo_cep.replace('-', '')
     document.getElementById('logradouro').value = cep.logradouro
     if (cep.complemento == '') {
         document.getElementById('complemento').value = 0
@@ -49,10 +51,4 @@ function preencherCampos(cep) {
     document.getElementById('bairro').value = cep.bairro
     document.getElementById('localidade').value = cep.localidade
     document.getElementById('uf').value = cep.uf
-    /*
-    document.getElementById('ibge').value = cep.ibge
-    document.getElementById('gia').value = cep.gia
-    document.getElementById('ddd').value = cep.ddd
-    document.getElementById('siafi').value = cep.siafi
-    */
 }

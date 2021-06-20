@@ -16,7 +16,8 @@ class EnderecoController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.endereco');
+        $enderecos = EnderecoService::listar();
+        return view('paginas.listas.endereco_lista', compact('enderecos'));
     }
 
     /**
@@ -26,7 +27,17 @@ class EnderecoController extends Controller
      */
     public function create()
     {
-        //
+         // configurando as permissoes
+         if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ){
+            return view('paginas.cadastros.endereco');
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
@@ -44,7 +55,7 @@ class EnderecoController extends Controller
             Gate::allows('desenvolvedor', Auth::user())
         ){
             EnderecoService::inserir($request->all());
-            return redirect()->action('RequisitoController@index')
+            return redirect()->action('EnderecoController@index')
             ->with('mensagem', 'Endereco cadastrado com sucesso!');
         }else {
             // em caso de erro

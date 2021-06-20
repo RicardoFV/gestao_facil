@@ -13,6 +13,7 @@
     <!-- Scripts -->
     <script src="{{asset('js/cep.js') }}"></script>
     <script src="{{asset('js/script.js') }}"></script>
+    <script src = " https://unpkg.com/sweetalert/dist/sweetalert.min.js "> </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
 

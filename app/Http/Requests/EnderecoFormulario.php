@@ -24,7 +24,12 @@ class EnderecoFormulario extends FormRequest
     public function rules()
     {
         return [
-            'cep' =>['required','min:8' ,'max:9' , 'unique:enderecos'],
+            'cep' =>'required|min:8|max:9|unique:enderecos|cep',
+            'logradouro' =>'required',
+            'complemento' =>  'required',
+            'bairro' =>['required'],
+            'localidade' =>['required'],
+            'uf' =>['required'],
         ];
     }
 
@@ -33,9 +38,16 @@ class EnderecoFormulario extends FormRequest
         return [
             // mensagens em português
             'cep.required' => 'O campo :attribute é obrigatório',
+            'cep' => 'É necessário digitar um :attribute valido',
             'cep.min' => 'O campo :attribute não permite menos de 8 caracteres',
             'cep.max' => 'O campo :attribute não permite mais de 9 caracteres',
             'cep.unique' => 'Esse :attribute já se encontra em nossa base de dados',
+            'logradouro.required' => 'O campo :attribute é obrigatório',
+            'complemento.required' => 'O campo :attribute é obrigatório',
+            'bairro.required' => 'O campo :attribute é obrigatório',
+            'localidade.required' => 'O campo :attribute é obrigatório',
+            'uf.required' => 'O campo :attribute é obrigatório',
+
         ];
     }
 }

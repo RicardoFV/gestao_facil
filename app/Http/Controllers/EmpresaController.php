@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Services\EmpresaService;
+use App\Http\Services\{EmpresaService, EnderecoService};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +21,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //$versoes = EmpresaService::listar();
+
         return view('paginas.listas.empresa_lista');
     }
 
@@ -37,8 +37,9 @@ class EmpresaController extends Controller
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user())
         ) {
+            $enderecos = EnderecoService::listar();
             //chama a tela de cadastro
-            return view('paginas.cadastros.empresa');
+            return view('paginas.cadastros.empresa', compact('enderecos'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }

@@ -35,9 +35,9 @@
                             </div>
                             <div class="col-4">
                                 <label for="cnpj" class="col-form-label">{{ __('CNPJ') }}<span
-                                    class="ml-1 cor_mensagem">*</span></label>
+                                        class="ml-1 cor_mensagem">*</span></label>
 
-                            <input id="cnpj" type="text" class="form-control" name="cnpj" value="{{ old('cnpj') }}">
+                                <input id="cnpj" type="text" class="form-control" name="cnpj" value="{{ old('cnpj') }}">
 
                             </div>
                             <div class="col-2">
@@ -72,16 +72,25 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inline-flex">
 
-                            <div class="col-6">
+                            <div class="col-1">
                                 <label for="id_endereco" class="col-form-label">{{ __('Endereço') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_endereco" class="form-control">
-                                    <option value="ativo">endereço</option>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-auto my-3">
+                                <label></label>
+                                <input type="text" class="form-control mt-2">
 
-                                </select>
+                            </div>
+                            <div class="col-auto my-4 pt-2">
+                                <!-- Botão para acionar modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modalExemplo">
+                                    Abrir modal de demonstração
+                                </button>
                             </div>
                         </div>
 
@@ -102,3 +111,72 @@
 
     </div>
 @endsection
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- criação da tabela  -->
+                <div class="container">
+                    <table class="table table-hover table-sm">
+                        <thead class="text-center">
+                            <tr>
+
+                                <th scope="col">Cep</th>
+                                <th scope="col">Bairro</th>
+                                <th scope="col">Uf</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach ($enderecos as $endereco)
+
+                                <tr>
+
+                                    <td>{{ $endereco->cep }}</td>
+                                    <td>{{ $endereco->bairro }}</td>
+                                    <td>{{ $endereco->uf }}</td>
+                                    <td>
+
+                                        <a href="{{ action('EnderecoController@edit', $endereco->id) }}"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+
+                                        <a href="{{ action('EnderecoController@show', $endereco->id) }}"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="align-items-center">
+                        {{ $enderecos->links() }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>
