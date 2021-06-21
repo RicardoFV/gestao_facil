@@ -55,3 +55,7 @@ Route::resources([
     // rota de tratamento, que mostra os tratamentos
     Route::get('/chamados/status/{situacao}', 'TratamentoController@listarTratamentos')->name('ver_tratamento');
     Route::post('chamados/tratamentos', 'TratamentoController@consultarPorParametro')->name('cunnsulta_parametro');
+
+    // rota empresa
+    Route::any('/empresas/consulta/inativa/{id}', 'EmpresaController@consultarEmpresaInativa')->name('cunnsulta_empresa_inativa');
+    Route::post('/empresas/ativar/{id}', 'EmpresaController@ativarEmpresa')->name('ativar_empresa');

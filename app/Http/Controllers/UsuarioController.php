@@ -291,7 +291,7 @@ class UsuarioController extends Controller
         ) {
             $usuario = UsuarioService::consultar($id);
             if (!empty($usuario)) {
-                $usuario->id_usuario_ressponsavel = auth()->user()->id;
+                $usuario->id_usuario_ressponsavel = Auth::user()->id;
                 UsuarioService::deletar($usuario);
                 return redirect()->action('UsuarioController@index')
                     ->with('mensagem', 'Usuário Excluído com sucesso!');

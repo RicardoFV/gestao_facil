@@ -85,7 +85,7 @@ class RequisitoController extends Controller
             $nome = $request->input('nome');
             $tipo_requisito = $request->input('tipo_requisito');
             $descricao = $request->input('descricao');
-            $id_usuario = auth()->user()->id;
+            $id_usuario =Auth::user()->id;
             // passa para um array
             $form = [
                 'nome' => $nome,
@@ -187,7 +187,7 @@ class RequisitoController extends Controller
                 $requisito->nome = $request->input('nome');
                 $requisito->tipo_requisito = $request->input('tipo_requisito');
                 $requisito->descricao = $request->input('descricao');
-                $requisito->id_usuario = auth()->user()->id;
+                $requisito->id_usuario = Auth::user()->id;
                 // atualiza os dados
                 RequisitoService::atualizar($requisito);
                 // apresenta a mensagem de sucesso
@@ -232,7 +232,7 @@ class RequisitoController extends Controller
                 //} else {
                 // atualiza as informaçoes
                 $requisito->excluido = 0;
-                $requisito->id_usuario = auth()->user()->id;
+                $requisito->id_usuario = Auth::user()->id;
                 // faz uma deleçao logica
                 RequisitoService::deletar($requisito);
                 // retorna a mensagem de erro

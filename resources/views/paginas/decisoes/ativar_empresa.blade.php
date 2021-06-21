@@ -7,16 +7,16 @@
 
         <div class="card-body">
 
-            <h1 class="text-center">Tem certeza que deseja Reativar esse Usuário  ?</h1>
+            <h1 class="text-center">Tem certeza que deseja Reativar essa Empresa  ?</h1>
             <p class="text-center mt-2">
                 <strong>
-                    {{$usuario->name}}
+                    {{$empresa->name}}
                 </strong>
             </p>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3 justify-content-sm-end">
 
-                    <form method="post" action="{{route('ativar_usuario',$usuario->id )}}">
+                    <form method="post" action="{{route('ativar_empresa',$empresa->id )}}">
                             @csrf
 
                                 <button class="btn btn-danger btn-sm">
@@ -27,7 +27,7 @@
 
                 </div>
                 <div class="form-group col-sm-6 d-flex inline mt-3 justify-content-sm-start">
-                    <a href="{{route('users.index')}}" class="btn btn-primary btn-sm">Não</a>
+                    <a href="{{route('empresas.index')}}" class="btn btn-primary btn-sm">Não</a>
                 </div>
             </div>
 

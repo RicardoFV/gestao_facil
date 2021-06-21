@@ -7,13 +7,12 @@ use  App\User;
 
 class UsuarioService
 {
-    // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
+    // mostra tods ate mesmo os excluidos
     public static function listar()
     {
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
             ->withTrashed()
             ->paginate(6);
-        //return DB::select('select id, name, email, perfil_acesso, excluido, created_at  from users where excluido = 1 ');
     }
 
     //consultar por id
@@ -44,7 +43,7 @@ class UsuarioService
     {
         $usuario->push();
     }
-    // reativa o usuario 
+    // reativa o usuario
     public static function ativarUsuario(User $usuario)
     {
         return $usuario->restore();

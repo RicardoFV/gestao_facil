@@ -95,7 +95,7 @@ class TratamentoController extends Controller
         $id_usuario_responsavel = $request->input('id_usuario_responsavel');
         $id_requisito = $request->input('id_requisito');
         $id_sistema = $request->input('id_sistema');
-        $id_usuario = auth()->user()->id;
+        $id_usuario = Auth::user()->id;
         // insere no array
         $form = [
             'dt_entrega' => $dt_entrega,
@@ -209,7 +209,7 @@ class TratamentoController extends Controller
                 $tratamento->id_usuario_responsavel = $request->input('id_usuario_responsavel');
                 $tratamento->id_requisito = $request->input('id_requisito');
                 $tratamento->id_sistema = $request->input('id_sistema');
-                $tratamento->id_usuario = auth()->user()->id;
+                $tratamento->id_usuario = Auth::user()->id;
                 // atuaaliza as informaçoes do tratamento
                 TratamentoService::atualizar($tratamento);
                 // insere o array, uma nova descriçao
@@ -249,7 +249,7 @@ class TratamentoController extends Controller
                 // atuzaliza o excluido para 0 -- inativado
                 // passa o usuario que fez a açao
                 $tratamento->excluido = 0;
-                $tratamento->id_usuario = auth()->user()->id;
+                $tratamento->id_usuario = Auth::user()->id;
                 // executa o delete
                 TratamentoService::deletar($tratamento);
                 return redirect()->action('SistemaController@index')

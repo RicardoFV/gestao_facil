@@ -67,7 +67,7 @@ class VersaoController extends Controller
             Gate::allows('administrador_gestor', Auth::user())
         ) {
             $nome = $request->input('nome');
-            $id_usuario = auth()->user()->id;
+            $id_usuario = Auth::user()->id;
             // recebe as informaçoes em forma de array
             $form = [
                 'nome' => $nome,
@@ -161,7 +161,7 @@ class VersaoController extends Controller
                 // recebe os novos dados
                 $versao->id = $id;
                 $versao->nome = $request->input('nome');
-                $versao->id_usuario = auth()->user()->id;
+                $versao->id_usuario = Auth::user()->id;
                 // atualiza as informaçoes
                 VersaoService::atualizar($versao);
                 return redirect()->action('VersaoController@index')
@@ -207,7 +207,7 @@ class VersaoController extends Controller
                     // coloca como excluido
                     // o usuario responsavel
                     $versao->excluido = 0;
-                    $versao->id_usuario = auth()->user()->id;
+                    $versao->id_usuario = Auth::user()->id;
                     // executa a atividade
                     VersaoService::deletar($versao);
                     return redirect()->action('VersaoController@index')

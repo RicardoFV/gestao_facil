@@ -8,5 +8,4 @@ $(document).ready(() => {
     var digitado = campo.val().trim();
     //devolve as informações sem espaço
     $('#descricao').val(digitado)
-
 })

@@ -72,7 +72,7 @@ class SistemaController extends Controller
             $nome = $request->input('nome');
             $descricao = $request->input('descricao');
             $id_versao = $request->input('id_versao');
-            $id_usuario = auth()->user()->id;
+            $id_usuario = Auth::user()->id;
 
             $form = [
                 'nome' => $nome,
@@ -169,7 +169,7 @@ class SistemaController extends Controller
                 $sistema->id = $id;
                 $sistema->nome = $request->input('nome');
                 $sistema->descricao = $request->input('descricao');
-                $sistema->id_usuario = auth()->user()->id;
+                $sistema->id_usuario = Auth::user()->id;
                 $sistema->id_versao = $request->input('id_versao');
 
                 SistemaService::atualizar($sistema);
@@ -205,7 +205,7 @@ class SistemaController extends Controller
                   //  return redirect()->action('SistemaController@index')
                   //      ->with('erro', 'Sistema não pode ser removido');
                //  } else {
-                    $sistema->id_usuario = auth()->user()->id;
+                    $sistema->id_usuario = Auth::user()->id;
                     $sistema->excluido = 0;
                     SistemaService::deletar($sistema);
                     return redirect()->action('SistemaController@index')
