@@ -25,25 +25,28 @@
                 <div class="container">
                     <form method="POST" action="{{ route('vinculos.store') }}">
                         @csrf
-
+                        <input type="hidden" id="id_usuario_responsavel" name="id_usuario_responsavel" value="{{Auth::user()->id}}">
                         <div class="row mb-3">
 
                             <div class="col-4">
-                                <label for="id_usuario_gestor" class="col-form-label">{{ __('Gestor Responsável') }}<span
+                                <label for="id_gestor" class="col-form-label">{{ __('Gestor Responsável') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_usuario_gestor" class="form-control">
-                                    <option value="ativo">responsavel</option>
-
+                                <select id="id_gestor" class="form-control">
+                                    @foreach($usuarios as $usuario)
+                                        <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                                    @endforeach
                                 </select>
 
                             </div>
                             <div class="col-4">
-                                <label for="id_usuario_gestor" class="col-form-label">{{ __('Empresa') }}<span
+                                <label for="id_empresa" class="col-form-label">{{ __('Empresa') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_usuario_gestor" class="form-control">
-                                    <option value="ativo">empresa</option>
+                                <select id="id_empresa" class="form-control">
+                                    @foreach($empresas as $empresa)
+                                        <option value="{{$empresa->id}}">{{$empresa->name}}</option>
+                                    @endforeach
 
                                 </select>
 

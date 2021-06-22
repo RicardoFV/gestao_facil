@@ -15,7 +15,7 @@ class EmpresaService
     // litar todas as empresas
     public static function listarTodas()
     {
-        return Empresa::all();
+        return Empresa::all('id', 'name');
     }
     // cadastrar as informaçoes
     public static function inserir(array $dados)

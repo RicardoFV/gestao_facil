@@ -39,16 +39,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('chamados.index') }}">Tratamentos</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('ver_tratamento', 'concluido') }}">Finalizados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Relatórios</a>
-                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Meus Chamados
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ route('chamados.index') }}">Todos Chamados</a>
+                              <a class="dropdown-item" href="{{ route('ver_tratamento', 'concluido') }}">Resolvidos</a>
+                              <a class="dropdown-item" href="#">Relatórios</a>
+                            </div>
+                          </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('configuracoes.index') }}">Configurações</a>
                         </li>

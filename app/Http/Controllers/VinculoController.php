@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\{EmpresaService, UsuarioService};
 
 class VinculoController extends Controller
 {
@@ -15,7 +16,21 @@ class VinculoController extends Controller
      */
     public function index()
     {
-        return view('paginas.cadastros.vincular_usuario_empresa');
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
+            // recebe os dados
+            $usuarios = UsuarioService::listarTodos();
+            $empresas = EmpresaService::listarTodas();
+            return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                'usuarios',
+                'empresas'
+            ));
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**

@@ -7,6 +7,13 @@ use  App\User;
 
 class UsuarioService
 {
+
+    // mostra tods ate mesmo os excluidos
+    public static function listarTodos()
+    {
+        // traz todos , id e nome
+        return User::all('id', 'name');
+    }
     // mostra tods ate mesmo os excluidos
     public static function listar()
     {

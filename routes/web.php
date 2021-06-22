@@ -34,7 +34,7 @@ Route::resources([
     'configuracoes' => 'ConfigController',
     'usuarios' => 'UsuarioController',
     'empresas' =>'EmpresaController',
-    'vinculos' =>'EnderecoController',
+    'vinculos' =>'VinculoController',
 ]);
 
     // rota de requisito
