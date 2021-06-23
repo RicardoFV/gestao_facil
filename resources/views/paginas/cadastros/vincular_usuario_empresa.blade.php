@@ -16,6 +16,8 @@
             <hr />
             <!-- colocando a mensagem de erro -->
             @include('mensagens.erro_cadastro')
+            <!-- mensagem de Sucesso-->
+            @include('mensagens.sucesso')
 
             <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
 
@@ -32,7 +34,7 @@
                                 <label for="id_gestor" class="col-form-label">{{ __('Gestor Responsável') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_gestor" class="form-control">
+                                <select id="id_gestor" name="id_gestor" class="form-control">
                                     @foreach($usuarios as $usuario)
                                         <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                                     @endforeach
@@ -43,7 +45,7 @@
                                 <label for="id_empresa" class="col-form-label">{{ __('Empresa') }}<span
                                         class="ml-1 cor_mensagem">*</span></label>
 
-                                <select id="id_empresa" class="form-control">
+                                <select id="id_empresa" name="id_empresa" class="form-control">
                                     @foreach($empresas as $empresa)
                                         <option value="{{$empresa->id}}">{{$empresa->name}}</option>
                                     @endforeach

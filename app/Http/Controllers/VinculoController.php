@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VinculoFormulario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{EmpresaService, UsuarioService};
+use App\Http\Services\{EmpresaService, UsuarioService, VinculoService};
 
 class VinculoController extends Controller
 {
@@ -16,11 +17,7 @@ class VinculoController extends Controller
      */
     public function index()
     {
-        if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
-        ) {
+        if (Gate::allows('super_admin', Auth::user())) {
             // recebe os dados
             $usuarios = UsuarioService::listarTodos();
             $empresas = EmpresaService::listarTodas();
@@ -28,7 +25,17 @@ class VinculoController extends Controller
                 'usuarios',
                 'empresas'
             ));
-        } else {
+           // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
+        }else if (Gate::allows('administrador', Auth::user()) ||Gate::allows('administrador_gestor', Auth::user())){
+
+              // recebe os dados
+              $usuarios = UsuarioService::listarTodosSemSuper();
+              $empresas = EmpresaService::listarTodas();
+              return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                  'usuarios',
+                  'empresas'
+              ));
+        }else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
@@ -58,9 +65,21 @@ class VinculoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VinculoFormulario $request)
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ){
+            // cadastra o vinculo
+            VinculoService::inserir($request->all());
+            // retorna para a listagem
+            return redirect()->back()->with('mensagem', 'Vinculo realizado com sucesso!');
+
+        }else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**

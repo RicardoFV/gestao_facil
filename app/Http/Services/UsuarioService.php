@@ -14,6 +14,14 @@ class UsuarioService
         // traz todos , id e nome
         return User::all('id', 'name');
     }
+
+    // mostra todos sem o super
+    public static function listarTodosSemSuper()
+    {
+        // traz todos , id e nome
+        return DB::select('select id, name from users where perfil_acesso <>
+         "super_admin" and deleted_at is null');
+    }
     // mostra tods ate mesmo os excluidos
     public static function listar()
     {
