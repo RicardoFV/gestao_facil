@@ -18,6 +18,8 @@
             @include('mensagens.erro_cadastro')
             <!-- mensagem de Sucesso-->
             @include('mensagens.sucesso')
+              <!-- mensagem de erro-->
+            @include('mensagens.erro')
 
             <span class="ml-4 cor_mensagem"> * Campos Obrigatorios </span>
 

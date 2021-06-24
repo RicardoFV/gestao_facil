@@ -13,4 +13,12 @@ class VinculoService
         Vinculo::create($dados);
     }
 
+    // verificar se tem vinculo
+    public static function verificarVinculo($id_gestor, $id_empresa)
+    {
+        return Vinculo::where([
+            'id_gestor' => $id_gestor,
+            'id_empresa' => $id_empresa
+        ])->count();
+    }
 }
