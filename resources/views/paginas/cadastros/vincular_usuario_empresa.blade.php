@@ -5,11 +5,11 @@
     <div class="container">
         <div class="card mt-1">
             <div class="card-header">
-                <h1>Vincular Profissional</h1>
+                <h1>Vincular Empresa Profissional</h1>
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
-                    <a href="{{ route('vinculos.index') }}" class="btn btn-block btn-primary">Ver Registro</a>
+                    <a href="{{ route('vinculos.index') }}" class="btn btn-block btn-primary">Ver Vinculos</a>
                 </div>
             </div>
 

@@ -21,4 +21,16 @@ class VinculoService
             'id_empresa' => $id_empresa
         ])->count();
     }
+    // traz todos os usuarios que tem vinculos
+    public static function listarUsuariosVinculados()
+    {
+        return  DB::select('select u.id, u.name from users u
+       where u.id in (select id_gestor from vinculos)');
+    }
+    // traz todos os usuarios que tem vinculos, por usuario logado
+    public static function listarUsuariosVinculadosSemSuper($id)
+    {
+        return  DB::select('select u.id, u.name from users u
+       where u.id in (select id_gestor from vinculos where id_gestor ='.$id .')');
+    }
 }

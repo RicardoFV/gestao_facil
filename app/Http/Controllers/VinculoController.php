@@ -20,26 +20,23 @@ class VinculoController extends Controller
     {
         if (Gate::allows('super_admin', Auth::user())) {
             // recebe os dados
-            $usuarios = UsuarioService::listarTodos();
-            $empresas = EmpresaService::listarTodas();
-            return view('paginas.cadastros.vincular_usuario_empresa', compact(
-                'usuarios',
-                'empresas'
-            ));
-            // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
-        } else if (Gate::allows('administrador', Auth::user()) || Gate::allows('administrador_gestor', Auth::user())) {
-
+            $usuarios = VinculoService::listarUsuariosVinculados();
+            return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
+            // se for o restante dos perfis
+        } else if (
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user()) ||
+            Gate::allows('suporte', Auth::user())
+        ) {
             // recebe os dados
-            $usuarios = UsuarioService::listarTodosSemSuper();
-            $empresas = EmpresaService::listarTodas();
-            return view('paginas.cadastros.vincular_usuario_empresa', compact(
-                'usuarios',
-                'empresas'
-            ));
+            $usuarios = VinculoService::listarUsuariosVinculadosSemSuper(Auth::user()->id);
+            return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,13 +45,23 @@ class VinculoController extends Controller
      */
     public function create()
     {
-        if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
-        ) {
-            //chama a tela de cadastro
-            return view('paginas.cadastros.vincular_usuario_empresa');
+        if (Gate::allows('super_admin', Auth::user())) {
+            // recebe os dados
+            $usuarios = UsuarioService::listarTodos();
+            $empresas = EmpresaService::listarTodas();
+            return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                'usuarios',
+                'empresas'
+            ));
+            // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
+        } else if (Gate::allows('administrador', Auth::user()) || Gate::allows('administrador_gestor', Auth::user())) {
+            // recebe os dados
+            $usuarios = UsuarioService::listarTodosSemSuper();
+            $empresas = EmpresaService::listarTodas();
+            return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                'usuarios',
+                'empresas'
+            ));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -85,9 +92,9 @@ class VinculoController extends Controller
                 // retorna para a listagem
                 return redirect()->back()
                     ->with('mensagem', 'Vinculo realizado com sucesso!');
-            }else{// retorna o erro
+            } else { // retorna o erro
                 return redirect()->back()
-                ->with('erro', 'Voce já esta vinculado, não pode Vincular mais de uma vez a mesma Empresa');
+                    ->with('erro', 'Voce já esta vinculado, não pode Vincular mais de uma vez a mesma Empresa');
             }
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -102,7 +109,15 @@ class VinculoController extends Controller
      */
     public function show($id)
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
+            return view('paginas.listas.detalhes_vinculo');
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 
     /**
@@ -113,7 +128,6 @@ class VinculoController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
