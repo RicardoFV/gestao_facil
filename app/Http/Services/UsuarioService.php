@@ -7,20 +7,14 @@ use  App\User;
 
 class UsuarioService
 {
-
-    // mostra tods ate mesmo os excluidos
-    public static function listarTodos()
-    {
-        // traz todos , id e nome
-        return User::all('id', 'name');
-    }
-
-    // mostra todos sem o super
+    // mostra todos os dados sem o super
     public static function listarTodosSemSuper()
     {
-        // traz todos , id e nome
-        return DB::select('select id, name from users where perfil_acesso <>
-         "super_admin" and deleted_at is null');
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
+            ->where('perfil_acesso', '<>', 'super_admin')
+            ->withTrashed()
+            ->paginate(6);
+        //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
     }
     // mostra tods ate mesmo os excluidos
     public static function listar()
@@ -39,7 +33,8 @@ class UsuarioService
     //consultar por id do usuario deletado
     public static function consultarUsuarioDeletado($id)
     {
-        return User::onlyTrashed()->find($id);
+        DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id =' . $id);
+        //return User::onlyTrashed()->find($id);
     }
 
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)

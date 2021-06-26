@@ -47,7 +47,7 @@ class VinculoController extends Controller
     {
         if (Gate::allows('super_admin', Auth::user())) {
             // recebe os dados
-            $usuarios = UsuarioService::listarTodos();
+            $usuarios = UsuarioService::listar();
             $empresas = EmpresaService::listarTodas();
             return view('paginas.cadastros.vincular_usuario_empresa', compact(
                 'usuarios',
@@ -114,7 +114,28 @@ class VinculoController extends Controller
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user())
         ) {
-            return view('paginas.listas.detalhes_vinculo');
+            // verifica se foi passado algum id
+            if (isset($id)) {
+                // consulta o usuario
+                $usuario = UsuarioService::consultar($id);
+                // verifica se nao esta vezio
+                if (!empty($usuario)) {
+                    // consulto as empresas
+                    $empresas = VinculoService::detalhesEmpresaVinculo($id);
+                    // verifica se nao esta vazio
+                    if (!empty($empresas)) {
+                        // retorna as infotmacoes
+                        return view('paginas.listas.detalhes_vinculo', compact(
+                            'usuario',
+                            'empresas'
+                        ));
+                    } else {
+                        return redirect()->back()->with('erro', 'Empresa nao Encontrada !');
+                    }
+                } else {
+                    return redirect()->back()->with('erro', 'Erro ao buscar usuario !');
+                }
+            }
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }

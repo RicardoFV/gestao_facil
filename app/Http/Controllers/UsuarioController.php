@@ -31,11 +31,13 @@ class UsuarioController extends Controller
     {
         // configurando as permissoes
         if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
+            Gate::allows('super_admin', Auth::user())
         ) {
             $users = UsuarioService::listar();
+            return view('paginas.listas.usuario_lista', compact('users'));
+            // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
+        } else if (Gate::allows('administrador', Auth::user()) || Gate::allows('administrador_gestor', Auth::user())) {
+            $users = UsuarioService::listarTodosSemSuper();
             return view('paginas.listas.usuario_lista', compact('users'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
@@ -71,7 +73,7 @@ class UsuarioController extends Controller
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user())
-        ){
+        ) {
             //chama a tela de cadastro
             return view('auth.register');
         } else {

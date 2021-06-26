@@ -31,6 +31,21 @@ class VinculoService
     public static function listarUsuariosVinculadosSemSuper($id)
     {
         return  DB::select('select u.id, u.name from users u
-       where u.id in (select id_gestor from vinculos where id_gestor ='.$id .')');
+       where u.id in (select id_gestor from vinculos where id_gestor =' . $id . ')');
+    }
+    // mostra as empresas vinculadas ao usuario
+    public static function detalhesEmpresaVinculo($id)
+    {
+        return DB::table('vinculos')
+            ->join('empresas', 'vinculos.id_empresa', '=', 'empresas.id')
+            ->select(
+                'vinculos.id as id_vinculo',
+                'empresas.id as id_empresa',
+                'empresas.name as nome_empresa',
+                'empresas.cnpj',
+                'empresas.telefone_1'
+            )
+            ->where('vinculos.id_gestor', $id)
+            ->get();
     }
 }
