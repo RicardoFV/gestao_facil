@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20-Jun-2021 às 17:10
+-- Tempo de geração: 27-Jun-2021 às 19:43
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 7.4.15
 
@@ -93,15 +93,6 @@ CREATE TRIGGER `trig_log_empresa_alteracao` AFTER UPDATE ON `empresas` FOR EACH 
 end
 $$
 DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `trig_log_empresa_cadastro` AFTER INSERT ON `empresas` FOR EACH ROW begin
-	-- cadastra o logs na tabela logs tratamento
-    
-    insert into log_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
-    values (new.id_usuario, 'inserindo dados do endereço', new.created_at, new.id);
-end
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -139,20 +130,6 @@ CREATE TABLE `log_empresa` (
 --
 
 CREATE TABLE `log_requisito` (
-  `id` bigint(20) NOT NULL,
-  `id_usuario_acao` int(11) DEFAULT NULL,
-  `atividade` varchar(255) DEFAULT NULL,
-  `data_inclusao` datetime DEFAULT NULL,
-  `id_usuario_cadastrado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `log_responsavel_empresa`
---
-
-CREATE TABLE `log_responsavel_empresa` (
   `id` bigint(20) NOT NULL,
   `id_usuario_acao` int(11) DEFAULT NULL,
   `atividade` varchar(255) DEFAULT NULL,
@@ -207,7 +184,7 @@ CREATE TABLE `log_usuario` (
 --
 
 INSERT INTO `log_usuario` (`id`, `id_usuario_acao`, `atividade`, `data_inclusao`, `id_usuario_cadastrado`) VALUES
-(1, 1, 'inserindo dados de usuario', '2021-06-20 12:07:49', 1);
+(1, 1, 'inserindo dados de usuario', '2021-06-27 14:40:40', 1);
 
 -- --------------------------------------------------------
 
@@ -424,7 +401,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `perfil_acesso`, `id_usuario_ressponsavel`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Super Admin', 'superadmin@gmail.com', 'super_admin', 1, NULL, '$2y$10$GgmTkF8lJ6/bBhzqCDBm/OO1KMuhRXzBGWgcOFzWYGIlF2uISV/D2', NULL, '2021-06-20 15:07:49', '2021-06-20 15:07:49', NULL);
+(1, 'Super Admin', 'superadmin@gmail.com', 'super_admin', 1, NULL, '$2y$10$GgmTkF8lJ6/bBhzqCDBm/OO1KMuhRXzBGWgcOFzWYGIlF2uISV/D2', NULL, '2021-06-27 17:40:40', '2021-06-27 17:40:40', NULL);
 
 --
 -- Acionadores `users`
@@ -506,22 +483,85 @@ CREATE TABLE `vinculos` (
 --
 DELIMITER $$
 CREATE TRIGGER `trig_log_vinculo_empresa` AFTER INSERT ON `vinculos` FOR EACH ROW begin
-	-- cadastra o logs na tabela logs tratamento
+	-- cadastra o logs na tabela log_responsavel_empresa
     
-    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    insert into log_vinculo(id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
     values (new.id_usuario_responsavel, 'inserindo dados do vinculo empresa', new.created_at, new.id);
 end
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `trig_log_vinculo_empresa_alteracao` AFTER UPDATE ON `vinculos` FOR EACH ROW begin
-	-- cadastra o logs na tabela logs tratamento
+	-- cadastra o logs na tabela log_responsavel_empresa
     
-    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    insert into log_vinculo (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
     values (new.id_usuario_responsavel, 'Alterando dados do vinculo empresa', new.updated_at, new.id);
 end
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trig_log_vinculo_empresa_delete` AFTER DELETE ON `vinculos` FOR EACH ROW begin
+	-- cadastra o logs na tabela log_responsavel_empresa
+    
+    insert into log_vinculo (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    values (old.id_usuario_responsavel, 'Deletando dados da tabela Vinculo', now(), old.id);
+end
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura stand-in para vista `v_list_tsru_dados`
+-- (Veja abaixo para a view atual)
+--
+CREATE TABLE `v_list_tsru_dados` (
+`id_tratamento` int(10) unsigned
+,`situacao` enum('novo','nao_iniciado','em_andamento','parado','concluido')
+,`dt_inclusao` timestamp
+,`finalizado` timestamp
+,`id_sistema` int(10) unsigned
+,`nome_sistema` varchar(255)
+,`id_requisito` int(10) unsigned
+,`nome_requisito` varchar(255)
+,`id_usuario` int(10) unsigned
+,`nome_usuario` varchar(255)
+,`nome_empresa` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura stand-in para vista `v_versao_sistema`
+-- (Veja abaixo para a view atual)
+--
+CREATE TABLE `v_versao_sistema` (
+`id` int(10) unsigned
+,`id_sistema` int(10) unsigned
+,`nome_versao` varchar(255)
+,`nome_sistema` varchar(255)
+,`descricao` varchar(255)
+,`excluido` int(11)
+,`nome_empresa` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para vista `v_list_tsru_dados`
+--
+DROP TABLE IF EXISTS `v_list_tsru_dados`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_list_tsru_dados`  AS SELECT `tra`.`id` AS `id_tratamento`, `tra`.`situacao` AS `situacao`, `tra`.`created_at` AS `dt_inclusao`, `tra`.`updated_at` AS `finalizado`, `sis`.`id` AS `id_sistema`, `sis`.`nome` AS `nome_sistema`, `res`.`id` AS `id_requisito`, `res`.`nome` AS `nome_requisito`, `usuario`.`id` AS `id_usuario`, `usuario`.`name` AS `nome_usuario`, `e`.`name` AS `nome_empresa` FROM ((((`tratamentos` `tra` join `sistemas` `sis` on(`tra`.`id_sistema` = `sis`.`id`)) join `requisitos` `res` on(`tra`.`id_requisito` = `res`.`id`)) join `users` `usuario` on(`tra`.`id_usuario_responsavel` = `usuario`.`id`)) join `empresas` `e` on(`tra`.`id_empresa` = `e`.`id` and `sis`.`id_empresa` = `e`.`id` and `res`.`id_empresa` = `e`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para vista `v_versao_sistema`
+--
+DROP TABLE IF EXISTS `v_versao_sistema`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_versao_sistema`  AS SELECT `v`.`id` AS `id`, `s`.`id` AS `id_sistema`, `v`.`nome` AS `nome_versao`, `s`.`nome` AS `nome_sistema`, `s`.`descricao` AS `descricao`, `s`.`excluido` AS `excluido`, `e`.`name` AS `nome_empresa` FROM ((`versaos` `v` join `sistemas` `s` on(`v`.`id` = `s`.`id_versao`)) join `empresas` `e` on(`v`.`id_empresa` = `e`.`id` and `s`.`id_empresa` = `e`.`id`)) ;
 
 --
 -- Índices para tabelas despejadas
@@ -557,12 +597,6 @@ ALTER TABLE `log_empresa`
 -- Índices para tabela `log_requisito`
 --
 ALTER TABLE `log_requisito`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `log_responsavel_empresa`
---
-ALTER TABLE `log_responsavel_empresa`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -691,12 +725,6 @@ ALTER TABLE `log_empresa`
 -- AUTO_INCREMENT de tabela `log_requisito`
 --
 ALTER TABLE `log_requisito`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `log_responsavel_empresa`
---
-ALTER TABLE `log_responsavel_empresa`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --

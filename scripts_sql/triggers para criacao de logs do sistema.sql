@@ -135,9 +135,9 @@ DELIMITER //
 create trigger trig_log_vinculo_empresa
 after insert on vinculos for each row
 begin
-	-- cadastra o logs na tabela logs tratamento
+	-- cadastra o logs na tabela log_responsavel_empresa
     
-    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    insert into log_vinculo(id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
     values (new.id_usuario_responsavel, 'inserindo dados do vinculo empresa', new.created_at, new.id);
 end;
 
@@ -146,10 +146,21 @@ DELIMITER //
 create trigger trig_log_vinculo_empresa_alteracao
 after update on vinculos for each row
 begin
-	-- cadastra o logs na tabela logs tratamento
+	-- cadastra o logs na tabela log_responsavel_empresa
     
-    insert into log_responsavel_empresa (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    insert into log_vinculo (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
     values (new.id_usuario_responsavel, 'Alterando dados do vinculo empresa', new.updated_at, new.id);
+end;
+
+-- trigger para logs de vinculo empresa (delete)
+DELIMITER //
+create trigger trig_log_vinculo_empresa_delete
+after delete on vinculos for each row
+begin
+	-- cadastra o logs na tabela log_responsavel_empresa
+    
+    insert into log_vinculo (id_usuario_acao, atividade, data_inclusao, id_usuario_cadastrado)
+    values (old.id_usuario_responsavel, 'Deletando dados da tabela Vinculo', now(), old.id);
 end;
 
 

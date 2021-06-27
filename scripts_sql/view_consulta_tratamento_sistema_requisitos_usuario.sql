@@ -8,12 +8,9 @@ e.name as nome_empresa
 from 
 tratamentos  tra inner join sistemas sis
 on tra.id_sistema = sis.id
-            
 inner join requisitos res
 on tra.id_requisito = res.id
-            
 inner join users usuario
 on tra.id_usuario_responsavel = usuario.id
-
 inner join empresas e 
 on tra.id_empresa = e.id and sis.id_empresa = e.id and res.id_empresa = e.id;

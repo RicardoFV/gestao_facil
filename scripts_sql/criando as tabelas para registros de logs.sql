@@ -52,15 +52,6 @@ create table log_sistema
     id_usuario_cadastrado int   
 );
 
-create table log_responsavel_empresa
-( 
-	id bigint not null primary key auto_increment,
-    id_usuario_acao int, 
-    atividade varchar(255), 
-    data_inclusao datetime,
-    id_usuario_cadastrado int   
-);
-
 create table log_vinculo
 ( 
 	id bigint not null primary key auto_increment,
