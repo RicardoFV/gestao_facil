@@ -37,7 +37,7 @@
                                 <td>
                                     <a href="{{ action('VinculoController@show', $empresa->id_vinculo) }}"
                                         class="btn btn-danger btn-sm">
-                                        <i class="far fa-trash-alt"></i>
+                                        <i class="fas fa-undo"></i>
                                     </a>
                                 </td>
                             </tr>

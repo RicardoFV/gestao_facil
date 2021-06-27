@@ -109,6 +109,42 @@ class VinculoController extends Controller
      */
     public function show($id)
     {
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ) {
+            // faz a consulta
+            $vinculo = VinculoService::consultar($id);
+            if (!empty($vinculo)) {
+                // traz a empresa tambem
+                $empresa = EmpresaService::consultar($vinculo->id_empresa);
+                if (!empty($empresa)) {
+                    // coloca as informações na view
+                    return view('paginas.decisoes.apagar_vinculo', compact(
+                        'empresa',
+                        'vinculo'
+                    ));
+                } else {
+                    return redirect()->back()->with('erro', 'Empresa não encontrada!');
+                }
+            } else {
+                return redirect()->back()->with('erro', 'Vinculo não encontrado!');
+            }
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
@@ -142,16 +178,6 @@ class VinculoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -171,6 +197,23 @@ class VinculoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (
+            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())
+        ){
+            // consulta as informações
+            $vinculo = VinculoService::consultar($id);
+            if (!empty($vinculo)) {
+                VinculoService::deletar($vinculo);
+                return redirect()->action('VinculoController@index')
+                    ->with('mensagem', 'Vinculo desfeito com sucesso!');
+            } else {
+                return redirect()->back()->with('erro', 'Vinculo não encontrado!');
+            }
+
+        }else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
 }

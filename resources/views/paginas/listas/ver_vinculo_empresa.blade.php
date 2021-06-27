@@ -12,6 +12,11 @@
                 <a href="{{route('vinculos.create')}}" class="btn btn-block btn-primary">Novo Vinculo</a>
             </div>
         </div>
+           <!-- mensagem de Sucesso-->
+           @include('mensagens.sucesso')
+
+           <!-- mensagem de erro-->
+           @include('mensagens.erro')
         <hr>
         <!-- criação da tabela  -->
         <div class="container">
@@ -29,7 +34,7 @@
                             <td>{{ $usuario->id }}</td>
                             <td>{{ $usuario->name }}</td>
                             <td>
-                                <a href="{{route('vinculos.show', $usuario->id)}}" class="btn btn-primary btn-sm">
+                                <a href="{{route('vinculos.edit', $usuario->id)}}" class="btn btn-primary btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>

@@ -13,6 +13,11 @@ class VinculoService
         Vinculo::create($dados);
     }
 
+     //consultar por id
+     public static function consultar($id)
+     {
+        return Vinculo::find($id);
+     }
     // verificar se tem vinculo
     public static function verificarVinculo($id_gestor, $id_empresa)
     {
@@ -47,5 +52,11 @@ class VinculoService
             )
             ->where('vinculos.id_gestor', $id)
             ->get();
+    }
+
+    // realiza a deleçao do vinculo
+    public static function deletar(Vinculo $vinculo)
+    {
+        return Vinculo::destroy($vinculo->id);
     }
 }

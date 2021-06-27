@@ -28,6 +28,16 @@
                     <div class="row">
                       <div class="col-sm-4">
 
+                        <div class="form-group">
+                            <label for="id_empresa" class="col-md-12 col-form-label">{{ __('Empresa') }} <span class="ml-1 cor_mensagem">*</span></label>
+
+                            <div class="col-md-12">
+                                <select name="id_empresa" id="empresa" class="form-control">
+                                    <option value="empresa">Empresa</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <label for="dt_entrega" class="col-md-12 col-form-label">{{ __('Data De Entrega') }} <span class="ml-1 cor_mensagem">*</span></label>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\{TratamentoFormReuest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{TratamentoService, DescricaoService};
+use App\Http\Services\{TratamentoService, DescricaoService, VinculoService};
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -25,7 +25,12 @@ class TratamentoController extends Controller
     public function index()
     {
         $tratamentos = TratamentoService::listar();
-        return view('paginas.listas.tratamento_lista')->with('tratamentos', $tratamentos);
+        // recebe as empresas que se tem vinculo
+        $empresas = VinculoService::detalhesEmpresaVinculo(Auth::user()->id);
+        return view('paginas.listas.tratamento_lista')->with([
+            'tratamentos' => $tratamentos,
+            'empresas' => $empresas
+        ]);
     }
 
     // metodo que faz a busca do tratamento que é passodo por parametro
