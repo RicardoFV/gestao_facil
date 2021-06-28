@@ -13,11 +13,11 @@ class VinculoService
         Vinculo::create($dados);
     }
 
-     //consultar por id
-     public static function consultar($id)
-     {
+    //consultar por id
+    public static function consultar($id)
+    {
         return Vinculo::find($id);
-     }
+    }
     // verificar se tem vinculo
     public static function verificarVinculo($id_gestor, $id_empresa)
     {
@@ -32,8 +32,24 @@ class VinculoService
         return  DB::select('select u.id, u.name from users u
        where u.id in (select id_gestor from vinculos)');
     }
+    // traz todos os usuarios que tem vinculos sem super
+    public static function listarUsuariosVinculadosSemSuper()
+    {
+        return  DB::select('select u.id, u.name from users u
+        where u.id in (select id_gestor from vinculos)
+        and perfil_acesso <> "super_admin" ');
+    }
+    // traz todos os usuarios que tem vinculos sem super
+    public static function listarUsuariosVinculadosSemSuperSemAdministrador()
+    {
+        return  DB::select('select u.id, u.name from users u
+         where u.id in (select id_gestor from vinculos)
+         and perfil_acesso <> "super_admin"
+         and perfil_acesso <> "administrador"');
+    }
+
     // traz todos os usuarios que tem vinculos, por usuario logado
-    public static function listarUsuariosVinculadosSemSuper($id)
+    public static function listarUsuariosVinculadosPorDesenvolvedorEUsuario($id)
     {
         return  DB::select('select u.id, u.name from users u
        where u.id in (select id_gestor from vinculos where id_gestor =' . $id . ')');

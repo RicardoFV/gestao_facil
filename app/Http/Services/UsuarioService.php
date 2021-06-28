@@ -13,7 +13,17 @@ class UsuarioService
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
             ->where('perfil_acesso', '<>', 'super_admin')
             ->withTrashed()
-            ->paginate(6);
+            ->paginate(5);
+        //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
+    }
+    // mostra todos os dados sem o super e sem o administrador
+    public static function listarTodosSemSuperSemAdminsitrador()
+    {
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
+            ->where('perfil_acesso', '<>', 'super_admin')
+            ->where('perfil_acesso', '<>', 'administrador')
+            ->withTrashed()
+            ->paginate(5);
         //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
     }
     // mostra tods ate mesmo os excluidos
@@ -21,7 +31,7 @@ class UsuarioService
     {
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
             ->withTrashed()
-            ->paginate(6);
+            ->paginate(5);
     }
 
     //consultar por id

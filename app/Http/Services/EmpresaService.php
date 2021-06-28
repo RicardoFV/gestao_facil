@@ -10,7 +10,7 @@ class EmpresaService
     // mostra tods ate mesmo os excluidos
     public static function listar()
     {
-        return Empresa::select('*')->withTrashed()->paginate(6);
+        return Empresa::select('*')->withTrashed()->paginate(5);
     }
     // litar todas as empresas
     public static function listarTodas()

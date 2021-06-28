@@ -17,21 +17,27 @@ class VinculoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   // administrador ver tudo
         if (Gate::allows('super_admin', Auth::user())) {
             // recebe os dados
             $usuarios = VinculoService::listarUsuariosVinculados();
             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
-            // se for o restante dos perfis
-        } else if (
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user()) ||
-            Gate::allows('desenvolvedor', Auth::user()) ||
-            Gate::allows('suporte', Auth::user())
-        ) {
+            // administrador ver todos sem o super
+        } else if (Gate::allows('administrador', Auth::user())) {
             // recebe os dados
-            $usuarios = VinculoService::listarUsuariosVinculadosSemSuper(Auth::user()->id);
+            $usuarios = VinculoService::listarUsuariosVinculadosSemSuper();
             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
+        // ver somente gestor , desenvolvedor e suporte
+        }else if(Gate::allows('administrador_gestor', Auth::user())){
+            // recebe os dados
+            $usuarios = VinculoService::listarUsuariosVinculadosSemSuperSemAdministrador();
+            return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
+            // caso seja desenvolvedor e suporte
+        }else if (Gate::allows('desenvolvedor', Auth::user()) ||Gate::allows('suporte', Auth::user())){
+             // recebe os dados
+             $usuarios = VinculoService::listarUsuariosVinculadosPorDesenvolvedorEUsuario(Auth::user()->id);
+             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
+
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -54,14 +60,21 @@ class VinculoController extends Controller
                 'empresas'
             ));
             // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
-        } else if (Gate::allows('administrador', Auth::user()) || Gate::allows('administrador_gestor', Auth::user())) {
-            // recebe os dados
+        } else if (Gate::allows('administrador', Auth::user())){
             $usuarios = UsuarioService::listarTodosSemSuper();
             $empresas = EmpresaService::listarTodas();
             return view('paginas.cadastros.vincular_usuario_empresa', compact(
                 'usuarios',
                 'empresas'
             ));
+        }else if(Gate::allows('administrador_gestor', Auth::user())) {
+            $usuarios = UsuarioService::listarTodosSemSuperSemAdminsitrador();
+            $empresas = EmpresaService::listarTodas();
+            return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                'usuarios',
+                'empresas'
+            ));
+
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
