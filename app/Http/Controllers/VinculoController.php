@@ -62,14 +62,16 @@ class VinculoController extends Controller
             // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
         } else if (Gate::allows('administrador', Auth::user())){
             $usuarios = UsuarioService::listarTodosSemSuper();
-            $empresas = EmpresaService::listarTodas();
+            // lista por responsavel de cada empresa
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
             return view('paginas.cadastros.vincular_usuario_empresa', compact(
                 'usuarios',
                 'empresas'
             ));
         }else if(Gate::allows('administrador_gestor', Auth::user())) {
             $usuarios = UsuarioService::listarTodosSemSuperSemAdminsitrador();
-            $empresas = EmpresaService::listarTodas();
+            // lista por responsavel de cada empresa
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
             return view('paginas.cadastros.vincular_usuario_empresa', compact(
                 'usuarios',
                 'empresas'

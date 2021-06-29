@@ -17,6 +17,13 @@ class EmpresaService
     {
         return Empresa::all('id', 'name');
     }
+    // litar todas as empresas por responsavel
+    public static function listarTodasPorResponsavel($id)
+    {
+        return DB::select('select e.id , e.name from empresas e inner join vinculos v
+         on v.id_empresa = e.id
+         where id_gestor =' . $id);
+    }
     // cadastrar as informaçoes
     public static function inserir(array $dados)
     {
