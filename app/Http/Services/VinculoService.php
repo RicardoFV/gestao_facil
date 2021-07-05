@@ -61,6 +61,8 @@ class VinculoService
             ->join('empresas', 'vinculos.id_empresa', '=', 'empresas.id')
             ->select(
                 'vinculos.id as id_vinculo',
+                'vinculos.id_gestor',
+                'vinculos.id_usuario_responsavel',
                 'empresas.id as id_empresa',
                 'empresas.name as nome_empresa',
                 'empresas.cnpj',
