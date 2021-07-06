@@ -30,9 +30,11 @@
                         <input id="nome" type="text" class="form-control"name="nome" value="{{ old('nome') }}" >
                     </div>
                     <div class="col-4">
-                        <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
-                        <select name="tipo_reqempresauisito" id="empresa" class="form-control">
-                            <option value="empresa">Empresa</option>
+                        <label for="id_empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
+                        <select name="id_empresa" id="id_empresa" class="form-control">
+                            @foreach($empresas as $empresa)
+                                <option value="{{$empresa->id}}">{{$empresa->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

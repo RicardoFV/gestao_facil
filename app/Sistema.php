@@ -14,6 +14,7 @@ class Sistema extends Model
         'descricao',
         'id_usuario',
         'id_versao',
+        'id_empresa',
         'excluido'
     ];
 }

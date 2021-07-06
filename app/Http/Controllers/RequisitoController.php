@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\{RequisitoFormRequest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\RequisitoService;
+use App\Http\Services\{RequisitoService, EmpresaService};
 
 class RequisitoController extends Controller
 {
@@ -53,12 +53,17 @@ class RequisitoController extends Controller
     {
         // configurando as permissoes
         if (
-            Gate::allows('super_admin', Auth::user()) ||
+            Gate::allows('super_admin', Auth::user())
+        ) {
+            $empresas = EmpresaService::listarTodas();
+            return view('paginas.cadastros.requisito', compact('empresas'));
+        } else if (
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user()) ||
             Gate::allows('desenvolvedor', Auth::user())
         ) {
-            return view('paginas.cadastros.requisito');
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+            return view('paginas.cadastros.requisito', compact('empresas'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -85,13 +90,15 @@ class RequisitoController extends Controller
             $nome = $request->input('nome');
             $tipo_requisito = $request->input('tipo_requisito');
             $descricao = $request->input('descricao');
-            $id_usuario =Auth::user()->id;
+            $id_empresa = $request->input('id_empresa');
+            $id_usuario = Auth::user()->id;
             // passa para um array
             $form = [
                 'nome' => $nome,
                 'tipo_requisito' => $tipo_requisito,
                 'descricao' => $descricao,
                 'id_usuario' => $id_usuario,
+                'id_empresa' => $id_empresa,
                 'excluido' => 1
             ];
             // executa a inserçao

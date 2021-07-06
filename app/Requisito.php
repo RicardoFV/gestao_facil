@@ -12,6 +12,7 @@ class Requisito extends Model
         'descricao',
         'tipo_requisito',
         'id_usuario',
+        'id_empresa',
         'excluido'
     ];
 }

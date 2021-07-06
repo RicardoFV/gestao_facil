@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 
 class Versao extends Model
-{   // nome da tabela 
+{   // nome da tabela
     protected $table = 'versaos';
     // campos que serao usados para cadastro
     protected $fillable = [
         'nome',
         'id_usuario',
+        'id_empresa',
         'excluido'
     ];
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{SistemaFormRequest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\SistemaService;
+use App\Http\Services\{SistemaService, EmpresaService};
 
 class SistemaController extends Controller
 {
@@ -27,8 +27,8 @@ class SistemaController extends Controller
     }
 
     // metodo que faz a busca do tratamento que é passodo por parametro
-    public function consultarPorParametro(PesquisaFormRequest $request){
-
+    public function consultarPorParametro(PesquisaFormRequest $request)
+    {
     }
 
     /**
@@ -39,15 +39,27 @@ class SistemaController extends Controller
     // clama a tela de inicia o cadastro
     public function create()
     {
-         // configurando as permissoes
-         if (
-            Gate::allows('super_admin', Auth::user()) ||
+        // configurando as permissoes
+        if (
+            Gate::allows('super_admin', Auth::user())
+        ) {
+            $empresas = EmpresaService::listarTodas();
+            $versoes = SistemaService::listarVersao();
+            return view('paginas.cadastros.sistema', compact(
+                'versoes',
+                'empresas'
+            ));
+        } else if (
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user()) ||
             Gate::allows('desenvolvedor', Auth::user())
         ) {
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
             $versoes = SistemaService::listarVersao();
-            return view('paginas.cadastros.sistema', compact('versoes'));
+            return view('paginas.cadastros.sistema', compact(
+                'versoes',
+                'empresas'
+            ));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -163,7 +175,7 @@ class SistemaController extends Controller
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user()) ||
             Gate::allows('desenvolvedor', Auth::user())
-        ){
+        ) {
             $sistema = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 $sistema->id = $id;
@@ -202,14 +214,14 @@ class SistemaController extends Controller
             if (!empty($sistema)) {
                 //$tratamento = SistemaService::consultarTratamentoPorsistema($sistema->id);
                 //if (!empty($tratamento)) {
-                  //  return redirect()->action('SistemaController@index')
-                  //      ->with('erro', 'Sistema não pode ser removido');
-               //  } else {
-                    $sistema->id_usuario = Auth::user()->id;
-                    $sistema->excluido = 0;
-                    SistemaService::deletar($sistema);
-                    return redirect()->action('SistemaController@index')
-                        ->with('mensagem', 'Sistema Excluído com sucesso!');
+                //  return redirect()->action('SistemaController@index')
+                //      ->with('erro', 'Sistema não pode ser removido');
+                //  } else {
+                $sistema->id_usuario = Auth::user()->id;
+                $sistema->excluido = 0;
+                SistemaService::deletar($sistema);
+                return redirect()->action('SistemaController@index')
+                    ->with('mensagem', 'Sistema Excluído com sucesso!');
                 //}
             } else {
                 return redirect()->back()->with('erro', 'Sistema não encontrado!');
