@@ -23,8 +23,23 @@ class RequisitoController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        $requisitos = RequisitoService::listar();
-        return view('paginas.listas.requisito_lista', compact('requisitos'));
+
+        if (
+        Gate::allows('super_admin', Auth::user())
+        ) {
+            $requisitos = RequisitoService::listar();
+            return view('paginas.listas.requisito_lista', compact('requisitos'));
+        } else if (
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
+
+            $requisitos = RequisitoService::listarTodosPorParametro(Auth::user()->id);
+            return view('paginas.listas.requisito_lista', compact('requisitos'));
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
     }
     // metodo que faz a busca do tratamento que é passodo por parametro
     public function consultarPorParametro(PesquisaFormRequest $request)

@@ -10,7 +10,7 @@ class RequisitoService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listar()
     {
-        $requisitos = Requisito::paginate(6);
+        $requisitos = Requisito::paginate(4);
         foreach ($requisitos as $requisito) {
             if ($requisito->tipo_requisito === 'funcional') {
                 $requisito->tipo_requisito = 'Funcional';
@@ -18,11 +18,22 @@ class RequisitoService
                 $requisito->tipo_requisito = 'Não Funcional';
             }
         }
-       // print_r($requisito->tipo_requisito);
-        //dd();
-
         return $requisitos;
-        //return DB::select('select * from requisitos where excluido = 1  ');
+    }
+
+    // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
+    public static function listarTodosPorParametro($id)
+    {
+        $requisitos = DB::select('select * from requisitos where id_empresa
+                                   in(select id_empresa from vinculos where id_gestor ='  . $id . ')');
+        foreach ($requisitos as $requisito) {
+            if ($requisito->tipo_requisito === 'funcional') {
+                $requisito->tipo_requisito = 'Funcional';
+            } elseif ($requisito->tipo_requisito === 'nao_funcional') {
+                $requisito->tipo_requisito = 'Não Funcional';
+            }
+        }
+        return $requisitos;
     }
 
     // cadastrar as informaçoes
@@ -30,6 +41,7 @@ class RequisitoService
     {
         Requisito::create($dados);
     }
+
     //consultar por id
     public static function consultar($id)
     {
@@ -40,8 +52,8 @@ class RequisitoService
     public static function consultarPorNomeRequisito($nome)
     {
         return  DB::table('requisitos')->where('nome', 'LIKE', '%' . $nome . '%');
-     
-        
+
+
     }
 
     // atualiza as informaçoes

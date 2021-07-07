@@ -77,7 +77,7 @@
                                     </a>
 
                                     <a href="{{ action('RequisitoController@show', $requisito->id) }}"
-                                        class="btn btn-danger btn-sm">
+                                       class="btn btn-danger btn-sm">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
 
@@ -87,7 +87,7 @@
                     </tbody>
                 </table>
                 <div class="align-items-center">
-                    {{ $requisitos->links() }}
+
                 </div>
             </div>
         </div>
