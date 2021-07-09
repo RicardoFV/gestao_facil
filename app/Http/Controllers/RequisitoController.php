@@ -140,8 +140,7 @@ class RequisitoController extends Controller
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user()) ||
-            Gate::allows('desenvolvedor', Auth::user())
+            Gate::allows('administrador_gestor', Auth::user())
         ) {
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
@@ -165,16 +164,28 @@ class RequisitoController extends Controller
     public function edit($id)
     {
         // configurando as permissoes
-        if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user()) ||
-            Gate::allows('desenvolvedor', Auth::user())
-        ) {
+        if (Gate::allows('super_admin', Auth::user())) {
+
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
-                return view('paginas.alteracoes.requisito_altera', compact('requisito'));
+                $empresas = EmpresaService::listarTodas();
+                return view('paginas.alteracoes.requisito_altera', compact(
+                    'requisito','empresas'));
+            } else {
+                return redirect()->back()->with('erro', 'Requisito não encontrado!');
+            }
+
+        }elseif (Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())){
+
+            // faz a consulta
+            $requisito = RequisitoService::consultar($id);
+            if (!empty($requisito)) {
+                $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+                return view('paginas.alteracoes.requisito_altera', compact(
+                    'requisito', 'empresas'));
             } else {
                 return redirect()->back()->with('erro', 'Requisito não encontrado!');
             }
@@ -209,6 +220,7 @@ class RequisitoController extends Controller
                 $requisito->nome = $request->input('nome');
                 $requisito->tipo_requisito = $request->input('tipo_requisito');
                 $requisito->descricao = $request->input('descricao');
+                $requisito->id_empresa = $request->input('id_empresa');
                 $requisito->id_usuario = Auth::user()->id;
                 // atualiza os dados
                 RequisitoService::atualizar($requisito);

@@ -39,16 +39,15 @@ class VersaoController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function create()
     {
-        if (
-            Gate::allows('super_admin', Auth::user())
-        ) {
+        if (Gate::allows('super_admin', Auth::user())) {
 
             $empresas = EmpresaService::listarTodas();
             //chama a tela de cadastro
             return view('paginas.cadastros.versao', compact('empresas'));
         } else if (
             Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
         ) {
             $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
 
@@ -72,7 +71,8 @@ class VersaoController extends Controller
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
+            Gate::allows('administrador_gestor', Auth::user())||
+            Gate::allows('desenvolvedor', Auth::user())
         ) {
             $nome = $request->input('nome');
             $id_empresa = $request->input('id_empresa');
@@ -131,15 +131,26 @@ class VersaoController extends Controller
     public function edit($id)
     {
         // configurando as permissoes
-        if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
-        ) {
+        if (Gate::allows('super_admin', Auth::user())) {
             // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
-                return view('paginas.alteracoes.versao_altera', compact('versao'));
+                $empresas = EmpresaService::listarTodas();
+                return view('paginas.alteracoes.versao_altera', compact('versao' , 'empresas'));
+            } else {
+                return redirect()->back()->with('erro', 'Versão não encontrada!');
+            }
+
+        }elseif ( Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())){
+
+            // faz a consulta
+            $versao = VersaoService::consultar($id);
+            if (!empty($versao)) {
+                $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+                return view('paginas.alteracoes.versao_altera', compact(
+                    'versao', 'empresas'));
             } else {
                 return redirect()->back()->with('erro', 'Versão não encontrada!');
             }
@@ -162,7 +173,8 @@ class VersaoController extends Controller
         if (
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user())
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
         ) {
             // consulta as informaçoes
             $versao = VersaoService::consultar($id);
@@ -171,6 +183,7 @@ class VersaoController extends Controller
                 // recebe os novos dados
                 $versao->id = $id;
                 $versao->nome = $request->input('nome');
+                $versao->id_empresa = $request->input('id_empresa');
                 $versao->id_usuario = Auth::user()->id;
                 // atualiza as informaçoes
                 VersaoService::atualizar($versao);

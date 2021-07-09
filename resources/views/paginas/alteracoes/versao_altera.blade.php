@@ -35,8 +35,10 @@
                     </div>
                     <div class="col-4">
                         <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
-                        <select name="tipo_reqempresauisito" id="empresa" class="form-control">
-                            <option value="empresa">Empresa</option>
+                        <select name="id_empresa" id="id_empresa" class="form-control">
+                            @foreach($empresas as $empresa)
+                                <option value="{{ $versao->id_empresa }}" {{ ($versao->id_empresa === $empresa->id)? 'selected': ''}}>{{$empresa->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
