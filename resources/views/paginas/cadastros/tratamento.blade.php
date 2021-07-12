@@ -32,8 +32,10 @@
                             <label for="id_empresa" class="col-md-12 col-form-label">{{ __('Empresa') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                             <div class="col-md-12">
-                                <select name="id_empresa" id="empresa" class="form-control">
-                                    <option value="empresa">Empresa</option>
+                                <select name="id_empresa" id="id_empresa" class="form-control">
+                                    @foreach($empresas as $empresa)
+                                        <option value="{{$empresa->id}}">{{$empresa->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

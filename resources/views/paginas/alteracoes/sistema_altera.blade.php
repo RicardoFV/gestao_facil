@@ -44,9 +44,8 @@
                     </div>
                     <div class="col-4">
                         <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
-                        <select name="tipo_reqempresauisito" id="empresa" class="form-control">
-                            <option value="empresa">Empresa</option>
-                        </select>
+                        <input id="id_empresa" type="hidden" class="form-control" name="id_empresa" value="{{$empresa->id}}">
+                        <input id="empresa_nome" type="text" class="form-control" name="empresa_nome" value="{{$empresa->name}}" readonly>
                     </div>
                 </div>
 

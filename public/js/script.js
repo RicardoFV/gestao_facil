@@ -1,4 +1,3 @@
-
 // funcao para identar o texto no textarea
 $(document).ready(() => {
 

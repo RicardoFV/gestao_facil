@@ -135,8 +135,8 @@ class VersaoController extends Controller
             // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
-                $empresas = EmpresaService::listarTodas();
-                return view('paginas.alteracoes.versao_altera', compact('versao' , 'empresas'));
+                $empresa = EmpresaService::consultar($versao->id_empresa);
+                return view('paginas.alteracoes.versao_altera', compact('versao' , 'empresa'));
             } else {
                 return redirect()->back()->with('erro', 'Versão não encontrada!');
             }
@@ -148,9 +148,9 @@ class VersaoController extends Controller
             // faz a consulta
             $versao = VersaoService::consultar($id);
             if (!empty($versao)) {
-                $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+                $empresa = EmpresaService::consultar($versao->id_empresa);
                 return view('paginas.alteracoes.versao_altera', compact(
-                    'versao', 'empresas'));
+                    'versao', 'empresa'));
             } else {
                 return redirect()->back()->with('erro', 'Versão não encontrada!');
             }

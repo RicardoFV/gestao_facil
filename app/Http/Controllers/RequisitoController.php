@@ -169,9 +169,9 @@ class RequisitoController extends Controller
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
-                $empresas = EmpresaService::listarTodas();
+                $empresa = EmpresaService::consultar($requisito->id_empresa);
                 return view('paginas.alteracoes.requisito_altera', compact(
-                    'requisito','empresas'));
+                    'requisito','empresa'));
             } else {
                 return redirect()->back()->with('erro', 'Requisito não encontrado!');
             }
@@ -183,9 +183,9 @@ class RequisitoController extends Controller
             // faz a consulta
             $requisito = RequisitoService::consultar($id);
             if (!empty($requisito)) {
-                $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+                $empresa = EmpresaService::consultar($requisito->id_empresa);
                 return view('paginas.alteracoes.requisito_altera', compact(
-                    'requisito', 'empresas'));
+                    'requisito', 'empresa'));
             } else {
                 return redirect()->back()->with('erro', 'Requisito não encontrado!');
             }

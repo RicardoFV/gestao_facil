@@ -48,18 +48,15 @@
                     </div>
                     <div class="col-4">
                         <label for="empresa" >{{ __('Empresa') }}<span class="ml-1 cor_mensagem">*</span></label>
-                        <select name="id_empresa" id="id_empresa" class="form-control">
-                            @foreach($empresas as $empresa)
-                                <option value="{{ $requisito->id_empresa }}" {{ ($requisito->id_empresa === $empresa->id)? 'selected': ''}}>{{$empresa->name}}</option>
-                            @endforeach
-                        </select>
+                        <input id="id_empresa" type="hidden" class="form-control" name="id_empresa" value="{{$empresa->id}}">
+                        <input id="empresa_nome" type="text" class="form-control" name="empresa_nome" value="{{$empresa->name}}" readonly>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-6">
                         <label for="descricao" class="col-md-4 col-form-label text-md-right">{{ __('Descrição') }} <span class="ml-1 cor_mensagem">*</span></label>
-                        <textarea  name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
+                        <textarea onmouseenter="tirarEspaco()" name="descricao" placeholder="Digite a descrição" class="form-control" id="descricao" cols="30" rows="3">
                             {{$requisito->descricao}}
                         </textarea>
                     </div>

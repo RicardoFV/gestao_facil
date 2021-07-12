@@ -84,6 +84,7 @@ class SistemaController extends Controller
             $nome = $request->input('nome');
             $descricao = $request->input('descricao');
             $id_versao = $request->input('id_versao');
+            $id_empresa = $request->input('id_empresa');
             $id_usuario = Auth::user()->id;
 
             $form = [
@@ -91,6 +92,7 @@ class SistemaController extends Controller
                 'descricao' => $descricao,
                 'id_usuario' => $id_usuario,
                 'id_versao' => $id_versao,
+                'id_empresa' => $id_empresa,
                 'excluido' => 1
             ];
             SistemaService::inserir($form);
@@ -141,16 +143,31 @@ class SistemaController extends Controller
     {
         // configurando as permissoes
         if (
-            Gate::allows('super_admin', Auth::user()) ||
-            Gate::allows('administrador', Auth::user()) ||
-            Gate::allows('administrador_gestor', Auth::user()) ||
-            Gate::allows('desenvolvedor', Auth::user())
-        ) {
+            Gate::allows('super_admin', Auth::user())) {
+
             // faz a consulta
             $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
                 $versoes = SistemaService::listarVersao();
-                return view('paginas.alteracoes.sistema_altera', compact('sistema', 'versoes'));
+                $empresa = EmpresaService::consultar($sistema->id_empresa);
+                return view('paginas.alteracoes.sistema_altera',
+                    compact('sistema', 'versoes', 'empresa'));
+            } else {
+                return redirect()->back()->with('erro', 'Sistema não encontrada!');
+            }
+
+        }elseif (
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ){
+            // faz a consulta
+            $sistema  = SistemaService::consultar($id);
+            $empresa = EmpresaService::consultar($sistema->id_empresa);
+            if (!empty($sistema)) {
+                $versoes = SistemaService::listarVersao();
+                return view('paginas.alteracoes.sistema_altera',
+                    compact('sistema', 'versoes', 'empresa'));
             } else {
                 return redirect()->back()->with('erro', 'Sistema não encontrada!');
             }
@@ -183,6 +200,7 @@ class SistemaController extends Controller
                 $sistema->descricao = $request->input('descricao');
                 $sistema->id_usuario = Auth::user()->id;
                 $sistema->id_versao = $request->input('id_versao');
+                $sistema->id_versao = $request->input('id_empresa');
 
                 SistemaService::atualizar($sistema);
                 return redirect()->action('SistemaController@index')

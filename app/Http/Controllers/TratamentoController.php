@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\{TratamentoFormReuest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{TratamentoService, DescricaoService, VinculoService};
+use App\Http\Services\{EmpresaService, TratamentoService, DescricaoService, VinculoService};
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -25,12 +25,8 @@ class TratamentoController extends Controller
     public function index()
     {
         $tratamentos = TratamentoService::listar();
-        // recebe as empresas que se tem vinculo
-        $empresas = VinculoService::detalhesEmpresaVinculo(Auth::user()->id);
         return view('paginas.listas.tratamento_lista')->with([
-            'tratamentos' => $tratamentos,
-            'empresas' => $empresas
-        ]);
+            'tratamentos' => $tratamentos]);
     }
 
     // metodo que faz a busca do tratamento que é passodo por parametro
@@ -80,8 +76,10 @@ class TratamentoController extends Controller
         $sistemas = TratamentoService::listarVersaoSistema();
         $requisitos = TratamentoService::listarRequisito();
         $users = TratamentoService::listarUsuario();
+        $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
 
-        return view('paginas.cadastros.tratamento', compact('sistemas', 'requisitos', 'users'));
+        return view('paginas.cadastros.tratamento',
+            compact('sistemas', 'requisitos', 'users', 'empresas'));
     }
 
     /**
@@ -100,6 +98,7 @@ class TratamentoController extends Controller
         $id_usuario_responsavel = $request->input('id_usuario_responsavel');
         $id_requisito = $request->input('id_requisito');
         $id_sistema = $request->input('id_sistema');
+        $id_empresa = $request->input('id_empresa');
         $id_usuario = Auth::user()->id;
         // insere no array
         $form = [
@@ -109,6 +108,7 @@ class TratamentoController extends Controller
             'id_requisito' => $id_requisito,
             'id_usuario' => $id_usuario,
             'id_sistema' => $id_sistema,
+            'id_empresa' => $id_empresa,
             'excluido' => 1
         ];
         // faz o cadastro

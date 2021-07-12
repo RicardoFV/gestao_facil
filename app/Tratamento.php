@@ -14,9 +14,10 @@ class Tratamento extends Model
         'id_usuario',
         'id_requisito',
         'id_sistema',
+        'id_empresa',
         'excluido'
     ];
-    //formatar data 
+    //formatar data
     public static function formatarData($data)
     {
         return date("d-m-Y", strtotime($data));

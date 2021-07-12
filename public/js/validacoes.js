@@ -1,4 +1,12 @@
 // arquivo para criar as validaçoes dos campos
+function tirarEspaco(){
+    var campo = document.getElementById('descricao').value;
+    campo = campo.replace(/s/g, "")
+    document.getElementById('descricao').innerHTML = campo;
+}
+
+
+
 // mascara de cnpj
 function mascaraCnpj() {
     document.getElementById('cnpj').addEventListener('input', function (e) {
