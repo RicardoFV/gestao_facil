@@ -5,7 +5,7 @@
     <div class="container cadastro">
         <div class="card mt-1">
             <div class="card-header">
-                <h1>Tratamento</h1>
+                <h1>Chamado</h1>
             </div>
             <div class="form-row col-sm-12 justify-content-center">
                 <div class="form-group col-sm-6 d-flex inline mt-3">
@@ -42,53 +42,60 @@
 
                                 <div class="form-group">
                                     <label for="dt_entrega"
+                                           class="col-md-12 col-form-label">{{ __('Empresa') }} <span class="ml-1 cor_mensagem">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <input id="id_empresa" type="hidden" class="form-control" name="id_empresa" value="{{$empresa->id}}">
+                                        <input id="empresa_nome" type="text" class="form-control" name="empresa_nome" value="{{$empresa->name}}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dt_entrega"
                                         class="col-md-12 col-form-label">{{ __('Data De Entrega') }} <span class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <input id="dt_entrega" value="{{ $tratamento->dt_entrega }}" name="dt_entrega"
-                                            type="date" class="form-control">
+                                               type="date" class="form-control">
                                     </div>
                                 </div>
 
 
                                 <div class="form-group ">
-                                    <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }} <span class="ml-1 cor_mensagem">*</span></label>
+                                    <label for="id_sistema" class="col-md-12 col-form-label ">{{ __('Sistema') }} <span
+                                            class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="id_sistema" id="id_sistema" class="form-control">
-                                            @foreach ($sistemas as $sistema)
-                                                <option value="{{ $sistema->id_sistema }}"
-                                                    {{ $tratamento->id_sistema === $sistema->id_sistema ? 'selected' : '' }}>
-                                                    {{ $sistema->nome_sistema }}</option>
-                                            @endforeach
-                                        </select>
-
+                                        <input id="id_sistema" type="hidden" class="form-control" name="id_sistema"
+                                               value="{{$sistema->id}}">
+                                        <input id="nome_sistema" type="text" value="{{ $sistema->nome }}"
+                                               class="form-control" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id_requisito"
-                                        class="col-md-12 col-form-label">{{ __('Requisito') }} <span class="ml-1 cor_mensagem">*</span></label>
+                                           class="col-md-12 col-form-label">{{ __('Requisito') }} <span
+                                            class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
-
-                                        <select name="id_requisito" id="id_requisito" class="form-control">
-                                            @foreach ($requisitos as $requisito)
-                                                <option value="{{ $requisito->id }}"
-                                                    {{ $tratamento->id_requisito === $requisito->id ? 'selected' : '' }}>
-                                                    {{ $requisito->nome }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input id="id_requisito" type="hidden" class="form-control" name="id_requisito"
+                                               value="{{$requisito->id}}">
+                                        <input id="nome_requisito" type="text" value="{{ $requisito->nome }}"
+                                               class="form-control" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="situacao" class="col-md-12 col-form-label">{{ __('Situacao') }} <span class="ml-1 cor_mensagem">*</span></label>
+                                    <label for="situacao" class="col-md-12 col-form-label">{{ __('Situacao') }} <span
+                                            class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="situacao" id="situacao" class="form-control">
-                                            <option value="novo" {{ $tratamento->situacao == 'novo' ? 'selected' : '' }}>
-                                                Novo</option>
+                                            <option
+                                                value="novo" {{ $tratamento->situacao == 'novo' ? 'selected' : '' }}>
+                                                Novo
+                                            </option>
                                             <option value="nao_iniciado"
                                                 {{ $tratamento->situacao == 'nao_iniciado' ? 'selected' : '' }}>Não
                                                 Iniciada</option>
@@ -106,17 +113,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="id_usuario_responsavel"
-                                        class="col-md-10 col-form-label">{{ __('Usuário Responsável') }} <span class="ml-1 cor_mensagem">*</span></label>
+                                           class="col-md-10 col-form-label">{{ __('Usuário Responsável') }} <span
+                                            class="ml-1 cor_mensagem">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="id_usuario_responsavel" id="id_sistema" class="form-control">
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $tratamento->id_usuario === $user->id ? 'selected' : '' }}>
-                                                    {{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
 
+                                        <input id="id_usuario_responsavel" type="hidden" class="form-control"
+                                               name="id_usuario_responsavel" value="{{$user->id}}">
+                                        <input id="nome_usuario" type="text" value="{{ $user->name }}"
+                                               class="form-control" readonly>
                                     </div>
                                 </div>
                             </div>

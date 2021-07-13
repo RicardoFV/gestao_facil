@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\{TratamentoFormReuest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{EmpresaService, TratamentoService, DescricaoService, VinculoService};
+use App\Http\Services\{EmpresaService,
+    RequisitoService,
+    SistemaService,
+    TratamentoService,
+    DescricaoService,
+    UsuarioService,
+    VinculoService};
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -163,26 +169,29 @@ class TratamentoController extends Controller
         $tratamento = TratamentoService::consultar($id);
         if (!empty($tratamento)) {
             // recebe as informaçoes
-            $sistemas = TratamentoService::listarVersaoSistema();
-            $requisitos = TratamentoService::listarRequisito();
-            $users = TratamentoService::listarUsuario();
+            $sistema = SistemaService::consultar($tratamento->id_sistema);
+            $requisito = RequisitoService::consultar($tratamento->id_requisito);
+            $user = UsuarioService::consultar($tratamento->id_usuario);
             $descricoes = DescricaoService::consultar($id);
+            $empresa = EmpresaService::consultar($sistema->id_empresa);
             // caso seja o status seja concluido, levara para a tela mostrar concluidos detalhes
             if ($tratamento['situacao'] === 'concluido') {
                 return view('paginas.listas.mostrar_concluidos_detalhes', compact(
                     'tratamento',
-                    'sistemas',
-                    'requisitos',
-                    'users',
+                    'sistema',
+                    'requisito',
+                    'user',
+                    'empresa',
                     'descricoes'
                 ));
             }
             // retorna para alteraçao
             return view('paginas.alteracoes.tratamento_altera', compact(
                 'tratamento',
-                'sistemas',
-                'requisitos',
-                'users',
+                'sistema',
+                'requisito',
+                'empresa',
+                'user',
                 'descricoes'
             ));
         } else {
@@ -214,6 +223,7 @@ class TratamentoController extends Controller
                 $tratamento->id_usuario_responsavel = $request->input('id_usuario_responsavel');
                 $tratamento->id_requisito = $request->input('id_requisito');
                 $tratamento->id_sistema = $request->input('id_sistema');
+                $tratamento->id_empresa = $request->input('id_empresa');
                 $tratamento->id_usuario = Auth::user()->id;
                 // atuaaliza as informaçoes do tratamento
                 TratamentoService::atualizar($tratamento);

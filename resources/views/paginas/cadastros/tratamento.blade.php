@@ -5,7 +5,7 @@
 <div class="container cadastro">
     <div class="card mt-1">
         <div class="card-header">
-            <h1>Tratamento</h1>
+            <h1>Chamado</h1>
         </div>
         <div class="form-row col-sm-12 justify-content-center">
             <div class="form-group col-sm-6 d-flex inline mt-3">
