@@ -36,11 +36,8 @@ class UsuarioController extends Controller
             $users = UsuarioService::listar();
             return view('paginas.listas.usuario_lista', compact('users'));
             // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
-        } else if (Gate::allows('administrador', Auth::user())) {
-            $users = UsuarioService::listarTodosSemSuper();
-            return view('paginas.listas.usuario_lista', compact('users'));
-        }else if(Gate::allows('administrador_gestor', Auth::user())){
-            $users = UsuarioService::listarTodosSemSuperSemAdminsitrador();
+        } else if (Gate::allows('administrador', Auth::user())  || Gate::allows('administrador_gestor', Auth::user())) {
+            $users = UsuarioService::listarPorUsuarioCriacao(auth()->user()->id);
             return view('paginas.listas.usuario_lista', compact('users'));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');

@@ -48,7 +48,7 @@
                          @endcan
                          <!-- caso seja super administrador-->
                          @can('administrador', Auth::user())
-                         ]<select id="perfil_acesso" name="perfil_acesso" class="form-control">
+                         <select id="perfil_acesso" name="perfil_acesso" class="form-control">
                              <option value="administrador" >Administrador(a)</option>
                              <option value="administrador_gestor" >Gestor(a)</option>
                              <option value="desenvolvedor" >Desenvoldor(a)</option>

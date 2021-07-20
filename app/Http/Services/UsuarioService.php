@@ -26,6 +26,11 @@ class UsuarioService
             ->paginate(5);
         //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
     }
+
+    public static function listarPorUsuarioCriacao($id){
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
+            ->where('id_usuario_ressponsavel', '=', $id)->paginate(5);
+    }
     // mostra tods ate mesmo os excluidos
     public static function listar()
     {
