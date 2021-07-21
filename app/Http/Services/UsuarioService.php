@@ -8,35 +8,27 @@ use  App\User;
 class UsuarioService
 {
     // mostra todos os dados sem o super
-    public static function listarTodosSemSuper()
+    public static function listarPorUsuarioCadastro($id)
     {
-        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
-            ->where('perfil_acesso', '<>', 'super_admin')
-            ->withTrashed()
-            ->paginate(5);
-        //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
-    }
-    // mostra todos os dados sem o super e sem o administrador
-    public static function listarTodosSemSuperSemAdminsitrador()
-    {
-        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
-            ->where('perfil_acesso', '<>', 'super_admin')
-            ->where('perfil_acesso', '<>', 'administrador')
-            ->withTrashed()
-            ->paginate(5);
-        //return DB::table('users')->where('perfil_acesso' ,'<>', 'super_admin')->paginate(6);
+        return DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id_usuario_ressponsavel ='.$id);
     }
 
     public static function listarPorUsuarioCriacao($id){
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
             ->where('id_usuario_ressponsavel', '=', $id)->paginate(5);
     }
+
+    // mostra tods ate mesmo os excluidos
+    public static function listarSemPaginacao()
+    {
+        return User::all('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at');
+    }
     // mostra tods ate mesmo os excluidos
     public static function listar()
     {
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
             ->withTrashed()
-            ->paginate(5);
+            ->paginate(4);
     }
 
     //consultar por id
@@ -49,7 +41,6 @@ class UsuarioService
     public static function consultarUsuarioDeletado($id)
     {
         DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id =' . $id);
-        //return User::onlyTrashed()->find($id);
     }
 
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)

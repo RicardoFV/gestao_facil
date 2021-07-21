@@ -23,21 +23,11 @@ class VinculoController extends Controller
             $usuarios = VinculoService::listarUsuariosVinculados();
             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
             // administrador ver todos sem o super
-        } else if (Gate::allows('administrador', Auth::user())) {
+        } else if (Gate::allows('administrador', Auth::user()) || Gate::allows('administrador_gestor', Auth::user())  ) {
             // recebe os dados
-            $usuarios = VinculoService::listarUsuariosVinculadosSemSuper();
+            $usuarios = VinculoService::listarUsuariosVinculadosPorGestor(Auth::user()->id);
             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
-        // ver somente gestor , desenvolvedor e suporte
-        }else if(Gate::allows('administrador_gestor', Auth::user())){
-            // recebe os dados
-            $usuarios = VinculoService::listarUsuariosVinculadosSemSuperSemAdministrador();
-            return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
-            // caso seja desenvolvedor e suporte
-        }else if (Gate::allows('desenvolvedor', Auth::user()) ||Gate::allows('suporte', Auth::user())){
-             // recebe os dados
-             $usuarios = VinculoService::listarUsuariosVinculadosPorDesenvolvedorEUsuario(Auth::user()->id);
-             return view('paginas.listas.ver_vinculo_empresa', compact('usuarios'));
-
+            // ver somente gestor , desenvolvedor e suporte
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -53,30 +43,23 @@ class VinculoController extends Controller
     {
         if (Gate::allows('super_admin', Auth::user())) {
             // recebe os dados
-            $usuarios = UsuarioService::listar();
+            $usuarios = UsuarioService::listarSemPaginacao();
             $empresas = EmpresaService::listarTodas();
             return view('paginas.cadastros.vincular_usuario_empresa', compact(
                 'usuarios',
                 'empresas'
             ));
             // se o perfil for somente administrador ou administrador gestor, ele nao listara o super
-        } else if (Gate::allows('administrador', Auth::user())){
-            $usuarios = UsuarioService::listarTodosSemSuper();
-            // lista por responsavel de cada empresa
-            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
-            return view('paginas.cadastros.vincular_usuario_empresa', compact(
-                'usuarios',
-                'empresas'
-            ));
-        }else if(Gate::allows('administrador_gestor', Auth::user())) {
-            $usuarios = UsuarioService::listarTodosSemSuperSemAdminsitrador();
-            // lista por responsavel de cada empresa
-            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
-            return view('paginas.cadastros.vincular_usuario_empresa', compact(
-                'usuarios',
-                'empresas'
-            ));
+        } else if (Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user())) {
+            $usuarios = UsuarioService::listarPorUsuarioCadastro(Auth::user()->id);
 
+            // lista por responsavel de cada empresa
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+            return view('paginas.cadastros.vincular_usuario_empresa', compact(
+                'usuarios',
+                'empresas'
+            ));
         } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
@@ -85,7 +68,7 @@ class VinculoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -119,7 +102,7 @@ class VinculoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -155,7 +138,7 @@ class VinculoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -195,8 +178,8 @@ class VinculoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -207,7 +190,7 @@ class VinculoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -216,7 +199,7 @@ class VinculoController extends Controller
             Gate::allows('super_admin', Auth::user()) ||
             Gate::allows('administrador', Auth::user()) ||
             Gate::allows('administrador_gestor', Auth::user())
-        ){
+        ) {
             // consulta as informações
             $vinculo = VinculoService::consultar($id);
             if (!empty($vinculo)) {
@@ -227,7 +210,7 @@ class VinculoController extends Controller
                 return redirect()->back()->with('erro', 'Vinculo não encontrado!');
             }
 
-        }else {
+        } else {
             return view('paginas.restricao_acesso.restricao_acesso');
         }
     }

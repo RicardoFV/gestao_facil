@@ -49,10 +49,10 @@ class VinculoService
     }
 
     // traz todos os usuarios que tem vinculos, por usuario logado
-    public static function listarUsuariosVinculadosPorDesenvolvedorEUsuario($id)
+    public static function listarUsuariosVinculadosPorGestor($id)
     {
         return  DB::select('select u.id, u.name from users u
-       where u.id in (select id_gestor from vinculos where id_gestor =' . $id . ')');
+       where u.id in (select id_gestor from vinculos where id_usuario_responsavel =' . $id . ')');
     }
     // mostra as empresas vinculadas ao usuario
     public static function detalhesEmpresaVinculo($id)
