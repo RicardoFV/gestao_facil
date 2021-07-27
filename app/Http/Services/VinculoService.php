@@ -18,6 +18,7 @@ class VinculoService
     {
         return Vinculo::find($id);
     }
+
     // verificar se tem vinculo
     public static function verificarVinculo($id_gestor, $id_empresa)
     {
@@ -26,34 +27,42 @@ class VinculoService
             'id_empresa' => $id_empresa
         ])->count();
     }
+
     // traz todos os usuarios que tem vinculos
     public static function listarUsuariosVinculados()
     {
-        return  DB::select('select u.id, u.name from users u
-       where u.id in (select id_gestor from vinculos)');
+        return DB::table('v_vinculo')->paginate(4);
     }
+
     // traz todos os usuarios que tem vinculos sem super
     public static function listarUsuariosVinculadosSemSuper()
     {
-        return  DB::select('select u.id, u.name from users u
-        where u.id in (select id_gestor from vinculos)
-        and u.perfil_acesso <> "super_admin" ');
+        return DB::table('v_vinculo')
+            ->where('perfil_acesso', '<>', 'super_admin')
+            ->paginate(4);
     }
+
     // traz todos os usuarios que tem vinculos sem super
     public static function listarUsuariosVinculadosSemSuperSemAdministrador()
     {
-        return  DB::select('select u.id, u.name from users u
-         where u.id in (select id_gestor from vinculos)
-         and u.perfil_acesso <> "super_admin"
-         and u.perfil_acesso <> "administrador"');
+        return DB::table('v_vinculo')
+            ->where('perfil_acesso', '<>', 'super_admin')
+            ->where('perfil_acesso', '<>', 'administrador')
+            ->paginate(4);
     }
 
     // traz todos os usuarios que tem vinculos, por usuario logado
     public static function listarUsuariosVinculadosPorGestor($id)
     {
+        return DB::table('v_vinculo')
+            ->where('id_usuario_responsavel', '=', $id)
+            ->paginate(4);
+        /*
         return  DB::select('select u.id, u.name from users u
        where u.id in (select id_gestor from vinculos where id_usuario_responsavel =' . $id . ')');
+        */
     }
+
     // mostra as empresas vinculadas ao usuario
     public static function detalhesEmpresaVinculo($id)
     {
@@ -69,7 +78,7 @@ class VinculoService
                 'empresas.telefone_1'
             )
             ->where('vinculos.id_gestor', $id)
-            ->get();
+            ->paginate(4);
     }
 
     // realiza a deleçao do vinculo

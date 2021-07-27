@@ -23,8 +23,23 @@ class VersaoController extends Controller
     // lista as versoes
     public function index()
     {
-        $versoes = VersaoService::listar();
-        return view('paginas.listas.versao_lista', compact('versoes'));
+
+        if (Gate::allows('super_admin', Auth::user())) {
+
+            $versoes = VersaoService::listar();
+            return view('paginas.listas.versao_lista', compact('versoes'));
+        } else if (
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ){
+            $versoes = VersaoService::listarTodosPorParametro(Auth::user()->id);
+            return view('paginas.listas.versao_lista', compact('versoes'));
+
+        } else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+
     }
     // metodo que faz a busca do tratamento que é passodo por parametro
     public function consultarPorParametro(PesquisaFormRequest $request)

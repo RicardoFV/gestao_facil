@@ -80,10 +80,11 @@
                         @endforeach
 
                     </tbody>
+                    <div class="align-items-center">
+                        {{ $versoes->links() }}
+                    </div>
                 </table>
-                <div class="align-items-center">
-                    {{ $versoes->links() }}
-                </div>
+
             </div>
         </div>
     </div>

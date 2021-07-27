@@ -24,8 +24,10 @@ class RequisitoService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarTodosPorParametro($id)
     {
-        $requisitos = DB::select('select * from requisitos where id_empresa
-                                   in(select id_empresa from vinculos where id_gestor ='  . $id . ')');
+        $requisitos = DB::table('v_requisito')
+            ->where('excluido', 1)
+            ->where('id_gestor', $id)
+            ->paginate(4);
         foreach ($requisitos as $requisito) {
             if ($requisito->tipo_requisito === 'funcional') {
                 $requisito->tipo_requisito = 'Funcional';
@@ -51,7 +53,7 @@ class RequisitoService
     //consultar por id
     public static function consultarPorNomeRequisito($nome)
     {
-        return  DB::table('requisitos')->where('nome', 'LIKE', '%' . $nome . '%');
+        return DB::table('requisitos')->where('nome', 'LIKE', '%' . $nome . '%');
 
 
     }
@@ -61,11 +63,13 @@ class RequisitoService
     {
         $requisito->push();
     }
+
     // realiza o delete logigo , ou seja seta o excluido = 0 (inativo)
     public static function deletar(Requisito $requisito)
     {
         $requisito->push();
     }
+
     // consulta tratamento pelo o id do requisito
     public static function consultarTratamentoPorRequisito($id)
     {

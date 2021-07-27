@@ -11,8 +11,16 @@ class SistemaService
     // consulta que traz a versao e o sistema desde que sistema o campo excluir seja igual a 1 (ativo)
     public static function listarVersaoSistema()
     {
-        return DB::table('v_versao_sistema')->where('excluido', 1)->paginate(6);
-        //return DB::select('select * from v_versao_sistema where excluido = 1');
+        return DB::table('v_versao_sistema')
+            ->where('excluido', 1)->where()->paginate(4);
+    }
+
+    public static function listarVersaoSistemaPorParametro($id)
+    {
+        return DB::table('v_versao_sistema')
+            ->where('excluido', 1)
+            ->where('id_gestor', $id)
+            ->paginate(4);
     }
 
     public static function listarVersao(){

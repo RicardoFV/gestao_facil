@@ -52,7 +52,9 @@
                     @endforeach
                 </tbody>
             </table>
-
+            <div class="align-items-center">
+                {{ $empresas->links() }}
+            </div>
         </div>
     </div>
 </div>

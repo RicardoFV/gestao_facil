@@ -8,14 +8,17 @@ use  App\User;
 class UsuarioService
 {
     // mostra todos os dados sem o super
+    /*
     public static function listarPorUsuarioCadastro($id)
     {
-        return DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id_usuario_ressponsavel ='.$id);
+        return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')->w
+            //DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id_usuario_ressponsavel ='.$id);
     }
-
+    */
+    // lista por usuario que realizou o cadastro
     public static function listarPorUsuarioCriacao($id){
         return User::select('id', 'name', 'email', 'perfil_acesso', 'deleted_at', 'created_at')
-            ->where('id_usuario_ressponsavel', '=', $id)->paginate(5);
+            ->where('id_usuario_ressponsavel', '=', $id)->paginate(4);
     }
 
     // mostra tods ate mesmo os excluidos

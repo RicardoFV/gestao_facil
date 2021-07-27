@@ -87,7 +87,7 @@
                     </tbody>
                 </table>
                 <div class="align-items-center">
-
+                    {{$requisitos->links()}}
                 </div>
             </div>
         </div>

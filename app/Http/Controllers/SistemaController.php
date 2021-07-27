@@ -22,8 +22,24 @@ class SistemaController extends Controller
     // lista as informaçoes , colcoando na tela inicial
     public function index()
     {
-        $sistemas = SistemaService::listarVersaoSistema();
-        return view('paginas.listas.sistema_lista', ['sistemas' => $sistemas]);
+        if (
+        Gate::allows('super_admin', Auth::user())
+        ) {
+            $sistemas = SistemaService::listarVersaoSistema();
+            return view('paginas.listas.sistema_lista', ['sistemas' => $sistemas]);
+        } else if (
+            Gate::allows('administrador', Auth::user()) ||
+            Gate::allows('administrador_gestor', Auth::user()) ||
+            Gate::allows('desenvolvedor', Auth::user())
+        ) {
+            $sistemas = SistemaService::listarVersaoSistemaPorParametro(Auth::user()->id);
+            return view('paginas.listas.sistema_lista', ['sistemas' => $sistemas]);
+
+
+        }else {
+            return view('paginas.restricao_acesso.restricao_acesso');
+        }
+
     }
 
     // metodo que faz a busca do tratamento que é passodo por parametro
@@ -55,7 +71,7 @@ class SistemaController extends Controller
             Gate::allows('desenvolvedor', Auth::user())
         ) {
             $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
-            $versoes = SistemaService::listarVersao();
+            $versoes = SistemaService::listarVersaoSistemaPorParametro(Auth::user()->id);
             return view('paginas.cadastros.sistema', compact(
                 'versoes',
                 'empresas'
@@ -148,7 +164,7 @@ class SistemaController extends Controller
             // faz a consulta
             $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $versoes = SistemaService::listarVersao();
+                $versoes = SistemaService::listarVersaoSistemaPorParametro(Auth::user()->id);
                 $empresa = EmpresaService::consultar($sistema->id_empresa);
                 return view('paginas.alteracoes.sistema_altera',
                     compact('sistema', 'versoes', 'empresa'));
