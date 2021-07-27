@@ -31,7 +31,9 @@ class VinculoService
     // traz todos os usuarios que tem vinculos
     public static function listarUsuariosVinculados()
     {
-        return DB::table('v_vinculo')->paginate(4);
+        return DB::table('v_vinculo')
+            ->distinct('name')
+            ->paginate(4);
     }
 
     // traz todos os usuarios que tem vinculos sem super
@@ -39,6 +41,7 @@ class VinculoService
     {
         return DB::table('v_vinculo')
             ->where('perfil_acesso', '<>', 'super_admin')
+            ->distinct('name')
             ->paginate(4);
     }
 
@@ -48,6 +51,7 @@ class VinculoService
         return DB::table('v_vinculo')
             ->where('perfil_acesso', '<>', 'super_admin')
             ->where('perfil_acesso', '<>', 'administrador')
+            ->distinct('name')
             ->paginate(4);
     }
 

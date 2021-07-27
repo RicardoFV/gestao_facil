@@ -43,7 +43,7 @@ class UsuarioService
     //consultar por id do usuario deletado
     public static function consultarUsuarioDeletado($id)
     {
-        DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id =' . $id);
+        return DB::select('select id, name, email, perfil_acesso, deleted_at, created_at from users where id =' . $id);
     }
 
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)

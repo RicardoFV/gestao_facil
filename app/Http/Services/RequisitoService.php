@@ -26,7 +26,7 @@ class RequisitoService
     {
         $requisitos = DB::table('v_requisito')
             ->where('excluido', 1)
-            ->where('id_gestor', $id)
+            ->where('id_gestor', $id)->distinct('nome')
             ->paginate(4);
         foreach ($requisitos as $requisito) {
             if ($requisito->tipo_requisito === 'funcional') {

@@ -12,14 +12,21 @@ class SistemaService
     public static function listarVersaoSistema()
     {
         return DB::table('v_versao_sistema')
-            ->where('excluido', 1)->where()->paginate(4);
+            ->where('excluido', 1)->distinct('id_sistema')->paginate(4);
     }
 
+    public static function listarVersaoPorGestor($id)
+    {
+        return DB::table('v_versao')
+            ->where('excluido', 1)
+            ->where('id_gestor', $id)->distinct('nome')->get();
+    }
     public static function listarVersaoSistemaPorParametro($id)
     {
         return DB::table('v_versao_sistema')
             ->where('excluido', 1)
             ->where('id_gestor', $id)
+            ->distinct('nome_sistema')
             ->paginate(4);
     }
 

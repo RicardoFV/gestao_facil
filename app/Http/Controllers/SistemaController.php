@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{SistemaFormRequest, PesquisaFormRequest};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\{SistemaService, EmpresaService};
+use App\Http\Services\{SistemaService, EmpresaService, VersaoService};
 
 class SistemaController extends Controller
 {
@@ -71,7 +71,7 @@ class SistemaController extends Controller
             Gate::allows('desenvolvedor', Auth::user())
         ) {
             $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
-            $versoes = SistemaService::listarVersaoSistemaPorParametro(Auth::user()->id);
+            $versoes = SistemaService::listarVersaoPorGestor(Auth::user()->id);
             return view('paginas.cadastros.sistema', compact(
                 'versoes',
                 'empresas'
@@ -164,7 +164,7 @@ class SistemaController extends Controller
             // faz a consulta
             $sistema  = SistemaService::consultar($id);
             if (!empty($sistema)) {
-                $versoes = SistemaService::listarVersaoSistemaPorParametro(Auth::user()->id);
+                $versoes = VersaoService::listar();
                 $empresa = EmpresaService::consultar($sistema->id_empresa);
                 return view('paginas.alteracoes.sistema_altera',
                     compact('sistema', 'versoes', 'empresa'));
@@ -179,9 +179,9 @@ class SistemaController extends Controller
         ){
             // faz a consulta
             $sistema  = SistemaService::consultar($id);
-            $empresa = EmpresaService::consultar($sistema->id_empresa);
             if (!empty($sistema)) {
-                $versoes = SistemaService::listarVersao();
+                $empresa = EmpresaService::consultar($sistema->id_empresa);
+                $versoes = VersaoService::listarTodosPorParametro(Auth::user()->id);
                 return view('paginas.alteracoes.sistema_altera',
                     compact('sistema', 'versoes', 'empresa'));
             } else {
@@ -216,7 +216,7 @@ class SistemaController extends Controller
                 $sistema->descricao = $request->input('descricao');
                 $sistema->id_usuario = Auth::user()->id;
                 $sistema->id_versao = $request->input('id_versao');
-                $sistema->id_versao = $request->input('id_empresa');
+                $sistema->id_empresa = $request->input('id_empresa');
 
                 SistemaService::atualizar($sistema);
                 return redirect()->action('SistemaController@index')

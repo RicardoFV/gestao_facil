@@ -17,8 +17,10 @@ class VersaoService
     // lista as informaçoes que estao com o status de excluido igual a 1 (significa comko ativo)
     public static function listarTodosPorParametro($id)
     {
-        return $versoes = DB::table('v_versao')
-            ->where('excluido', 1)->where('id_gestor', $id)->paginate(4);
+        return DB::table('v_versao')
+            ->where('excluido', 1)
+            ->where('id_gestor', $id)->distinct('nome')
+            ->paginate(4);
     }
 
     // cadastrar as informaçoes

@@ -35,10 +35,10 @@
                         <input id="nome" type="text" class="form-control" name="nome" value="{{$sistema->nome}}">
                     </div>
                     <div class="col-4">
-                        <label for="tipo_requisito" >{{ __('Versão') }}<span class="ml-1 cor_mensagem">*</span></label>
+                        <label for="id_versao" >{{ __('Versão') }}<span class="ml-1 cor_mensagem">*</span></label>
                         <select name="id_versao" id="id_versao" class="form-control">
                             @foreach($versoes as $versao)
-                                <option value="{{ $sistema->id_versao }}" {{ ($sistema->id_versao === $versao->id)? 'selected': ''}}>{{$versao->nome}}</option>
+                                    <option value="{{ $versao->id }}" {{ ($sistema->id_versao == $versao->id)? 'selected': ''}}>{{$versao->nome}}</option>
                             @endforeach
                         </select>
                     </div>

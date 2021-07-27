@@ -80,7 +80,7 @@ class TratamentoController extends Controller
     public function create()
     {
         $sistemas = TratamentoService::listarVersaoSistema();
-        $requisitos = TratamentoService::listarRequisito();
+        $requisitos = TratamentoService::listarRequisitoPorGestor(Auth::user()->id);
         $users = TratamentoService::listarUsuario();
         $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
 
