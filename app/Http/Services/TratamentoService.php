@@ -11,7 +11,7 @@ class TratamentoService
     // vai trazer as informaçoes de tratamento, faz toda a listagem
     public static function listar()
     {
-        return DB::table('v_list_tsru_dados')->paginate(6);
+        return DB::table('v_list_tsru_dados')->paginate(4);
         // return DB::select('select * from v_list_tsru_dados');
     }
 
@@ -53,7 +53,7 @@ class TratamentoService
     // consulta que traz a versao e o sistema desde que sistema o campo excluir seja igual a 1 (ativo)
     public static function listarVersaoSistema()
     {
-        return DB::table('v_versao_sistema')->where('excluido', 1)->get();
+        return DB::table('v_versao_sistema2')->where('excluido', 1)->get();
         //return DB::select('select * from v_versao_sistema where excluido = 1');
     }
 

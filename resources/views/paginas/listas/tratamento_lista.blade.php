@@ -52,7 +52,7 @@
                 <table class="table table-hover table-sm">
                     <thead class="text-center">
                         <tr>
-                            <th scope="col">Id. Tratamento</th>
+                            <th scope="col">#</th>
                             <th scope="col">N. Sistema</th>
                             <th scope="col">Dt. Inclusão</th>
                             <th scope="col">Usuário Resp.</th>
@@ -78,6 +78,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="align-items-center">
+                    {{ $tratamentos->links() }}
+                </div>
             </div>
         </div>
     </div>

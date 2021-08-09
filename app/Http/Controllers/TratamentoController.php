@@ -82,7 +82,12 @@ class TratamentoController extends Controller
         $sistemas = TratamentoService::listarVersaoSistema();
         $requisitos = TratamentoService::listarRequisitoPorGestor(Auth::user()->id);
         $users = TratamentoService::listarUsuario();
-        $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+        if(Auth::user()->perfil_acesso === 'super_admin'){
+            $empresas = EmpresaService::listarTodas();
+        }else {
+            $empresas = EmpresaService::listarTodasPorResponsavel(Auth::user()->id);
+        }
+
 
         return view('paginas.cadastros.tratamento',
             compact('sistemas', 'requisitos', 'users', 'empresas'));
